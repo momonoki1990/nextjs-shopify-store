@@ -5,6 +5,6 @@ const home: React.FC = () => (
   <Layout>
     <div>ただのトップページです。</div>
   </Layout>
-);
+)
 
 export default home;
