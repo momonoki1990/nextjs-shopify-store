@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Header: React.FC = () => (
-  <header>
+  <header style={{ borderBottom: '1px solid #ddd' }}>
     <nav>
       ヘッダーです
     </nav>
