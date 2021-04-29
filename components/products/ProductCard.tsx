@@ -26,13 +26,13 @@ const ProductCard: React.FC<Props> = ({ product }) => {
           <Image
             priority
             src={product.images[0].src}
-            height={250}
-            width={250}
+            height={400}
+            width={400}
           />
         </figure>
         <div
           className="product-card__description"
-          style={{ margin: "0 auto", textAlign: "left", width: "250px" }}
+          style={{ textAlign: "left" }}
         >
           <div className="product-card__title">{product.title}</div>
           <div className="product-card__price">¥{price.toLocaleString('ja-JP')}{priceVaries && "から"}</div>
