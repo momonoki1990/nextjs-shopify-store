@@ -7,7 +7,8 @@ type Props = {
 }
 
 const ProductCard: React.FC<Props> = ({ product }) => {
-  // product.variantsから価格に関する情報を取得する
+  
+  // variantsから価格に関する情報を取得する
   const { variants } = product;
   variants.sort((a, b) => {
     const [ priceA, priceB ]: number[] = [a.price, b.price].map((str) => Number(str));
@@ -34,7 +35,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
           style={{ margin: "0 auto", textAlign: "left", width: "250px" }}
         >
           <div className="product-card__title">{product.title}</div>
-          <div className="product-card__price">{price}{priceVaries && "から"}</div>
+          <div className="product-card__price">¥{price.toLocaleString('ja-JP')}{priceVaries && "から"}</div>
         </div>
       </div>
     </div>
