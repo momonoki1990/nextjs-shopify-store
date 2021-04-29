@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import client from "lib/client";
 import { Product } from "shopify-buy";
 import Layout from "components/Layout";
-import FilterToolBar from "components/collections/FilterToolbar";
+import FilterToolbar from "components/collections/FilterToolbar";
 import ProductList from "components/products/ProductList";
 import Pagination from "components/utils/Pagination";
 import { paginate } from "lib/utils";
@@ -24,7 +24,7 @@ const collectionAll: React.FC<Props> = ({
   <Layout>
     <div className="collections-all">
       <h1 style={{ textAlign: "center" }}>商品</h1>
-      <FilterToolBar total={total} />
+      <FilterToolbar total={total} />
       <section>
         <div className="container">
           <ProductList products={products} />

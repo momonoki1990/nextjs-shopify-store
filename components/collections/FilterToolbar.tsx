@@ -2,7 +2,7 @@ type Props = {
   total: number
 };
 
-const FiltertoolBar = ({ total }) => {
+const FilterToolbar = ({ total }) => {
   return (
     <div
       className="filter-toolbar"
@@ -21,10 +21,12 @@ const FiltertoolBar = ({ total }) => {
         >
           並び替え
         </div>
-        <div style={{ lineHeight: "3.5rem", flex: "0 1 auto" }}>{String(total)}個の商品</div>
+        <div style={{ lineHeight: "3.5rem", flex: "0 1 auto" }}>
+          {String(total)}個の商品
+        </div>
       </div>
     </div>
   );
 };
 
-export default FiltertoolBar;
+export default FilterToolbar;
