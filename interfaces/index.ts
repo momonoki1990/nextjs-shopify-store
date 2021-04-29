@@ -1,5 +1,5 @@
-import { Product } from "shopify-buy";
+// import { Product } from "shopify-buy";
 
-export type ProductsProps = {
-  products: Product[];
-};
+// export type ProductsProps = {
+//   products: Product[];
+// };
