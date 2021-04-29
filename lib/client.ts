@@ -1,14 +1,14 @@
 import Client from 'shopify-buy'
-
 // fetch the large, unoptimized version of the SDK
 import UnoptimizedClient from 'shopify-buy/index.unoptimized.umd';
 
+
 const client = Client.buildClient({
-  domain: 'your-shop-name.myshopify.com',
-  storefrontAccessToken: 'your-storefront-access-token'
+  domain: process.env.DOMAIN,
+  storefrontAccessToken: process.env.SHOPIFYTOKEN,
 });
 
-const unoptimizedClient = UnoptimizedClient.buildClient({
+export const unoptimizedclient = UnoptimizedClient.buildClient({
   domain: process.env.DOMAIN,
   storefrontAccessToken: process.env.SHOPIFYTOKEN,
 });
