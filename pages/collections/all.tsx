@@ -2,7 +2,7 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import client from "lib/client";
 import { Product } from "shopify-buy";
-import Layout from "components/Layout";
+import Layout from "components/common/Layout";
 import FilterToolbar from "components/collections/FilterToolBar"
 import ProductList from "components/products/ProductList";
 import Pagination from "components/utils/Pagination";
