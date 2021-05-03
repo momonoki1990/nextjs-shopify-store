@@ -3,13 +3,14 @@ import { GetServerSideProps } from "next";
 import client from "lib/client";
 import { Product } from "shopify-buy";
 import Layout from "components/common/Layout";
-import FilterToolbar from "components/collections/FilterToolBar"
+import CollectionTitle from "components/collections/CollectionTitle"
+import FilterToolbar from "components/collections/FilterToolbar";
 import ProductList from "components/products/ProductList";
 import Pagination from "components/utils/Pagination";
 import { paginate } from "lib/utils";
 
 type Props = {
-  total: number,
+  total: number;
   products: Product[];
   currentPage: number;
   totalPage: number;
@@ -22,16 +23,18 @@ const collectionAll: React.FC<Props> = ({
   totalPage,
 }) => (
   <Layout>
-    <div className="collections-all">
-      <h1 style={{ textAlign: "center" }}>商品</h1>
-      <FilterToolbar total={total} />
+    <article className="collections-all">
+      <header>
+        <CollectionTitle title="商品"/>
+        <FilterToolbar total={total} />
+      </header>
       <section>
         <div className="container">
           <ProductList products={products} />
           <Pagination currentPage={currentPage} totalPage={totalPage} />
         </div>
       </section>
-    </div>
+    </article>
   </Layout>
 );
 

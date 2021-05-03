@@ -8,7 +8,7 @@ type Props = {
 }
 
 const ProductList: React.FC<Props> = ({ products }) => (
-  <div style={{ display: "flex", flexWrap: "wrap" }}>
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 py-14 md:py-12">
     {products.map((product) => (
       <ProductCard product={product} key={product.id} />
     ))}
