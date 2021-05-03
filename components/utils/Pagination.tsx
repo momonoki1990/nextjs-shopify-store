@@ -22,7 +22,7 @@ const Paginateion: React.FC<Props> = ({ currentPage, totalPage }) => {
       ) : (
         <li className={`pagination__prev--active ${active}`}>
           <Link href={previousPage}>
-            <a className="block cursor-pointer px-5 py-2">←</a>
+            <a className="block px-5 py-2">←</a>
           </Link>
         </li>
       )}{" "}
@@ -34,7 +34,7 @@ const Paginateion: React.FC<Props> = ({ currentPage, totalPage }) => {
       ) : (
         <li className={`pagination__next--active ${active}`}>
           <Link href={nextPage}>
-            <a className="block cursor-pointer px-5 py-2">→</a>
+            <a className="block px-5 py-2">→</a>
           </Link>
         </li>
       )}
