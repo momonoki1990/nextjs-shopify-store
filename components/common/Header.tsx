@@ -1,6 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import SearchDrawer from "components/common/SearchDrawer"
+import { bagIcon, banIcon } from "components/common/Icon";
+
+
 
 const Header: React.FC = () => (
   <header className="header border-b border-gray--600">
@@ -33,42 +36,11 @@ const Header: React.FC = () => (
       </nav>
 
       <div className="header__icons flex items-center justify-end">
-
         <SearchDrawer />
         <Link href="/cart">
-          <a className="bag inline-block p-2 text-gray-700">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-              />
-            </svg>
-          </a>
+          <a className="bag inline-block p-2 text-gray-700">{bagIcon}</a>
         </Link>
-        <button className="ban inline-block md:hidden pl-2 py-2 text-gray-700">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
+        <button className="ban inline-block md:hidden pl-2 py-2 text-gray-700">{banIcon}</button>
       </div>
     </div>
   </header>
