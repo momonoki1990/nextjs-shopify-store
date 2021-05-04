@@ -74,9 +74,9 @@ const SearchDrawer = () => {
               placeholder="検索する"
               autoFocus
             />
-            <span className="inline-block absolute top-1/2 right-3 transform -translate-y-1/2">
+            <button className="inline-block absolute p-2 top-1/2 right-0 transform -translate-y-1/2">
               {searchIcon}
-            </span>
+            </button>
           </div>
           <button
             className="drawer__close inline-block p-2"
