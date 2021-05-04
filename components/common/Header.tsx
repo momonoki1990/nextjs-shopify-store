@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import SearchDrawer from "components/common/SearchDrawer"
 
 const Header: React.FC = () => (
   <header className="header border-b border-gray--600">
@@ -32,24 +33,10 @@ const Header: React.FC = () => (
       </nav>
 
       <div className="header__icons flex items-center justify-end">
-        <button className="search inline-block px-2 text-gray-700">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </button>
+
+        <SearchDrawer />
         <Link href="/cart">
-          <a className="bag inline-block px-2 text-gray-700">
+          <a className="bag inline-block p-2 text-gray-700">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -66,7 +53,7 @@ const Header: React.FC = () => (
             </svg>
           </a>
         </Link>
-        <button className="ban inline-block md:hidden pl-2 text-gray-700">
+        <button className="ban inline-block md:hidden pl-2 py-2 text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
