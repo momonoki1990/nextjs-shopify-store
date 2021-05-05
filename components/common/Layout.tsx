@@ -19,7 +19,7 @@ const Layout: React.FC<Props> = ({
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <Header />
-    <main className="py-14">{children}</main>
+    <main className="py-9 md:py-14">{children}</main>
     <Footer />
   </>
 );

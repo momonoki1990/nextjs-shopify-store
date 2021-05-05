@@ -5,7 +5,7 @@ type Props = {
 }
 
 const CollectionTitle = ({ title }) => (
-  <h1 className="font-semibold mb-14 text-center text-gray-700 text-4xl">{ title }</h1>
+  <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-4xl">{ title }</h1>
 );
 
 export default CollectionTitle
