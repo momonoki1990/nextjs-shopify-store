@@ -1,15 +1,30 @@
-import React from 'react'
-import { menuIcon } from "components/common/Icon";
+import React from "react";
+import { menuIcon, closeIcon } from "components/common/Icon";
 
 type Props = {
-  toggleAccordion: () => void
-}
+  opened: boolean;
+  toggleAccordion: (opened: boolean) => void;
+};
 
-const MenuButton: React.FC<Props> = ({ toggleAccordion }) => {
+const MenuButton: React.FC<Props> = ({ opened, toggleAccordion }) => {
   return (
-    <button className="inline-block md:hidden p-2" onClick={toggleAccordion}>
-      {menuIcon}
-    </button>
+    <>
+      {opened ? (
+        <button
+          className="inline-block md:hidden p-2"
+          onClick={() => toggleAccordion(false)}
+        >
+          {closeIcon}
+        </button>
+      ) : (
+        <button
+          className="inline-block md:hidden p-2"
+          onClick={() => toggleAccordion(true)}
+        >
+          {menuIcon}
+        </button>
+      )}
+    </>
   );
 };
 

@@ -9,8 +9,8 @@ import { Collapse } from "@material-ui/core";
 const Header: React.FC = () => {
   const [opened, setOpened] = React.useState(false);
 
-  const toggleAccordion = () => {
-    setOpened((prev) => !prev);
+  const toggleAccordion = (opened: boolean) => {
+    setOpened(opened);
   };
 
   return (
@@ -32,8 +32,7 @@ const Header: React.FC = () => {
           <Link href="/cart">
             <a className="bag inline-block p-2 text-gray-700">{bagIcon}</a>
           </Link>
-
-          <MenuButton toggleAccordion={toggleAccordion} />
+          <MenuButton opened={opened} toggleAccordion={toggleAccordion} />
         </div>
       </div>
 
