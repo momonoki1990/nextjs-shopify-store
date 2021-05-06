@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, Drawer } from "@material-ui/core";
-import { searchIcon } from "components/common/Icon"
+import { Drawer } from "@material-ui/core";
+import { searchIcon, closeIcon } from "components/common/Icon"
+
 
 const SearchDrawer = () => {
-  const [state, setState] = React.useState({ isOpened: false });
+  const [opened, setOpened] = React.useState(false);
 
-  const toggleDrawer = (isOpened: boolean) => (
+  const toggleDrawer = (opened: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
@@ -16,25 +17,8 @@ const SearchDrawer = () => {
       return;
     }
 
-    setState({ isOpened: isOpened });
+    setOpened(opened);
   };
-
-  const closeIcon = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
-  );
 
   return (
     <>
@@ -47,7 +31,7 @@ const SearchDrawer = () => {
       <Drawer
         className="search__drawer"
         anchor="top"
-        open={state["isOpened"]}
+        open={opened}
         onClose={toggleDrawer(false)}
       >
         <div className="search__container container flex justify-center items-center py-4 text-center">
