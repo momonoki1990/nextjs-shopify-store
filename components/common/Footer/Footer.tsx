@@ -18,14 +18,16 @@ const Footer: React.FC = () => (
       </div>
       <div className="newsletter mb-12 md:mb-0 px-4 md:px-0">
         <div className="font-semibold mb-4">ニュースレター</div>
-        <div className="flex">
+        <div className="flex flex-wrap">
           <input
             className="border border-gray-200 px-4 py-3 rounded-sm text-sm"
             type="text"
             placeholder="メールアドレス"
-            style={{ flex: "1 0 15rem" }}
+            style={{ flex: "9999 0 15rem" }}
           />
-          <button className="bg-gray-700 inline-block px-4 py-3 text-sm text-white">
+          <button
+            className="bg-gray-700 flex-grow inline-block px-4 py-3 text-sm text-white"
+          >
             登録する
           </button>
         </div>
