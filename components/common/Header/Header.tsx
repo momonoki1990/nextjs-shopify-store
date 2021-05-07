@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import SearchDrawer from "components/common/SearchDrawer";
-import MenuList from "components/common/MenuList";
-import MenuButton from "components/common/MenuButton";
+import SearchDrawer from "components/common/Header/SearchDrawer";
+import MenuList from "components/common/Header/MenuList";
+import MenuButton from "components/common/Header/MenuButton";
 import { bagIcon } from "components/common/Icon";
 import { Collapse } from "@material-ui/core";
 
