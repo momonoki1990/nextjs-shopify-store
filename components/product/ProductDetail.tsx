@@ -14,7 +14,18 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
     <>
       <h1>{product.title}</h1>
       <div>¥{price.toLocaleString("ja-JP")}</div>
-
+      <div className="options">
+        {options.map((option) => (
+          <div className="options__item">
+            <div className="options__name">{option.name}</div>
+            <select>
+              {option.values.map(value => (
+                <option>{value.value}</option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
