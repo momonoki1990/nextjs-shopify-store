@@ -7,7 +7,7 @@ import CollectionTitle from "components/collections/CollectionTitle"
 import FilterToolbar from "components/collections/FilterToolbar";
 import ProductList from "components/collections/ProductList";
 import Pagination from "components/utils/Pagination";
-import { paginate } from "lib/utils";
+import paginate from "lib/paginate";
 
 type Props = {
   total: number;
@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   // ページに応じて配列を切り出す
   const perPage = 8;
-  const [pagenatedProducts, currentPage, totalPage] = paginate(
+  const [paginatedProducts, currentPage, totalPage] = paginate(
     context,
     products,
     perPage
@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       total: total,
-      products: JSON.parse(JSON.stringify(pagenatedProducts)),
+      products: JSON.parse(JSON.stringify(paginatedProducts)),
       currentPage,
       totalPage,
     },

@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 
 // クエリストリングから取得したページに応じて配列を切り出して、配列とページ情報を返す関数
-export const paginate = (
+const paginate = (
   context: GetServerSidePropsContext,
   target: any[],
   perPage: number
@@ -14,3 +14,5 @@ export const paginate = (
   const paginatedTarget = target.slice((currentPage - 1) * perPage, currentPage * perPage);
   return [paginatedTarget, currentPage, totalPage];
 };
+
+export default paginate;
