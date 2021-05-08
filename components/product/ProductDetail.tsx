@@ -16,7 +16,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
       <div>¥{price.toLocaleString("ja-JP")}</div>
       <div className="options">
         {options.map((option) => (
-          <div className="options__item">
+          <div className="options__item" key={option.name}>
             <div className="options__name">{option.name}</div>
             <select>
               {option.values.map(value => (
@@ -26,6 +26,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
           </div>
         ))}
       </div>
+
     </>
   );
 };
