@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer } from "@material-ui/core";
-import { searchIcon, closeIcon } from "components/common/Icon"
+import { searchIcon, closeIcon } from "components/utils/Icon"
 
 
 const SearchDrawer = () => {

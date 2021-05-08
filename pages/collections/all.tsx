@@ -5,7 +5,7 @@ import { Product } from "shopify-buy";
 import Layout from "components/common/Layout";
 import CollectionTitle from "components/collections/CollectionTitle"
 import FilterToolbar from "components/collections/FilterToolbar";
-import ProductList from "components/products/ProductList";
+import ProductList from "components/collections/ProductList";
 import Pagination from "components/utils/Pagination";
 import { paginate } from "lib/utils";
 

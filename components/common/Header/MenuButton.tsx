@@ -1,5 +1,5 @@
 import React from "react";
-import { menuIcon, closeIcon } from "components/common/Icon";
+import { menuIcon, closeIcon } from "components/utils/Icon";
 
 type Props = {
   opened: boolean;

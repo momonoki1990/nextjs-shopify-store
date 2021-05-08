@@ -3,7 +3,7 @@ import Link from "next/link";
 import SearchDrawer from "components/common/Header/SearchDrawer";
 import MenuList from "components/common/Header/MenuList";
 import MenuButton from "components/common/Header/MenuButton";
-import { bagIcon } from "components/common/Icon";
+import { bagIcon } from "components/utils/Icon";
 import { Collapse } from "@material-ui/core";
 
 const Header: React.FC = () => {

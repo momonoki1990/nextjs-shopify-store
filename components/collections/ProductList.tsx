@@ -1,6 +1,6 @@
 import React from "react";
 import { Product } from "shopify-buy";
-import ProductCard from 'components/products/ProductCard';
+import ProductCard from 'components/collections/ProductCard';
 
 
 type Props = {
