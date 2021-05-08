@@ -8,7 +8,7 @@ type Props = {
 };
 
 const ProductCard: React.FC<Props> = ({ product }) => {
-  const [price, priceVaries] = getPriceInfoFromProduct(product);
+  const { price, priceVaries } = getPriceInfoFromProduct(product);
 
   return (
     <div className="product-card">

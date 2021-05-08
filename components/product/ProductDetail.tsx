@@ -7,13 +7,14 @@ type Props = {
 };
 
 const ProductDetail: React.FC<Props> = ({ product }) => {
-  const [price, priceVaries] = getPriceInfoFromProduct(product);
+  const { options } = product;
+  const { price } = getPriceInfoFromProduct(product);
 
   return (
     <>
       <h1>{product.title}</h1>
       <div>¥{price.toLocaleString("ja-JP")}</div>
-      
+
     </>
   );
 };

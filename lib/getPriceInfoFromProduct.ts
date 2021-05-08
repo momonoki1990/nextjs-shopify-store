@@ -1,5 +1,8 @@
 import { Product } from "shopify-buy";
 
+type ProductInfo = { price: number; priceVaries: boolean };
+type Func = (product: Product) => ProductInfo;
+
 // variantsから価格に関する情報を取得する
 const getPriceInfoFromProduct = (product: Product) => {
   const { variants } = product;
@@ -19,7 +22,7 @@ const getPriceInfoFromProduct = (product: Product) => {
   const priceVaries: boolean =
     variants[0].price !== variants[variants.length - 1].price;
 
-  return [price, priceVaries];
+  return { price: price, priceVaries: priceVaries };
 };
 
 export default getPriceInfoFromProduct;
