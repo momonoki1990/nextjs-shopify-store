@@ -1,16 +1,17 @@
 import React from "react";
 import { GetServerSideProps } from "next";
+import { Product } from "shopify-buy";
 import client from "lib/client";
 import Layout from "components/common/Layout";
 import ProductImage from "components/product/ProductImage";
 import ProductDetail from "components/product/ProductDetail";
 
 type Props = {
-  product: {};
+  product: Product
 };
 
-const Product: React.FC<Props> = ({ product }) => {
-  console.log(product)
+const ProductPage: React.FC<Props> = ({ product }) => {
+  console.log(product);
   return (
     <Layout>
       <article className="product">
@@ -19,7 +20,7 @@ const Product: React.FC<Props> = ({ product }) => {
             <ProductImage />
           </div>
           <div className="product__detail">
-            <ProductDetail />
+            <ProductDetail product={product} />
           </div>
         </section>
       </article>
@@ -37,4 +38,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default Product;
+export default ProductPage;

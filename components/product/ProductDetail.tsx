@@ -1,7 +1,21 @@
-import react from "react";
+import React from "react";
+import { Product } from "shopify-buy";
+import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
 
-const ProductDetail = () => {
-  return <div>ProductDetailです</div>;
+type Props = {
+  product: Product;
+};
+
+const ProductDetail: React.FC<Props> = ({ product }) => {
+  const [price, priceVaries] = getPriceInfoFromProduct(product);
+
+  return (
+    <>
+      <h1>{product.title}</h1>
+      <div>¥{price.toLocaleString("ja-JP")}</div>
+      
+    </>
+  );
 };
 
 export default ProductDetail;
