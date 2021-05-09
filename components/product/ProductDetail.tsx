@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "shopify-buy";
+import sanitizeHtml from "sanitize-html";
 import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
 
 type Props = {
@@ -13,7 +14,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
   return (
     <>
       <div className="title mb-2">
-        <h1 className="font-semibold leading-tight text-gray-700 text-4xl tracking-wide">
+        <h1 className="font-semibold leading-tight text-gray-800 text-4xl tracking-wide">
           {title}
         </h1>
       </div>
@@ -26,10 +27,12 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {options.map((option) => (
             <div className="options__item mb-2 px-2" key={option.name}>
-              <div className="options__name text-gray-600">{option.name}</div>
+              <div className="options__name text-gray-700">{option.name}</div>
               <select className="border border-gray-300 rounded-sm px-4 py-3 w-full">
                 {option.values.map((value) => (
-                  <option>{value.value}</option>
+                  <option value={value.value} key={value.value}>
+                    {value.value}
+                  </option>
                 ))}
               </select>
             </div>
@@ -37,21 +40,24 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
         </div>
       </div>
 
-      <div className="payment-buttons px-2">
+      <div className="payment-buttons px-2 mb-24">
         <div className="cart-submit mb-2">
-          <button className="border border-gray-900 inline-block rounded-sm px-4 py-3 text-sm w-full">
+          <button className="border border-gray-900 font-semibold inline-block text-gray-700 rounded-sm px-4 py-3 text-sm w-full">
             カートに追加する
           </button>
         </div>
 
         <div className="to-checkout">
-          <button className="bg-gray-700 border border-gray-900 inline-block rounded-sm px-4 py-3 text-white text-sm w-full">
+          <button className="bg-gray-800 border border-gray-900 inline-block rounded-sm px-4 py-3 text-white text-sm w-full">
             今すぐ購入
           </button>
         </div>
       </div>
 
-      <div className="description" dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+      <div
+        className="description"
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(descriptionHtml) }}
+      />
     </>
   );
 };
