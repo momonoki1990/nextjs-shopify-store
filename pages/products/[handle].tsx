@@ -15,9 +15,9 @@ const ProductPage: React.FC<Props> = ({ product }) => {
   return (
     <Layout>
       <article className="product">
-        <section className="container md:grid md:grid-cols-2">
+        <section className="container md:grid md:grid-cols-2 md:gap-x-4">
           <div className="product__image">
-            <ProductImage />
+            <ProductImage product={product} />
           </div>
           <div className="product__detail">
             <ProductDetail product={product} />
