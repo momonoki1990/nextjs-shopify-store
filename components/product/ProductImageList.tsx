@@ -21,7 +21,7 @@ const ProductImageList: React.FC<Props> = ({
   setImageId,
 }) => {
   const isOverMd = useMediaQuery("(min-width:768px)", { noSsr: true });
-  
+
   return (
     <>
       {isOverMd ? (
