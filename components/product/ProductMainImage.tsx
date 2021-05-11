@@ -4,15 +4,16 @@ import { Product } from "shopify-buy";
 
 type Props = {
   product: Product;
-  imageId: string;
+  currentImageId: string;
 };
 
-const ProductMainImage: React.FC<Props> = ({ product, imageId }) => {
+const ProductMainImage: React.FC<Props> = ({ product, currentImageId }) => {
+  const selectedImage = product.images.find(image => image.id === currentImageId);
   return (
     <figure className="m-0">
       <Image
         priority
-        src={product.images[0].src}
+        src={selectedImage.src}
         height={2000}
         width={2000}
       ></Image>
