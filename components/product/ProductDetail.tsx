@@ -14,7 +14,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
   return (
     <>
       <div className="title mb-2">
-        <h1 className="font-semibold leading-tight text-gray-800 text-4xl tracking-wide">
+        <h1 className="font-bold md:font-semibold md:leading-tight text-gray-800 md:text-4xl text-3xl tracking-wide">
           {title}
         </h1>
       </div>
@@ -26,7 +26,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
       <div className="options mb-4">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {options.map((option) => (
-            <div className="options__item mb-2 px-2" key={option.name}>
+            <div className="options__item mb-2 md:px-2" key={option.name}>
               <div className="options__name text-gray-700">{option.name}</div>
               <select className="border border-gray-300 rounded-sm px-4 py-3 w-full">
                 {option.values.map((value) => (
@@ -40,7 +40,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
         </div>
       </div>
 
-      <div className="payment-buttons px-2 mb-24">
+      <div className="payment-buttons md:px-2 mb-24">
         <div className="cart-submit mb-2">
           <button className="border border-gray-900 font-semibold inline-block text-gray-700 rounded-sm px-4 py-3 text-sm w-full">
             カートに追加する

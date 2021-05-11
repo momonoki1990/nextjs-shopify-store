@@ -43,7 +43,6 @@ const ProductImageList: React.FC<Props> = ({
         <Swiper
           spaceBetween={50}
           slidesPerView={3}
-          onSwiper={(swiper) => console.log(swiper)}
           navigation={true}
         >
           {product.images.map((image) => {
