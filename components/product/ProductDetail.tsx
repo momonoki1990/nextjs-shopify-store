@@ -2,6 +2,7 @@ import React from "react";
 import { Product } from "shopify-buy";
 import sanitizeHtml from "sanitize-html";
 import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
+import ProductOption from "components/product/ProductOption"
 
 type Props = {
   product: Product;
@@ -24,20 +25,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
         </span>
       </div>
       <div className="options mb-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          {options.map((option) => (
-            <div className="options__item mb-2 md:px-2" key={option.name}>
-              <div className="options__name text-gray-700">{option.name}</div>
-              <select className="border border-gray-300 rounded-sm px-4 py-3 w-full">
-                {option.values.map((value) => (
-                  <option value={value.value} key={value.value}>
-                    {value.value}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ))}
-        </div>
+        <ProductOption options={options}/>
       </div>
 
       <div className="payment-buttons md:px-2 mb-24">

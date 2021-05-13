@@ -10,14 +10,16 @@ type Props = {
 
 
 const ProductImage: React.FC<Props> = ({ product }) => {
-  const [imageId, setImageId] = useState<string>(product.images[0].id as string);
+  const [currentImageId, setCurrentImageId] = useState<string>(
+    product.images[0].id as string
+  );
   return (
     <>
-      <ProductMainImage product={product} currentImageId={imageId} />
+      <ProductMainImage product={product} currentImageId={currentImageId} />
       <ProductImageList
         product={product}
-        currentImageId={imageId}
-        setImageId={setImageId}
+        currentImageId={currentImageId}
+        setCurrentImageId={setCurrentImageId}
       />
     </>
   );

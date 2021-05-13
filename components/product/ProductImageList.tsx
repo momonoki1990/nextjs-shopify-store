@@ -11,13 +11,13 @@ SwiperCore.use([Navigation]);
 type Props = {
   product: Product;
   currentImageId: string;
-  setImageId: (imageId: string) => void;
+  setCurrentImageId: (imageId: string) => void;
 };
 
 const ProductImageList: React.FC<Props> = ({
   product,
   currentImageId,
-  setImageId,
+  setCurrentImageId,
 }) => {
   return (
     <>
@@ -31,7 +31,7 @@ const ProductImageList: React.FC<Props> = ({
               className={"m-0" + (isCurrentImage ? borderClass : "")}
               key={image.id}
             >
-              <a onClick={() => setImageId(imageId)}>
+              <a onClick={() => setCurrentImageId(imageId)}>
                 <Image priority src={image.src} height={400} width={400} />
               </a>
             </figure>
@@ -55,7 +55,7 @@ const ProductImageList: React.FC<Props> = ({
                   className={"m-0" + (isCurrentImage ? borderClass : "")}
                   key={image.id}
                 >
-                  <a onClick={() => setImageId(imageId)}>
+                  <a onClick={() => setCurrentImageId(imageId)}>
                     <Image priority src={image.src} height={400} width={400} />
                   </a>
                 </figure>
