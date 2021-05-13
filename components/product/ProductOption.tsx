@@ -1,27 +1,39 @@
 import React from "react";
-import { Option } from "shopify-buy";
+import { ProductVariant, Option } from "shopify-buy";
 
 type Props = {
-  options: Option[]
+  variant: ProductVariant | any;
+  options: Option[];
 };
 
-const ProductOption:React.FC<Props> = ({options}) => {
+const ProductOption: React.FC<Props> = ({ variant, options }) => {
+  const selectedOptions: any[] = variant?.selectedOptions;
+  console.log(selectedOptions);
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
-      {options.map((option) => (
-        <div className="mb-2 md:px-2" key={option.name}>
-          <div className="text-gray-700">{option.name}</div>
-          <select className="border border-gray-300 rounded-sm px-4 py-3 w-full">
-            {option.values.map((value) => (
-              <option value={value.value} key={value.value}>
-                {value.value}
-              </option>
-            ))}
-          </select>
-        </div>
-      ))}
+      {options.map(({ name, values }) => {
+        const selectedValue: string = selectedOptions?.find(
+          (opt) => opt.name === name
+        )?.value;
+
+        return (
+          <div className="mb-2 md:px-2" key={name}>
+            <div className="text-gray-700">{name}</div>
+            <select
+              className="border border-gray-300 rounded-sm px-4 py-3 w-full"
+              defaultValue={selectedValue && selectedValue}
+            >
+              {values.map(({ value }) => (
+                <option value={value} key={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+        );
+      })}
     </div>
   );
-}
+};
 
 export default ProductOption;

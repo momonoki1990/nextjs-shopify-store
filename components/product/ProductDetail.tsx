@@ -1,14 +1,15 @@
 import React from "react";
-import { Product } from "shopify-buy";
+import { Product, ProductVariant } from "shopify-buy";
 import sanitizeHtml from "sanitize-html";
 import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
 import ProductOption from "components/product/ProductOption"
 
 type Props = {
   product: Product;
+  variant: ProductVariant | null;
 };
 
-const ProductDetail: React.FC<Props> = ({ product }) => {
+const ProductDetail: React.FC<Props> = ({ product, variant }) => {
   const { title, options, descriptionHtml } = product;
   const { price } = getPriceInfoFromProduct(product);
 
@@ -25,7 +26,7 @@ const ProductDetail: React.FC<Props> = ({ product }) => {
         </span>
       </div>
       <div className="options mb-4">
-        <ProductOption options={options}/>
+        <ProductOption variant={variant} options={options} />
       </div>
 
       <div className="payment-buttons md:px-2 mb-24">

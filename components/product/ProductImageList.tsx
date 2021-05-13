@@ -10,29 +10,31 @@ SwiperCore.use([Navigation]);
 
 type Props = {
   product: Product;
-  currentImageId: string;
-  setCurrentImageId: (imageId: string) => void;
+  imageId: string;
+  setImageId: (myImageId: string) => void;
 };
 
 const ProductImageList: React.FC<Props> = ({
   product,
-  currentImageId,
-  setCurrentImageId,
+  imageId,
+  setImageId,
 }) => {
+  const initialImageIndex: number = product.images.findIndex(
+    ({ id }) => id === imageId
+  );
   return (
     <>
       <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4">
-        {product.images.map((image) => {
-          const imageId = image.id as string;
-          const isCurrentImage = imageId === currentImageId;
+        {product.images.map(({ id, src }) => {
+          const isCurrentImage = id === imageId;
           const borderClass = " " + "border-2 border-gray-800";
           return (
             <figure
               className={"m-0" + (isCurrentImage ? borderClass : "")}
-              key={image.id}
+              key={id}
             >
-              <a onClick={() => setCurrentImageId(imageId)}>
-                <Image priority src={image.src} height={400} width={400} />
+              <a onClick={() => setImageId(id as string)}>
+                <Image priority src={src} height={400} width={400} />
               </a>
             </figure>
           );
@@ -44,19 +46,19 @@ const ProductImageList: React.FC<Props> = ({
           spaceBetween={50}
           slidesPerView={3}
           navigation={true}
+          initialSlide={initialImageIndex}
         >
-          {product.images.map((image) => {
-            const imageId = image.id as string;
-            const isCurrentImage = imageId === currentImageId;
+          {product.images.map(({ id, src }) => {
+            const isCurrentImage = id === imageId;
             const borderClass = " " + "border-2 border-gray-800";
             return (
-              <SwiperSlide key={image.id}>
+              <SwiperSlide key={id}>
                 <figure
                   className={"m-0" + (isCurrentImage ? borderClass : "")}
-                  key={image.id}
+                  key={id}
                 >
-                  <a onClick={() => setCurrentImageId(imageId)}>
-                    <Image priority src={image.src} height={400} width={400} />
+                  <a onClick={() => setImageId(id as string)}>
+                    <Image priority src={src} height={400} width={400} />
                   </a>
                 </figure>
               </SwiperSlide>

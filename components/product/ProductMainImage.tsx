@@ -4,11 +4,11 @@ import { Product } from "shopify-buy";
 
 type Props = {
   product: Product;
-  currentImageId: string;
+  imageId: string;
 };
 
-const ProductMainImage: React.FC<Props> = ({ product, currentImageId }) => {
-  const selectedImage = product.images.find(image => image.id === currentImageId);
+const ProductMainImage: React.FC<Props> = ({ product, imageId }) => {
+  const selectedImage = product.images.find((image) => image.id === imageId);
   return (
     <figure className="m-0">
       <Image
