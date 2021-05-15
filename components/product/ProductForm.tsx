@@ -5,17 +5,15 @@ import ProductOption from "components/product/ProductOption";
 type Props = {
   product: Product;
   variant: ProductVariant | null;
-  setVariant: (variant: ProductVariant | null) => void;
 };
 
-const ProductForm: React.FC<Props> = ({ product, variant, setVariant }) => {
+const ProductForm: React.FC<Props> = ({ product, variant }) => {
   return (
     <>
       <div className="options mb-4">
         <ProductOption
           product={product}
           variant={variant}
-          setVariant={setVariant}
         />
       </div>
 

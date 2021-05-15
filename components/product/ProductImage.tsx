@@ -14,6 +14,7 @@ const ProductImage: React.FC<Props> = ({ product, variant }) => {
   const [imageId, setImageId] = useState<string>(
     (variant?.image?.id || product.images[0].id) as string
   );
+  
   return (
     <>
       <ProductMainImage product={product} imageId={imageId} />

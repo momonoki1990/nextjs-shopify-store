@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { Product, ProductVariant } from "shopify-buy";
 import client from "lib/client";
 import Layout from "components/common/Layout";
@@ -11,10 +12,18 @@ type Props = {
   variant: ProductVariant | null;
 };
 
-const ProductPage: React.FC<Props> = ({ product, variantProp }) => {
+const ProductPage: React.FC<Props> = ({ product }) => {
+  console.log('[handle].tsxがレンダリングされました')
+  console.log('product');
   console.log(product);
 
-  const [variant, setVariant] = useState<ProductVariant | null>(variantProp);
+  // query paramsのvariantを元にvariantオブジェクトを取得
+  const router = useRouter();
+  const variantId = router.query.variant;
+  const variant: ProductVariant | null =
+    variantId ? product.variants.find((v) => v.id === variantId) : null;
+  console.log('variant')
+  console.log(variant);
 
   return (
     <Layout>
@@ -27,7 +36,6 @@ const ProductPage: React.FC<Props> = ({ product, variantProp }) => {
             <ProductDetail
               product={product}
               variant={variant}
-              setVariant={setVariant}
             />
           </div>
         </section>
@@ -40,13 +48,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const handle = context.params.handle as string;
   const product: Product = await client.product.fetchByHandle(handle);
   const variantId = context.query?.variant;
-  const variant: ProductVariant | null =
-    product.variants.find((v) => v.id === variantId) || null;
-
+  
+  console.log('getServersidePropsが走りました。')
   return {
     props: {
       product: JSON.parse(JSON.stringify(product)),
-      variantProp: JSON.parse(JSON.stringify(variant)),
     },
   };
 };

@@ -5,7 +5,6 @@ import Swatch from "components/product/Swatch";
 type Props = {
   product: Product;
   variant: ProductVariant | any;
-  setVariant: (variant: ProductVariant | null) => void;
 };
 
 type OptionValue = string;
@@ -14,21 +13,9 @@ export type SelectedValues = {
   optionName?: OptionValue
 };
 
-const changeVariant = (event) => { };
-
-
-
-const ProductOption: React.FC<Props> = ({ product, variant, setVariant }) => {
-  // オブジェクトからnameとvalueを抜き出して{name: value}として詰めていく
-  const reducer = (accumulator, currentValue) => {
-    accumulator[currentValue.name] = currentValue.value;
-    return accumulator;
-  };
-
-  // 選択されたoptionの値をstateとして持っておく
-  const [selectedValues, setSelectedValues] = useState<SelectedValues>(
-    variant?.selectedOptions?.reduce(reducer, {}) || {}
-  );
+const ProductOption: React.FC<Props> = ({ product, variant }) => {
+  
+  const { selectedOptions } = variant;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -39,9 +26,7 @@ const ProductOption: React.FC<Props> = ({ product, variant, setVariant }) => {
             <Swatch
               product={product}
               option={option}
-              selectedValues={selectedValues}
-              setSelectedValues={setSelectedValues}
-              setVariant={setVariant}
+              selectedOptions={selectedOptions}
             />
           </div>
         );

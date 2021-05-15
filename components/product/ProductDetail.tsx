@@ -7,10 +7,9 @@ import ProductForm from "components/product/ProductForm";
 type Props = {
   product: Product;
   variant: ProductVariant | null;
-  setVariant: (variant: ProductVariant | null) => void;
 };
 
-const ProductDetail: React.FC<Props> = ({ product, variant, setVariant }) => {
+const ProductDetail: React.FC<Props> = ({ product, variant }) => {
   const { title, descriptionHtml } = product;
   const { price } = getPriceInfoFromProduct(product);
 
@@ -30,7 +29,6 @@ const ProductDetail: React.FC<Props> = ({ product, variant, setVariant }) => {
         <ProductForm
           product={product}
           variant={variant}
-          setVariant={setVariant}
         />
       </div>
 
