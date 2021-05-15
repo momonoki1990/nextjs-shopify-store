@@ -6,7 +6,7 @@ import ProductOption, { SelectedValues } from "components/product/ProductOption"
 type Props = {
   product: Product;
   productOption: Option;
-  selectedOptions: Option[];
+  selectedOptions: any[];
 };
 
 const Swatch: React.FC<Props> = ({
@@ -18,10 +18,13 @@ const Swatch: React.FC<Props> = ({
 
   const { name: optionName } = productOption;
 
+  const currentValue = selectedOptions.find(opt => opt.name === optionName).value;
+
   const router = useRouter();
 
   const changeVariant = (event) => {
-    // 新しく選択されたvalueから新しいvariantを取得
+
+    // 新しく選択されたvalueと既存のvaluekからtitleを生成し、一致するvariantを取得
     const reducer = (accumulator, currentValue) => {
       accumulator.push(
         currentValue.name === optionName
@@ -30,12 +33,10 @@ const Swatch: React.FC<Props> = ({
       );
       return accumulator;
     };
-
     const title: string = selectedOptions.reduce(reducer, []).join(" / ");
-
     const newVariant = product.variants.find((vrt) => vrt.title === title);
 
-    // query paramのvariantを更新してshallow rendering
+    // query paramのvariantを更新
     router.push(
       {
         query: { handle: router.query.handle, variant: newVariant.id },
@@ -52,7 +53,7 @@ const Swatch: React.FC<Props> = ({
       <select
         className="bg-white border border-gray-300 rounded-sm px-4 py-3 w-full"
         onChange={changeVariant}
-        // value={selectedValues[optionName]}
+        value={currentValue}
       >
         {productOption.values.map(({ value }) => (
           <option value={value} key={value}>
