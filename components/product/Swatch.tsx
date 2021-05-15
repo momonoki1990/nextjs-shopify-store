@@ -1,22 +1,37 @@
 import React from "react";
-import { Option } from "shopify-buy";
-import {SelectedValues} from 'components/product/ProductOption'
+import { Product, ProductVariant, Option } from "shopify-buy";
+import ProductOption, { SelectedValues } from "components/product/ProductOption";
 
 type Props = {
+  product: Product;
   option: Option;
   selectedValues: SelectedValues;
-  // setSelectedValues: (selectedValues: SelectedValues) => void;
-  setSelectedValues: any;
+  setSelectedValues: (any) => void;
+  setVariant: (any) => void;
 };
 
-const Swatch: React.FC<Props> = ({ option, selectedValues, setSelectedValues }) => {
+const Swatch: React.FC<Props> = ({
+  product,
+  option,
+  selectedValues,
+  setSelectedValues,
+  setVariant
+}) => {
   const { name: optionName } = option;
 
   const onChangeHandle = (event) => {
-    setSelectedValues((prev) => {
-      prev[optionName] = event.target.value;
-      return { ...prev };
+    // selectedValuesを更新
+    selectedValues[optionName] = event.target.value;
+    setSelectedValues(() => {
+      return { ...selectedValues };
     });
+
+    // variantを更新(title一致find)
+    const title = Object.values(selectedValues).join(" / ")
+    setVariant(() => {
+      const newVariant = product.variants.find(vrt => vrt.title === title)
+      return newVariant;
+    })
   };
 
   return (

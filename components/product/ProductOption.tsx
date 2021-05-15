@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Product, ProductVariant, Option } from "shopify-buy";
+import { Product, ProductVariant } from "shopify-buy";
 import Swatch from "components/product/Swatch";
 
 type Props = {
@@ -18,8 +18,7 @@ const changeVariant = (event) => { };
 
 
 
-const ProductOption: React.FC<Props> = ({ product, variant }) => {
-
+const ProductOption: React.FC<Props> = ({ product, variant, setVariant }) => {
   // オブジェクトからnameとvalueを抜き出して{name: value}として詰めていく
   const reducer = (accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.value;
@@ -30,7 +29,6 @@ const ProductOption: React.FC<Props> = ({ product, variant }) => {
   const [selectedValues, setSelectedValues] = useState<SelectedValues>(
     variant?.selectedOptions?.reduce(reducer, {}) || {}
   );
-  console.log(selectedValues)
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -39,9 +37,11 @@ const ProductOption: React.FC<Props> = ({ product, variant }) => {
         return (
           <div className="swatch mb-2 md:px-2" key={optionName}>
             <Swatch
+              product={product}
               option={option}
               selectedValues={selectedValues}
               setSelectedValues={setSelectedValues}
+              setVariant={setVariant}
             />
           </div>
         );
