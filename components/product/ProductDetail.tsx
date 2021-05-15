@@ -7,9 +7,10 @@ import ProductOption from "components/product/ProductOption"
 type Props = {
   product: Product;
   variant: ProductVariant | null;
+  setVariant: (variant: ProductVariant | null) => void;
 };
 
-const ProductDetail: React.FC<Props> = ({ product, variant }) => {
+const ProductDetail: React.FC<Props> = ({ product, variant, setVariant }) => {
   const { title, options, descriptionHtml } = product;
   const { price } = getPriceInfoFromProduct(product);
 
@@ -26,7 +27,12 @@ const ProductDetail: React.FC<Props> = ({ product, variant }) => {
         </span>
       </div>
       <div className="options mb-4">
-        <ProductOption variant={variant} options={options} />
+        <ProductOption
+          product={product}
+          variant={variant}
+          setVariant={setVariant}
+          options={options}
+        />
       </div>
 
       <div className="payment-buttons md:px-2 mb-24">

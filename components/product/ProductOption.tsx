@@ -1,9 +1,15 @@
 import React from "react";
-import { ProductVariant, Option } from "shopify-buy";
+import { Product, ProductVariant, Option } from "shopify-buy";
 
 type Props = {
+  product: Product;
   variant: ProductVariant | any;
+  setVariant: (variant: ProductVariant | null) => void;
   options: Option[];
+};
+
+const changeVariant = (event: React.KeyboardEvent | React.MouseEvent) => {
+  
 };
 
 const ProductOption: React.FC<Props> = ({ variant, options }) => {

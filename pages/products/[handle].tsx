@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetServerSideProps } from "next";
 import { Product, ProductVariant } from "shopify-buy";
 import client from "lib/client";
@@ -11,8 +11,11 @@ type Props = {
   variant: ProductVariant | null;
 };
 
-const ProductPage: React.FC<Props> = ({ product, variant }) => {
+const ProductPage: React.FC<Props> = ({ product, variantProp }) => {
   console.log(product);
+
+  const [variant, setVariant] = useState<ProductVariant | null>(variantProp);
+
   return (
     <Layout>
       <article className="product">
@@ -21,7 +24,11 @@ const ProductPage: React.FC<Props> = ({ product, variant }) => {
             <ProductImage product={product} variant={variant} />
           </div>
           <div className="product__detail">
-            <ProductDetail product={product} variant={variant} />
+            <ProductDetail
+              product={product}
+              variant={variant}
+              setVariant={setVariant}
+            />
           </div>
         </section>
       </article>
@@ -33,12 +40,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const handle = context.params.handle as string;
   const product: Product = await client.product.fetchByHandle(handle);
   const variantId = context.query?.variant;
-  const variant: ProductVariant | null = product.variants.find((v) => v.id === variantId) || null;
+  const variant: ProductVariant | null =
+    product.variants.find((v) => v.id === variantId) || null;
 
   return {
     props: {
       product: JSON.parse(JSON.stringify(product)),
-      variant: JSON.parse(JSON.stringify(variant)),
+      variantProp: JSON.parse(JSON.stringify(variant)),
     },
   };
 };
