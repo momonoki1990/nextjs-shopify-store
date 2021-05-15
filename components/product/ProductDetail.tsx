@@ -2,7 +2,7 @@ import React from "react";
 import { Product, ProductVariant } from "shopify-buy";
 import sanitizeHtml from "sanitize-html";
 import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
-import ProductOption from "components/product/ProductOption"
+import ProductForm from "components/product/ProductForm";
 
 type Props = {
   product: Product;
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const ProductDetail: React.FC<Props> = ({ product, variant, setVariant }) => {
-  const { title, options, descriptionHtml } = product;
+  const { title, descriptionHtml } = product;
   const { price } = getPriceInfoFromProduct(product);
 
   return (
@@ -26,27 +26,12 @@ const ProductDetail: React.FC<Props> = ({ product, variant, setVariant }) => {
           ¥{price.toLocaleString("ja-JP")}
         </span>
       </div>
-      <div className="options mb-4">
-        <ProductOption
+      <div className="form mb-24">
+        <ProductForm
           product={product}
           variant={variant}
           setVariant={setVariant}
-          options={options}
         />
-      </div>
-
-      <div className="payment-buttons md:px-2 mb-24">
-        <div className="cart-submit mb-2">
-          <button className="border border-gray-900 font-semibold inline-block text-gray-700 rounded-sm px-4 py-3 text-sm w-full">
-            カートに追加する
-          </button>
-        </div>
-
-        <div className="to-checkout">
-          <button className="bg-gray-800 border border-gray-900 inline-block rounded-sm px-4 py-3 text-white text-sm w-full">
-            今すぐ購入
-          </button>
-        </div>
       </div>
 
       <div
