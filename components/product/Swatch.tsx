@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { Product, ProductVariant, Option } from "shopify-buy";
 import ProductOption, { SelectedValues } from "components/product/ProductOption";
 
@@ -17,7 +18,10 @@ const Swatch: React.FC<Props> = ({
   setSelectedValues,
   setVariant
 }) => {
+
   const { name: optionName } = option;
+
+  const router = useRouter();
 
   const onChangeHandle = (event) => {
     // selectedValuesを更新
@@ -28,10 +32,18 @@ const Swatch: React.FC<Props> = ({
 
     // variantを更新(title一致find)
     const title = Object.values(selectedValues).join(" / ")
+    const newVariant = product.variants.find((vrt) => vrt.title === title);
     setVariant(() => {
-      const newVariant = product.variants.find(vrt => vrt.title === title)
       return newVariant;
     })
+
+    // query paramsを更新
+    // router.push(`${router.pathname}?variant=${newVariant.id as string}`, undefined, { shallow: true });
+    router.push({
+      query: {　handle: router.query.handle, variant: newVariant.id },
+    });
+    console.log('hahah')
+    console.log(newVariant.id)
   };
 
   return (
