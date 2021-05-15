@@ -5,19 +5,22 @@ import ProductOption, { SelectedValues } from "components/product/ProductOption"
 
 type Props = {
   product: Product;
-  option: Option;
-  selectedOptions: Option[]
+  productOption: Option;
+  selectedOptions: Option[];
 };
 
-const Swatch: React.FC<Props> = ({ product, option, selectedOptions }) => {
+const Swatch: React.FC<Props> = ({
+  product,
+  productOption,
+  selectedOptions,
+}) => {
   console.log("Swatch.tsxがレンダリングされました");
 
-  const { name: optionName } = option;
+  const { name: optionName } = productOption;
 
   const router = useRouter();
 
   const changeVariant = (event) => {
-
     // 新しく選択されたvalueから新しいvariantを取得
     const reducer = (accumulator, currentValue) => {
       accumulator.push(
@@ -28,9 +31,7 @@ const Swatch: React.FC<Props> = ({ product, option, selectedOptions }) => {
       return accumulator;
     };
 
-    const title: string = selectedOptions
-      .reduce(reducer, [])
-      .join(" / ");
+    const title: string = selectedOptions.reduce(reducer, []).join(" / ");
 
     const newVariant = product.variants.find((vrt) => vrt.title === title);
 
@@ -45,7 +46,6 @@ const Swatch: React.FC<Props> = ({ product, option, selectedOptions }) => {
     console.log(newVariant.id);
   };
 
-
   return (
     <>
       <div className="text-gray-700">{optionName}</div>
@@ -54,7 +54,7 @@ const Swatch: React.FC<Props> = ({ product, option, selectedOptions }) => {
         onChange={changeVariant}
         // value={selectedValues[optionName]}
       >
-        {option.values.map(({ value }) => (
+        {productOption.values.map(({ value }) => (
           <option value={value} key={value}>
             {value}
           </option>

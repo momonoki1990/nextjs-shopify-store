@@ -25,7 +25,7 @@ const ProductOption: React.FC<Props> = ({ product, variant }) => {
           <div className="swatch mb-2 md:px-2" key={optionName}>
             <Swatch
               product={product}
-              option={option}
+              productOption={option}
               selectedOptions={selectedOptions}
             />
           </div>
