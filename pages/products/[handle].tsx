@@ -22,6 +22,7 @@ const ProductPage: React.FC<Props> = ({ product }) => {
   const variantId = router.query.variant;
   const variant: ProductVariant | null =
     variantId ? product.variants.find((v) => v.id === variantId) : null;
+  
   console.log('variant')
   console.log(variant);
 

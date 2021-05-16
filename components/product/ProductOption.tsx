@@ -15,7 +15,9 @@ export type SelectedValues = {
 
 const ProductOption: React.FC<Props> = ({ product, variant }) => {
   
-  const { selectedOptions } = variant;
+  console.log('ProductOption.tsxがレンダリングされました')
+  const selectedOptions = variant ? variant.selectedOptions : product.variants[0].selectedOptions;
+  console.log(selectedOptions)
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
