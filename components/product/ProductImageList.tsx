@@ -11,7 +11,7 @@ SwiperCore.use([Navigation]);
 type Props = {
   product: Product;
   imageId: string;
-  setImageId: (myImageId: string) => void;
+  setImageId: (imageId: string) => void;
 };
 
 const ProductImageList: React.FC<Props> = ({

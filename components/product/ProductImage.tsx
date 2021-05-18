@@ -6,14 +6,13 @@ import ProductImageList from "components/product/ProductImageList";
 type Props = {
   product: Product;
   variant: ProductVariant | null;
+  imageId: string;
+  setImageId: (imageId: string) => void;
 };
 
 
 
-const ProductImage: React.FC<Props> = ({ product, variant }) => {
-  const [imageId, setImageId] = useState<string>(
-    (variant?.image?.id || product.images[0].id) as string
-  );
+const ProductImage: React.FC<Props> = ({ product, variant, imageId, setImageId }) => {
   
   return (
     <>

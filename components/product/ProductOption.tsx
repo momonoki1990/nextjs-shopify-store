@@ -5,19 +5,23 @@ import Swatch from "components/product/Swatch";
 type Props = {
   product: Product;
   variant: ProductVariant | any;
+  setVariant: any;
+  setImageId: (imageId: string) => void;
 };
 
 type OptionValue = string;
 
 export type SelectedValues = {
-  optionName?: OptionValue
+  optionName?: OptionValue;
 };
 
-const ProductOption: React.FC<Props> = ({ product, variant }) => {
-  
-  console.log('ProductOption.tsxがレンダリングされました')
-  const selectedOptions = variant ? variant.selectedOptions : product.variants[0].selectedOptions;
-  console.log(selectedOptions)
+const ProductOption: React.FC<Props> = ({
+  product,
+  variant,
+  setVariant,
+  setImageId,
+}) => {
+  console.log("ProductOption.tsxがレンダリングされました");
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -28,7 +32,9 @@ const ProductOption: React.FC<Props> = ({ product, variant }) => {
             <Swatch
               product={product}
               productOption={option}
-              selectedOptions={selectedOptions}
+              variant={variant}
+              setVariant={setVariant}
+              setImageId={setImageId}
             />
           </div>
         );

@@ -1,29 +1,39 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Product, ProductVariant, Option } from "shopify-buy";
-import ProductOption, { SelectedValues } from "components/product/ProductOption";
+import ProductOption, {
+  SelectedValues,
+} from "components/product/ProductOption";
 
 type Props = {
   product: Product;
   productOption: Option;
-  selectedOptions: any[];
+  variant: ProductVariant | any;
+  setVariant: any;
+  setImageId: (imageId: string) => void;
 };
 
 const Swatch: React.FC<Props> = ({
   product,
   productOption,
-  selectedOptions,
+  variant,
+  setVariant,
+  setImageId,
 }) => {
   console.log("Swatch.tsxがレンダリングされました");
 
   const { name: optionName } = productOption;
 
-  const currentValue = selectedOptions.find(opt => opt.name === optionName).value;
+  const selectedOptions = variant
+    ? variant.selectedOptions
+    : product.variants[0].selectedOptions;
+
+  const currentValue = selectedOptions.find((opt) => opt.name === optionName)
+    .value;
 
   const router = useRouter();
 
   const changeVariant = (event) => {
-
     // 新しく選択されたvalueと既存のvaluekからtitleを生成し、一致するvariantを取得
     const reducer = (accumulator, currentValue) => {
       accumulator.push(
@@ -36,8 +46,14 @@ const Swatch: React.FC<Props> = ({
     const title: string = selectedOptions.reduce(reducer, []).join(" / ");
     const newVariant = product.variants.find((vrt) => vrt.title === title);
 
-    // query paramのvariantを更新
-    router.push(
+    // variantを更新
+    setVariant(newVariant);
+
+    // imageIdを更新
+    newVariant?.image?.id && setImageId(newVariant?.image?.id as string);
+
+    // query paramを更新
+    router.replace(
       {
         query: { handle: router.query.handle, variant: newVariant.id },
       },
