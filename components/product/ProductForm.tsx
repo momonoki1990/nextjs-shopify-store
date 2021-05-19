@@ -1,6 +1,7 @@
 import React from "react";
 import { Product, ProductVariant } from "shopify-buy";
 import ProductOption from "components/product/ProductOption";
+import PaymentButton from "components/product/PaymentButton";
 
 type Props = {
   product: Product;
@@ -25,19 +26,8 @@ const ProductForm: React.FC<Props> = ({
           setImageId={setImageId}
         />
       </div>
-
       <div className="payment-buttons md:px-2">
-        <div className="cart-submit mb-2">
-          <button className="border border-gray-900 font-semibold inline-block text-gray-700 rounded-sm px-4 py-3 text-sm w-full">
-            カートに追加する
-          </button>
-        </div>
-
-        <div className="to-checkout">
-          <button className="bg-gray-800 border border-gray-900 inline-block rounded-sm px-4 py-3 text-white text-sm w-full">
-            今すぐ購入
-          </button>
-        </div>
+        <PaymentButton product={product} variant={variant} />
       </div>
     </>
   );
