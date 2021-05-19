@@ -28,7 +28,7 @@ const PaymentButton: React.FC<Props> = ({ product, variant }) => {
           </div>
         </>
       ) : (
-        <div className="sold-out border border-gray-400 font-semibold inline-block text-gray-400 rounded-sm px-4 py-3 text-center text-sm w-full">
+        <div className="sold-out border border-gray-400 inline-block text-gray-400 rounded-sm px-4 py-3 text-center text-sm w-full">
           売り切れ
         </div>
       )}
