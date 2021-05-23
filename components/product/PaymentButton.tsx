@@ -1,5 +1,6 @@
 import React from "react";
 import { Product, ProductVariant } from "shopify-buy";
+import AddToCartButton from "components/product/AddToCartButton";
 
 type Props = {
   product: Product;
@@ -16,9 +17,7 @@ const PaymentButton: React.FC<Props> = ({ product, variant }) => {
       {isAvailable ? (
         <>
           <div className="add-btn mb-2">
-            <button className="border border-gray-900 font-semibold inline-block text-gray-700 rounded-sm px-4 py-3 text-sm w-full">
-              カートに追加する
-            </button>
+            <AddToCartButton product={product} variant={variant} />
           </div>
 
           <div className="checkout-btn">
