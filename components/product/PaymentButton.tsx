@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Product, ProductVariant } from "shopify-buy";
 import AddToCartButton from "components/product/AddToCartButton";
+import { ProductContext } from "pages/products/[handle]";
 
-type Props = {
-  product: Product;
-  variant: ProductVariant | null;
-};
 
-const PaymentButton: React.FC<Props> = ({ product, variant }) => {
+const PaymentButton: React.FC = () => {
+
+  const { product, variant } = useContext(ProductContext)
+
   const isAvailable = variant
     ? variant.available
     : product.variants[0].available;

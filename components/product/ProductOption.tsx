@@ -1,27 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Product, ProductVariant } from "shopify-buy";
 import Swatch from "components/product/Swatch";
-
-type Props = {
-  product: Product;
-  variant: ProductVariant | any;
-  setVariant: any;
-  setImageId: (imageId: string) => void;
-};
+import { ProductContext } from "pages/products/[handle]";
 
 type OptionValue = string;
 
-export type SelectedValues = {
-  optionName?: OptionValue;
-};
-
-const ProductOption: React.FC<Props> = ({
-  product,
-  variant,
-  setVariant,
-  setImageId,
-}) => {
+const ProductOption: React.FC = () => {
   console.log("ProductOption.tsxがレンダリングされました");
+
+  const { product } = useContext(ProductContext);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -29,13 +16,7 @@ const ProductOption: React.FC<Props> = ({
         const { name: optionName } = option;
         return (
           <div className="swatch mb-2 md:px-2" key={optionName}>
-            <Swatch
-              product={product}
-              productOption={option}
-              variant={variant}
-              setVariant={setVariant}
-              setImageId={setImageId}
-            />
+            <Swatch productOption={option} />
           </div>
         );
       })}

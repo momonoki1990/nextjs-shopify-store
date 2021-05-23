@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { Product, ProductVariant } from "shopify-buy";
@@ -6,11 +6,22 @@ import client from "lib/client";
 import Layout from "components/common/Layout";
 import ProductImage from "components/product/ProductImage";
 import ProductDetail from "components/product/ProductDetail";
+import ProductCard from "components/collections/ProductCard";
 
 type Props = {
   product: Product;
   variant: ProductVariant | null;
 };
+
+type ProductContext = {
+  product: Product;
+  variant: ProductVariant | null;
+  setVariant: (variant: ProductVariant) => void;
+  imageId: string;
+  setImageId: (imageId: string) => void;
+};
+
+export const ProductContext = createContext({} as ProductContext);
 
 const ProductPage: React.FC<Props> = ({ product }) => {
   console.log('[handle].tsxがレンダリングされました')
@@ -30,29 +41,34 @@ const ProductPage: React.FC<Props> = ({ product }) => {
   console.log('variant')
   console.log(variant);
 
+  const ProductContextValue: ProductContext = {
+    product: product,
+    variant: variant,
+    setVariant: setVariant,
+    imageId: imageId,
+    setImageId: setImageId,
+  };
+
   return (
-    <Layout>
-      <article className="product">
-        <section className="container md:grid md:grid-cols-2 md:gap-x-8">
-          <div className="product__image mb-12 md:mb-0">
-            <ProductImage
-              product={product}
-              variant={variant}
-              imageId={imageId}
-              setImageId={setImageId}
-            />
-          </div>
-          <div className="product__detail">
-            <ProductDetail
-              product={product}
-              variant={variant}
-              setVariant={setVariant}
-              setImageId={setImageId}
-            />
-          </div>
-        </section>
-      </article>
-    </Layout>
+    <ProductContext.Provider value={ProductContextValue}>
+      <Layout>
+        <article className="product">
+          <section className="container md:grid md:grid-cols-2 md:gap-x-8">
+            <div className="product__image mb-12 md:mb-0">
+              <ProductImage
+                product={product}
+                variant={variant}
+                imageId={imageId}
+                setImageId={setImageId}
+              />
+            </div>
+            <div className="product__detail">
+              <ProductDetail/>
+            </div>
+          </section>
+        </article>
+      </Layout>
+    </ProductContext.Provider>
   );
 };
 

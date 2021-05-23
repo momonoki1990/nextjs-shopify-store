@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Product, ProductVariant } from "shopify-buy";
 import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
+import { ProductContext } from "pages/products/[handle]";
 
-type Props = {
-  product: Product;
-  variant: ProductVariant | null;
-};
+const ProductPrice: React.FC = () => {
+  const { product, variant } = useContext(ProductContext)
 
-const ProductPrice: React.FC<Props> = ({ product, variant }) => {
   const price = variant ? variant.price : getPriceInfoFromProduct(product).price.toLocaleString("ja-JP");
   const isAvailable = variant
     ? variant.available

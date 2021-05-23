@@ -1,26 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { Product, ProductVariant, Option } from "shopify-buy";
-import ProductOption, {
-  SelectedValues,
-} from "components/product/ProductOption";
+import { Option } from "shopify-buy";
+import { ProductContext } from "pages/products/[handle]";
 
 type Props = {
-  product: Product;
   productOption: Option;
-  variant: ProductVariant | any;
-  setVariant: any;
-  setImageId: (imageId: string) => void;
 };
 
-const Swatch: React.FC<Props> = ({
-  product,
-  productOption,
-  variant,
-  setVariant,
-  setImageId,
-}) => {
+const Swatch: React.FC<Props> = ({ productOption }) => {
   console.log("Swatch.tsxがレンダリングされました");
+
+  const { product, variant, setVariant, setImageId } = useContext(
+    ProductContext
+  );
 
   const { name: optionName } = productOption;
 

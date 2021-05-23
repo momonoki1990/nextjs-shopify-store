@@ -1,33 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Product, ProductVariant } from "shopify-buy";
 import ProductOption from "components/product/ProductOption";
 import PaymentButton from "components/product/PaymentButton";
 
-type Props = {
-  product: Product;
-  variant: ProductVariant | null;
-  setVariant: any;
-  setImageId: (imageId: string) => void;
-};
-
-const ProductForm: React.FC<Props> = ({
-  product,
-  variant,
-  setVariant,
-  setImageId,
-}) => {
+const ProductForm: React.FC = () => {
   return (
     <>
       <div className="options mb-4">
-        <ProductOption
-          product={product}
-          variant={variant}
-          setVariant={setVariant}
-          setImageId={setImageId}
-        />
+        <ProductOption />
       </div>
       <div className="payment-buttons md:px-2">
-        <PaymentButton product={product} variant={variant} />
+        <PaymentButton />
       </div>
     </>
   );

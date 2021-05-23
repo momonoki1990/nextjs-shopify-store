@@ -1,24 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
-import { Product } from "shopify-buy";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import Swiper core and required modules
 import SwiperCore, { Navigation } from "swiper/core";
+import { ProductContext } from "pages/products/[handle]";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
 
-type Props = {
-  product: Product;
-  imageId: string;
-  setImageId: (imageId: string) => void;
-};
+const ProductImageList: React.FC = () => {
 
-const ProductImageList: React.FC<Props> = ({
-  product,
-  imageId,
-  setImageId,
-}) => {
+  const { product, imageId, setImageId } = useContext(ProductContext);
+  
   const initialImageIndex: number = product.images.findIndex(
     ({ id }) => id === imageId
   );

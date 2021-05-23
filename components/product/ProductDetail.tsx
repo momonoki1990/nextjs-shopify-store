@@ -1,23 +1,15 @@
-import React from "react";
-import { Product, ProductVariant } from "shopify-buy";
+import React, { useContext } from "react";
 import sanitizeHtml from "sanitize-html";
 import ProductForm from "components/product/ProductForm";
 import ProductPrice from "components/product/ProductPrice";
+import { ProductContext } from "pages/products/[handle]";
 
-type Props = {
-  product: Product;
-  variant: ProductVariant | null;
-  setVariant: any;
-  setImageId: (imageId: string) => void;
-};
+const ProductDetail: React.FC = () => {
 
-const ProductDetail: React.FC<Props> = ({
-  product,
-  variant,
-  setVariant,
-  setImageId,
-}) => {
-  const { title, descriptionHtml } = product;
+  const {
+    product: { title, descriptionHtml },
+  } = useContext(ProductContext);
+
 
   return (
     <>
@@ -27,15 +19,10 @@ const ProductDetail: React.FC<Props> = ({
         </h1>
       </div>
       <div className="price mb-8">
-        <ProductPrice product={product} variant={variant} />
+        <ProductPrice />
       </div>
       <div className="form mb-24">
-        <ProductForm
-          product={product}
-          variant={variant}
-          setVariant={setVariant}
-          setImageId={setImageId}
-        />
+        <ProductForm />
       </div>
 
       <div

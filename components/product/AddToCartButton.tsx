@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Product, ProductVariant } from "shopify-buy";
 import client from "lib/client";
+import { ProductContext } from "pages/products/[handle]";
 
 type Props = {
   product: Product;
