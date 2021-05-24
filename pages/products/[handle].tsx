@@ -55,12 +55,7 @@ const ProductPage: React.FC<Props> = ({ product }) => {
         <article className="product">
           <section className="container md:grid md:grid-cols-2 md:gap-x-8">
             <div className="product__image mb-12 md:mb-0">
-              <ProductImage
-                product={product}
-                variant={variant}
-                imageId={imageId}
-                setImageId={setImageId}
-              />
+              <ProductImage/>
             </div>
             <div className="product__detail">
               <ProductDetail/>

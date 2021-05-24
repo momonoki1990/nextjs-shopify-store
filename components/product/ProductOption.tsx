@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
-import { Product, ProductVariant } from "shopify-buy";
 import Swatch from "components/product/Swatch";
 import { ProductContext } from "pages/products/[handle]";
-
-type OptionValue = string;
 
 const ProductOption: React.FC = () => {
   console.log("ProductOption.tsxがレンダリングされました");

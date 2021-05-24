@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Product, ProductVariant } from "shopify-buy";
 import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
 import { ProductContext } from "pages/products/[handle]";
 

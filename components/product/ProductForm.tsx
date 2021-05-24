@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { Product, ProductVariant } from "shopify-buy";
+import React from "react";
 import ProductOption from "components/product/ProductOption";
 import PaymentButton from "components/product/PaymentButton";
 
