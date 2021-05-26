@@ -1,36 +1,30 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Product, ProductVariant } from "shopify-buy";
+import useCheckout from 'lib/useCheckout';
 import client from "lib/client";
 import { ProductContext } from "pages/products/[handle]";
 
-type Props = {
-  product: Product;
-  variant: ProductVariant | null;
-};
 
-const AddToCartButton: React.FC<Props> = ({ product, variant }) => {
-  const addToCart = () => {
-    client.checkout
-      .create()
-      .then((checkout) => {
-        console.log(JSON.stringify(checkout.id));
-        const lineItemsToAdd = [{
-          variantId: variant.id,
-          quantity: 1
-        }]
-        client.checkout.addLineItems(checkout.id, lineItemsToAdd).then((checkout) => {
-          console.log(JSON.stringify(checkout.lineItems))
-        })
-      })
-      .catch((err) => {
-        console.error(JSON.stringify(err));
-      });
-  };
+const AddToCartButton: React.FC = () => {
 
+  const { variant } = useContext(ProductContext);
+  const { cart, addVariant } = useCheckout();
+
+  const onClickHandler = () => {
+    const quantity = 1;
+    addVariant(variant.id as string, quantity);
+  }
+
+  
+  console.log('AddToCartButton')
+  console.log('checkoutId')
+  console.log(JSON.stringify(cart));
+
+  // console.log(JSON.stringify(checkoutID));
   return (
     <button
       className="border border-gray-900 font-semibold inline-block text-gray-700 rounded-sm px-4 py-3 text-sm w-full"
-      onClick={addToCart}
+      onClick={onClickHandler}
     >
       カートに追加する
     </button>

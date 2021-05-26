@@ -16,7 +16,7 @@ const PaymentButton: React.FC = () => {
       {isAvailable ? (
         <>
           <div className="add-btn mb-2">
-            <AddToCartButton product={product} variant={variant} />
+            <AddToCartButton />
           </div>
 
           <div className="checkout-btn">
