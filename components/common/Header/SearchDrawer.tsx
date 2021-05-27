@@ -4,9 +4,9 @@ import { searchIcon, closeIcon } from "components/utils/Icon"
 
 
 const SearchDrawer = () => {
-  const [opened, setOpened] = React.useState(false);
+  const [isOpened, setIsOpened] = React.useState(false);
 
-  const toggleDrawer = (opened: boolean) => (
+  const toggleDrawer = (isOpened: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
@@ -17,7 +17,7 @@ const SearchDrawer = () => {
       return;
     }
 
-    setOpened(opened);
+    setIsOpened(isOpened);
   };
 
   return (
@@ -31,7 +31,7 @@ const SearchDrawer = () => {
       <Drawer
         className="search__drawer"
         anchor="top"
-        open={opened}
+        open={isOpened}
         onClose={toggleDrawer(false)}
       >
         <div className="search__container container flex justify-center items-center py-4 text-center">
