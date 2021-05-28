@@ -9,13 +9,13 @@ import ProductDetail from "components/product/ProductDetail";
 import ProductCard from "components/collections/ProductCard";
 
 type Props = {
-  product: Product;
-  variant: ProductVariant | null;
+  product: any;
+  variant: any | null;
 };
 
 type ProductContext = {
-  product: Product;
-  variant: ProductVariant | null;
+  product: any;
+  variant: any | null;
   setVariant: (variant: ProductVariant) => void;
   imageId: string;
   setImageId: (imageId: string) => void;
