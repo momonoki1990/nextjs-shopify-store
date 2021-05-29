@@ -10,15 +10,19 @@ import client from "lib/client";
 // };
 
 const useCheckout = () => {
-  const [cart, setCart] = useState({});
-  const [checkoutId, setCheckoutId] = useState("");
+  console.log('useCheckout')
+  const [loading, setLoading] = useState<boolean>(false);
+  const [checkout, setCheckout] = useState({});
+  const [checkoutId, setCheckoutId] = useState<string>("");
+
 
   const initializeCart = () => {
+    console.log('initializeCart')
+
     const id: string | null = localStorage.getItem("checkoutId") || null;
     if (id) {
       client.checkout.fetch(id).then((checkout) => {
         setCheckoutId(checkout.id as string);
-        console.log(JSON.stringify(checkout))
       });
     } else {
       client.checkout.create().then((checkout) => {
@@ -29,20 +33,20 @@ const useCheckout = () => {
   };
 
   useEffect(() => {
+    console.log('useCheckout内のuseEffect')
     initializeCart();
   }, []);
 
-  const addVariant = (variantId: string, quantity: number): void => {
+  const addVariant = async (variantId: string, quantity: number) => {
+    console.log('addVariant関数の中')
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
-    client.checkout.addLineItems(checkoutId, lineItemsToAdd).then(checkout => {
-      console.log('商品が追加されました')
-      setCart(checkout)
-      console.log('addVariantの結果セットされたcart state')
-      console.log(JSON.stringify(cart))
-    })
+    const checkout = await client.checkout.addLineItems(checkoutId, lineItemsToAdd)
+    console.log("addVariant関数の中でのaddLineItemsのあと");
+    setCheckout(checkout);
+    console.log("addVariant関数の中でのsetCheckoutのあと");
   }
 
-  return {cart: cart, addVariant: addVariant};
+  return {checkout: checkout, loading:loading, addVariant: addVariant};
 };
 
 export default useCheckout;

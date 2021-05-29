@@ -24,9 +24,6 @@ type ProductContext = {
 export const ProductContext = createContext({} as ProductContext);
 
 const ProductPage: React.FC<Props> = ({ product }) => {
-  console.log('[handle].tsxがレンダリングされました')
-  console.log('product');
-  console.log(product);
 
   // query paramsのvariantを元にvariantオブジェクトを取得
   const router = useRouter();
@@ -37,9 +34,6 @@ const ProductPage: React.FC<Props> = ({ product }) => {
   const [imageId, setImageId] = useState<string>(
     (variant?.image?.id || product.images[0].id) as string
   );
-  
-  console.log('variant')
-  console.log(variant);
 
   const ProductContextValue: ProductContext = {
     product: product,
@@ -72,7 +66,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const product: Product = await client.product.fetchByHandle(handle);
   const variantId = context.query?.variant;
   
-  console.log('getServersidePropsが走りました。')
   return {
     props: {
       product: JSON.parse(JSON.stringify(product)),

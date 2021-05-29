@@ -8,7 +8,6 @@ type Props = {
 };
 
 const Swatch: React.FC<Props> = ({ productOption }) => {
-  console.log("Swatch.tsxがレンダリングされました");
 
   const { product, variant, setVariant, setImageId } = useContext(
     ProductContext
@@ -52,7 +51,6 @@ const Swatch: React.FC<Props> = ({ productOption }) => {
       undefined,
       { shallow: true }
     );
-    console.log(newVariant.id);
   };
 
   return (

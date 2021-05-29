@@ -10,7 +10,6 @@ type Props = {
 
 const ProductCard: React.FC<Props> = ({ product }) => {
   const { price, priceVaries } = getPriceInfoFromProduct(product);
-  console.log(JSON.stringify(product.handle))
 
   return (
     <div className="product-card">

@@ -3,7 +3,6 @@ import Swatch from "components/product/Swatch";
 import { ProductContext } from "pages/products/[handle]";
 
 const ProductOption: React.FC = () => {
-  console.log("ProductOption.tsxがレンダリングされました");
 
   const { product } = useContext(ProductContext);
 
