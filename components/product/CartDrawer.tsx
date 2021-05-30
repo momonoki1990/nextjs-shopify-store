@@ -36,7 +36,7 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, checkout }) => {
         <div className="cart-drawer__header border-b border-gray-200 flex justify-between py-2">
           <div className="text-sm text-gray-700">カートに追加済み</div>
           <div className="text-gray-700">
-            <a onClick={closeDrawer}>{closeIcon}</a>
+            <a className="cursor-pointer" onClick={closeDrawer}>{closeIcon}</a>
           </div>
         </div>
         <div className="cart-drawer__content flex mt-4">
@@ -68,7 +68,7 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, checkout }) => {
             </a>
         </div>
         <div className="cart-drawer__continue mt-4 text-center">
-          <a className="border-b border-gray-400 text-gray-600 text-sm">買い物を続ける</a>
+          <a className="border-b border-gray-400 cursor-pointer text-gray-600 text-sm" onClick={closeDrawer}>買い物を続ける</a>
         </div>
       </div>
     </Drawer>

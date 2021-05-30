@@ -57,7 +57,7 @@ const Swatch: React.FC<Props> = ({ productOption }) => {
     <>
       <div className="text-gray-700">{optionName}</div>
       <select
-        className="bg-white border border-gray-300 rounded-sm px-4 py-3 w-full"
+        className="bg-white border border-gray-300 cursor-pointer rounded-sm px-4 py-3 w-full"
         onChange={changeVariant}
         value={currentValue}
       >
