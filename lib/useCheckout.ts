@@ -41,14 +41,31 @@ const useCheckout = () => {
     console.log('addVariant関数の中')
     setLoading(true);
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
-    const checkout = await client.checkout.addLineItems(checkoutId, lineItemsToAdd)
+    const checkout = await client.checkout.addLineItems(
+      checkoutId,
+      lineItemsToAdd
+    );
     console.log("addVariant関数の中でのaddLineItemsのあと");
     setCheckout(checkout);
     console.log("addVariant関数の中でのsetCheckoutのあと");
     setLoading(false)
   }
 
-  return {checkout: checkout, loading:loading, addVariant: addVariant};
+  const buyNow = async (variantId: string, quantity: number) => {
+    const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
+    const checkout= await client.checkout.addLineItems(
+      checkoutId,
+      lineItemsToAdd
+    ) as any;
+    location.href = checkout.webUrl;
+  };
+
+  return {
+    checkout: checkout,
+    loading: loading,
+    addVariant: addVariant,
+    buyNow: buyNow,
+  };
 };
 
 export default useCheckout;

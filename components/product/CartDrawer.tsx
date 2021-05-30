@@ -50,13 +50,12 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, checkout }) => {
           <div className="cart-drawer__info flex-1">
             <div className="cart-drawer__product-title font-bold">{product.title}</div>
             <div className="cart-drawer__option mt-2">
-              {variant.selectedOptions.map(opt => {
+              {(variant ? variant : product.variants[0]).selectedOptions.map(opt => {
                 return (
                   <div className="text-sm"><span>{opt.name}:</span><span>{opt.value}</span></div>
                 )
               })}
             </div>
-
           </div>
           <div className="cart-drawer__quantity ml-4 text-gray-600 text-right text-sm" style={{flexBasis: "20%" }}>
             数量: 1

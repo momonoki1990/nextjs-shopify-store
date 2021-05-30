@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import AddToCartButton from "components/product/AddToCartButton";
 import { ProductContext } from "pages/products/[handle]";
+import AddToCartButton from "components/product/AddToCartButton";
+import CheckoutButton from "components/product/CheckoutButton"
 
 
 const PaymentButton: React.FC = () => {
@@ -19,10 +20,8 @@ const PaymentButton: React.FC = () => {
             <AddToCartButton />
           </div>
 
-          <div className="checkout-btn">
-            <button className="bg-gray-800 border border-gray-900 inline-block rounded-sm px-4 py-3 text-white text-sm w-full">
-              今すぐ購入
-            </button>
+          <div className="buynow-btn">
+            <CheckoutButton />
           </div>
         </>
       ) : (
