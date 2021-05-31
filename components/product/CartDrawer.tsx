@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
 import { Drawer } from "@material-ui/core";
@@ -16,9 +16,9 @@ type Props = {
 const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, checkout }) => {
   console.log('CartDrawerのなか')
 
-  const closeDrawer = useCallback(() => {
+  const closeDrawer = () => {
     setIsOpen(false)
-  }, [])
+  }
 
   const { product, imageId, variant } = useContext(ProductContext);
   const selectedImage = product.images.find((image) => image.id === imageId);

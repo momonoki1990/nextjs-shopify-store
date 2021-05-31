@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper/core";
@@ -18,10 +18,10 @@ const ProductImageList: React.FC = () => {
     (prd) => prd.id === imageId
   );
 
-  const changeImage = useCallback((e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const changeImage =(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     const id: string = e.currentTarget.getAttribute('data-id');
     setImageId(id)
-  }, [])
+  }
 
   const generateImageChild = (id: string, src: string, isCurrentImage: boolean, borderClass: string): JSX.Element => {
     return (
