@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 const Footer: React.FC = () => (
   <footer className="bg-gray-50 border-t border-gray-200 pt-12 pb-14">
@@ -8,11 +7,11 @@ const Footer: React.FC = () => (
         <div className="font-semibold">クイックリンク</div>
         <ul>
           <li className="py-4">
-            <Link href="/search">
+            <a href="/search">
               <a className="hover:text-opacity-70 text-gray-800 hover:underline">
                 検索
               </a>
-            </Link>
+            </a>
           </li>
         </ul>
       </div>

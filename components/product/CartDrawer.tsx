@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Image from 'next/image'
-import Link from 'next/link'
 import { Drawer } from "@material-ui/core";
 import { ProductContext } from "pages/products/[handle]";
 import { closeIcon } from "components/utils/Icon";
