@@ -3,11 +3,11 @@ import ProductMainImage from "components/product/ProductMainImage";
 import ProductImageList from "components/product/ProductImageList";
 
 const ProductImage: React.FC = () => {
-  
+
   return (
     <>
-      <ProductMainImage />
-      <ProductImageList />
+      <div className="main-image"><ProductMainImage /></div>
+      <div className="image-list"><ProductImageList /></div>
     </>
   );
 };

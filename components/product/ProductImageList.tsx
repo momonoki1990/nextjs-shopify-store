@@ -1,37 +1,60 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import Swiper core and required modules
 import SwiperCore, { Navigation } from "swiper/core";
 import { ProductContext } from "pages/products/[handle]";
 
-// install Swiper modules
+
+
 SwiperCore.use([Navigation]);
+
+
 
 const ProductImageList: React.FC = () => {
 
   const { product, imageId, setImageId } = useContext(ProductContext);
-  
-  const initialImageIndex: number = product.images.findIndex(
-    ({ id }) => id === imageId
+
+  const initialImageIdx: number = product.images.findIndex(
+    (prd) => prd.id === imageId
   );
+
+  const changeImage = useCallback((e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const id: string = e.currentTarget.getAttribute('data-id');
+    setImageId(id)
+  }, [])
+
+  const generateImageChild = (id: string, src: string, isCurrentImage: boolean, borderClass: string): JSX.Element => {
+    return (
+      <figure
+        className={"m-0" + (isCurrentImage ? borderClass : "")}
+        key={id}
+      >
+        <a onClick={changeImage} data-id={id}>
+          <Image priority src={src} height={400} width={400} />
+        </a>
+      </figure>
+    )
+  }
+
+  const generateImageList = (product, imageId, useSwiper: boolean): JSX.Element[] => {
+    const imageList = product.images.map((image) => {
+      const { id, src } = image;
+      const isCurrentImage = id === imageId;
+      const borderClass = " " + "border-2 border-gray-800";
+      return useSwiper ? (
+        <SwiperSlide key={id}>
+          {generateImageChild(id, src, isCurrentImage, borderClass)}
+        </SwiperSlide>
+      ) : generateImageChild(id, src, isCurrentImage, borderClass)
+    })
+    return imageList;
+  }
+
+
   return (
     <>
       <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4">
-        {product.images.map(({ id, src }) => {
-          const isCurrentImage = id === imageId;
-          const borderClass = " " + "border-2 border-gray-800";
-          return (
-            <figure
-              className={"m-0" + (isCurrentImage ? borderClass : "")}
-              key={id}
-            >
-              <a onClick={() => setImageId(id as string)}>
-                <Image priority src={src} height={400} width={400} />
-              </a>
-            </figure>
-          );
-        })}
+        {generateImageList(product, imageId, false)}
       </div>
 
       <div className="md:hidden">
@@ -39,24 +62,9 @@ const ProductImageList: React.FC = () => {
           spaceBetween={50}
           slidesPerView={3}
           navigation={true}
-          initialSlide={initialImageIndex}
+          initialSlide={initialImageIdx}
         >
-          {product.images.map(({ id, src }) => {
-            const isCurrentImage = id === imageId;
-            const borderClass = " " + "border-2 border-gray-800";
-            return (
-              <SwiperSlide key={id}>
-                <figure
-                  className={"m-0" + (isCurrentImage ? borderClass : "")}
-                  key={id}
-                >
-                  <a onClick={() => setImageId(id as string)}>
-                    <Image priority src={src} height={400} width={400} />
-                  </a>
-                </figure>
-              </SwiperSlide>
-            );
-          })}
+          {generateImageList(product, imageId, true)}
         </Swiper>
       </div>
     </>
