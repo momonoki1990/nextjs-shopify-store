@@ -26,7 +26,7 @@ const ProductImageList: React.FC = () => {
   const generateImageChild = (id: string, src: string, isCurrentImage: boolean, borderClass: string): JSX.Element => {
     return (
       <figure
-        className={"m-0" + (isCurrentImage ? borderClass : "")}
+        className={"cursor-pointer m-0" + (isCurrentImage ? borderClass : "")}
         key={id}
       >
         <a onClick={changeImage} data-id={id}>
