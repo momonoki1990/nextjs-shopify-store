@@ -2,6 +2,7 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import client from "lib/client";
 import { Product } from "shopify-buy";
+import { fetchCollectionWithProducts } from 'lib/graphql/collection'
 import Layout from "components/common/Layout";
 import CollectionTitle from "components/collections/CollectionTitle"
 import FilterToolbar from "components/collections/FilterToolbar";
@@ -38,7 +39,13 @@ const collectionAll: React.FC<Props> = ({
   </Layout>
 );
 
+
+
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  // サーバーサイドでこれを実行するとIP単位のコスト計算→すぐにコスト超過してしまうと思われる。。。
+  // const collection = await fetchCollectionWithProducts();
+
   const products: Product[] = await client.product.fetchAll();
   const total = products.length;
 
@@ -58,6 +65,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       totalPage,
     },
   };
-};
+};;
 
 export default collectionAll;

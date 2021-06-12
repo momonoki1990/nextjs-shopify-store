@@ -6,12 +6,12 @@ const FilterToolbar = ({ total }) => {
   return (
     <div className="filter-toolbar border-t border-b border-gray--600 h-14">
       <div className="filter-toolbar__inner container flex h-full items-center">
-        <div
+        {/* <div
           className="filter-toolbar__sort text-left text-xs text-gray-600"
           style={{ flex: "1 1 33%", lineHeight: "3.5rem" }}
         >
           並び替え
-        </div>
+        </div> */}
         <div
           className="filter-toolbar__total flex-initial text-xs text-gray-600"
           style={{ lineHeight: "3.5rem" }}
