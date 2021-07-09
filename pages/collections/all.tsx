@@ -2,9 +2,8 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import client from "lib/client";
 import { Product } from "shopify-buy";
-import { fetchCollectionWithProducts } from 'lib/graphql/collection'
+import { fetchCollectionWithProducts } from "lib/graphql/collection";
 import Layout from "components/common/Layout";
-import CollectionTitle from "components/collections/CollectionTitle"
 import FilterToolbar from "components/collections/FilterToolbar";
 import ProductList from "components/collections/ProductList";
 import Pagination from "components/utils/Pagination";
@@ -26,7 +25,9 @@ const collectionAll: React.FC<Props> = ({
   <Layout>
     <article className="collections-all">
       <header>
-        <CollectionTitle title="商品"/>
+        <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-4xl">
+          商品
+        </h1>
         <FilterToolbar total={total} />
       </header>
       <section>
@@ -39,13 +40,9 @@ const collectionAll: React.FC<Props> = ({
   </Layout>
 );
 
-
-
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  
   // サーバーサイドでこれを実行するとIP単位のコスト計算→すぐにコスト超過してしまうと思われる。。。
-  // const collection = await fetchCollectionWithProducts();
-
   const products: Product[] = await client.product.fetchAll();
   const total = products.length;
 
@@ -65,6 +62,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       totalPage,
     },
   };
-};;
+};
 
 export default collectionAll;

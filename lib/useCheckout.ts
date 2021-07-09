@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Cart } from "shopify-buy";
 import client from "lib/client";
 
@@ -12,22 +12,23 @@ import client from "lib/client";
 const useCheckout = () => {
   console.log('useCheckout')
   const [loading, setLoading] = useState<boolean>(false);
-  const [checkout, setCheckout] = useState({});
+  const [checkout, setCheckout] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
 
 
   const initializeCart = () => {
-    console.log('initializeCart')
-
     const id: string | null = localStorage.getItem("checkoutId") || null;
+
     if (id) {
       client.checkout.fetch(id).then((checkout) => {
         setCheckoutId(checkout.id as string);
+        setCheckout(checkout);
       });
     } else {
       client.checkout.create().then((checkout) => {
         localStorage.setItem("checkoutId", checkout.id as string);
         setCheckoutId(checkout.id as string);
+        setCheckout(checkout);
       });
     }
   };
@@ -38,16 +39,13 @@ const useCheckout = () => {
   }, []);
 
   const addVariant = async (variantId: string, quantity: number) => {
-    console.log('addVariant関数の中')
     setLoading(true);
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
     const checkout = await client.checkout.addLineItems(
       checkoutId,
       lineItemsToAdd
     );
-    console.log("addVariant関数の中でのaddLineItemsのあと");
     setCheckout(checkout);
-    console.log("addVariant関数の中でのsetCheckoutのあと");
     setLoading(false)
   }
 
