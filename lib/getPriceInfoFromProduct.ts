@@ -12,9 +12,7 @@ const getPriceInfoFromProduct = (product: Product) => {
     const [priceA, priceB]: number[] = [a.price, b.price].map((str) =>
       Number(str)
     );
-    if (priceA > priceB) return 1;
-    if (priceA < priceB) return -1;
-    return 0;
+    return priceA - priceB
   });
 
   // 一番低い価格・価格に差異があるかを取得

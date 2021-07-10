@@ -8,7 +8,10 @@ type Props = {
 };
 
 const ProductCard: React.FC<Props> = ({ product }) => {
-  const { price, priceVaries } = getPriceInfoFromProduct(product);
+  // const { price, priceVaries } = getPriceInfoFromProduct(product);
+  const price = product.priceMin;
+  const priceVaries = !(product.priceMax === product.priceMin);
+
 
   return (
     <div className="product-card">
@@ -17,7 +20,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
           <a href={`/products/${product.handle}`}>
             <Image
               priority
-              src={product.images[0].src}
+              src={product.images[0]?.originalSrc}
               height={400}
               width={400}
             />

@@ -6,7 +6,7 @@ type Image = {
   src: string;
 }
 
-type Product = {
+export type Product = {
   handle: string;
   images: Image;
   priceMin: number;
@@ -14,7 +14,7 @@ type Product = {
   title: string;
 }
 
-type Collection = {
+export type Collection = {
   products: Product[];
   title: string;
 };
@@ -71,7 +71,12 @@ export const fetchCollectionWithProducts = async (): Promise<
     const product = {} as Product;
     
     product.handle = node.handle;
-    product.images = node.images;
+    product.images = node.images.edges.map(node => {
+      const originalSrc = node.node.originalSrc;
+      return {
+        originalSrc
+      }
+    });
     product.priceMax = node.priceRange.maxVariantPrice.amount;
     product.priceMin = node.priceRange.minVariantPrice.amount;
     product.title = node.title;
