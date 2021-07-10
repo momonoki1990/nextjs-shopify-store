@@ -22,12 +22,11 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, checkout }) => {
   const { product, imageId, variant } = useContext(ProductContext);
   const selectedImage = product.images.find((image) => image.id === imageId);
 
-  const { lineItems } = checkout;
   const reducer = (accumulator, currentValue) => {
     accumulator += currentValue.quantity;
     return accumulator;
   }
-  const totalQuqntity = lineItems?.reduce(reducer, 0);
+  const totalQuqntity = checkout?.lineItems?.reduce(reducer, 0);
 
   return (
     <Drawer classes={{ paper: "border border-gray-400 left-auto w-full md:w-96" }} anchor="top" open={isOpen} onClose={closeDrawer}>
