@@ -19,15 +19,17 @@ export type Collection = {
   title: string;
 };
 
-// コレクションページ用にコレクションと商品の情報をcollectionオブジェクトにまとめて取得する
-// このアプリでは使わないことにする(SEOの事考えると、サーバーサイドから叩きたい・StoreFrontAPIはサーバーから叩くとコストの問題出てくる→js-buy-sdkであれば、コストの問題なさそうなので)
-export const fetchCollectionWithProducts = async (): Promise<
+/**
+ * Fetch collection info with products info for collection page
+ * @param handle collection handle
+ */
+export const fetchCollectionWithProducts = async (handle: string): Promise<
   Collection
 > => {
   const query = gql`
-    {
-      collectionByHandle(handle: "all") {
-        products(first: 8, sortKey: CREATED) {
+    query getCollectionByHandle($handle: String!) {
+      collectionByHandle(handle: $handle) {
+        products(first: 250, sortKey: CREATED) {
           edges {
             node {
               handle
@@ -59,11 +61,14 @@ export const fetchCollectionWithProducts = async (): Promise<
     }
   `;
 
+  const variables = {
+    handle
+  }
   const response = await customClient
-    .request(query)
+    .request(query, variables)
     .catch((err) => console.error(JSON.stringify(err)));
 
-  // StoreFront APIからのresponseをLiquidで得られるようなcollectionオブジェクトの形式に整形する
+  // Arrange as collection object like Liquid collection object
   const collection = {} as Collection;
   collection.title = response.collectionByHandle.title;
   collection.products = response.collectionByHandle.products.edges.map(edge => {

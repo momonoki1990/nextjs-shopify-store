@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import { Product } from "lib/graphql/collection";
 // import { Product } from "shopify-buy";
 import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct"
 
 type Props = {
-  product: any;
+  product: Product;
 };
 
 const ProductCard: React.FC<Props> = ({ product }) => {
