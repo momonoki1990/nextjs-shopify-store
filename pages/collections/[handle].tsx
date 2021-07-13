@@ -7,7 +7,8 @@ import {
   Collection,
   fetchCollectionWithProducts,
   fetchCollectionWithProductsResult,
-  Product
+  Product,
+  SortBy
 } from "lib/graphql/collection";
 import Layout from "components/common/Layout";
 import FilterToolbar from "components/collections/FilterToolbar";
@@ -15,20 +16,26 @@ import ProductList from "components/collections/ProductList";
 import Pagination from "components/utils/Pagination";
 import paginate from "lib/paginate";
 
+
+
 type Props = {
   handle: string;
-  page: number;
+  sortBy: SortBy;
 };
 
-const CollectionPage: React.FC<Props> = ({ handle, page }) => {
+const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
   const [collection, setCollection] = useState<Collection | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [cursor, setCursor] = useState<string>("");
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
+  const numOfDisplays: number = 16;
+
   const fetchMoreData = async (cursor?: string) => {
     const result: fetchCollectionWithProductsResult = await fetchCollectionWithProducts(
       handle,
+      numOfDisplays,
+      sortBy,
       cursor
     );
     
@@ -52,7 +59,7 @@ const CollectionPage: React.FC<Props> = ({ handle, page }) => {
           <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-4xl">
             {collection && collection.title}
           </h1>
-          {/* <FilterToolbar total={total} /> */}
+          <FilterToolbar sortBy={sortBy}/>
         </header>
         <section>
           <div className="container">
@@ -61,7 +68,7 @@ const CollectionPage: React.FC<Props> = ({ handle, page }) => {
                 dataLength={products.length}
                 next={() => fetchMoreData(cursor)}
                 hasMore={hasNextPage}
-                loader={<Loader numOfDisplays={8}/>}
+                loader={<Loader numOfDisplays={numOfDisplays} />}
               >
                 <ProductList products={products} />
               </InfiniteScroll>
@@ -100,12 +107,12 @@ const Loader: React.FC<{ numOfDisplays: number }> = ({ numOfDisplays }) => (
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const handle: string = context.params.handle as string;
-  const page: number = Number(context.query?.page) || 1;
+  const sortBy: SortBy = (context.query?.sort_by as SortBy) || "manual";
 
   return {
     props: {
       handle,
-      page,
+      sortBy,
     },
   };
 };

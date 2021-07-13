@@ -2,6 +2,16 @@ import { gql } from 'graphql-request';
 import customClient from 'lib/graphql/customClient';
 import CollectionPage from 'pages/collections/[handle]';
 
+// ProductCollectionSortKeys(https://shopify.dev/api/storefront/reference/products/productcollectionsortkeys)
+export type SortBy =
+  | "manual"
+  | "best-selling"
+  | "title-ascending"
+  | "title-descending"
+  | "price-ascending"
+  | "price-descending"
+  | "created-ascending"
+  | "created-descending";
 
 type Image = {
   src: string;
@@ -32,12 +42,20 @@ export type fetchCollectionWithProductsResult = {
  */
 export const fetchCollectionWithProducts = async (
   handle: string,
-  cursor: string | null,
+  numOfDisplays: number,
+  sortBy: SortBy,
+  cursor: string | null
 ): Promise<fetchCollectionWithProductsResult> => {
   const query = gql`
-    query getCollectionByHandle($handle: String!, $cursor: String) {
+    query getCollectionByHandle(
+      $handle: String!
+      $numOfDisplays: Int!
+      $sortKey: ProductCollectionSortKeys!
+      $reverse: Boolean!
+      $cursor: String
+    ) {
       collectionByHandle(handle: $handle) {
-        products(first: 8, sortKey: CREATED, after: $cursor) {
+        products(first: $numOfDisplays, sortKey: $sortKey, reverse: $reverse, after: $cursor) {
           edges {
             cursor
             node {
@@ -69,41 +87,84 @@ export const fetchCollectionWithProducts = async (
       }
     }
   `;
-  console.log(cursor)
+
+  let sortKey: string;
+  let reverse: boolean;
+
+  switch (sortBy) {
+    case "manual":
+      sortKey = "MANUAL";
+      reverse = false;
+      break;
+    case "best-selling":
+      sortKey = "BEST_SELLING";
+      reverse = false;
+      break;
+    case "title-ascending":
+      sortKey = "TITLE";
+      reverse = false;
+      break;
+    case "title-descending":
+      sortKey = "TITLE";
+      reverse = true;
+      break;
+    case "price-ascending":
+      sortKey = "PRICE";
+      reverse = false;
+      break;
+    case "price-descending":
+      sortKey = "PRICE";
+      reverse = true;
+      break;
+    case "created-ascending":
+      sortKey = "CREATED";
+      reverse = false;
+      break;
+    case "created-descending":
+      sortKey = "CREATED";
+      reverse = true;
+      break;
+  }
 
   const variables = {
     handle,
-    cursor
+    numOfDisplays,
+    sortKey,
+    reverse,
+    cursor,
   };
-  const res = await customClient
-    .request(query, variables)
-    .catch((err) => console.error(JSON.stringify(err)));
+
+  const res = await customClient.request(query, variables).catch((err) => {
+    throw new Error(err);
+  });
 
   // Arrange as collection object like Liquid collection object
   const collection: Collection = {} as Collection;
   collection.title = res.collectionByHandle.title;
 
-  const products: Product[] = res.collectionByHandle.products.edges.map((edge) => {
-    const { node } = edge;
-    const product = {} as Product;
+  const products: Product[] = res.collectionByHandle.products.edges.map(
+    (edge) => {
+      const { node } = edge;
+      const product = {} as Product;
 
-    product.handle = node.handle;
-    product.images = node.images.edges.map((node) => {
-      const originalSrc = node.node.originalSrc;
-      return {
-        originalSrc,
-      };
-    });
-    product.priceMax = node.priceRange.maxVariantPrice.amount;
-    product.priceMin = node.priceRange.minVariantPrice.amount;
-    product.title = node.title;
+      product.handle = node.handle;
+      product.images = node.images.edges.map((node) => {
+        const originalSrc = node.node.originalSrc;
+        return {
+          originalSrc,
+        };
+      });
+      product.priceMax = node.priceRange.maxVariantPrice.amount;
+      product.priceMin = node.priceRange.minVariantPrice.amount;
+      product.title = node.title;
 
-    return product;
-  });
+      return product;
+    }
+  );
 
-  const hasNextPage: boolean = res.collectionByHandle.products.pageInfo.hasNextPage;
+  const hasNextPage: boolean =
+    res.collectionByHandle.products.pageInfo.hasNextPage;
   const lastCursor = res.collectionByHandle.products.edges.slice(-1)[0].cursor;
-
 
   return { collection, products, hasNextPage, cursor: lastCursor };
 };
