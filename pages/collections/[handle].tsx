@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
-import Skeleton from "@material-ui/lab/Skeleton";
+import { Skeleton } from "@material-ui/lab";
 import InfiniteScroll from "react-infinite-scroll-component";
 import client from "lib/client";
 import {
   Collection,
-  fetchCollectionWithProducts,
-  fetchCollectionWithProductsResult,
+  getCollectionWithProducts,
+  GetCollectionWithProductsResult,
   Product,
-  SortBy
+  SortBy,
 } from "lib/graphql/collection";
 import Layout from "components/common/Layout";
 import FilterToolbar from "components/collections/FilterToolbar";
 import ProductList from "components/collections/ProductList";
 import Pagination from "components/utils/Pagination";
 import paginate from "lib/paginate";
-
-
 
 type Props = {
   handle: string;
@@ -32,13 +30,20 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
   const numOfDisplays: number = 16;
 
   const fetchMoreData = async (cursor?: string) => {
-    const result: fetchCollectionWithProductsResult = await fetchCollectionWithProducts(
-      handle,
-      numOfDisplays,
-      sortBy,
-      cursor
-    );
-    
+    let result: GetCollectionWithProductsResult;
+    try {
+      result = await getCollectionWithProducts(
+        handle,
+        numOfDisplays,
+        sortBy,
+        cursor
+      );
+    } catch (err) {
+      console.error(err);
+      alert("商品情報の取得に失敗しました。");
+      return;
+    }
+
     if (!collection) {
       setCollection(result.collection);
     }
@@ -46,7 +51,7 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
     setProducts([...products, ...result.products]);
     setCursor(result.cursor);
     setHasNextPage(result.hasNextPage);
-  }
+  };
 
   useEffect(() => {
     fetchMoreData();
@@ -59,7 +64,7 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
           <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-4xl">
             {collection && collection.title}
           </h1>
-          <FilterToolbar sortBy={sortBy}/>
+          <FilterToolbar sortBy={sortBy} />
         </header>
         <section>
           <div className="container">

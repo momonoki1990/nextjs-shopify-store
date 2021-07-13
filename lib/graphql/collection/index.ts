@@ -1,6 +1,6 @@
-import { gql } from 'graphql-request';
-import customClient from 'lib/graphql/customClient';
-import CollectionPage from 'pages/collections/[handle]';
+import { gql } from "graphql-request";
+import customClient from "lib/graphql/customClient";
+import CollectionPage from "pages/collections/[handle]";
 
 // ProductCollectionSortKeys(https://shopify.dev/api/storefront/reference/products/productcollectionsortkeys)
 export type SortBy =
@@ -15,7 +15,7 @@ export type SortBy =
 
 type Image = {
   src: string;
-}
+};
 
 export type Product = {
   handle: string;
@@ -23,13 +23,13 @@ export type Product = {
   priceMin: number;
   priceMax: number;
   title: string;
-}
+};
 
 export type Collection = {
   title: string;
 };
 
-export type fetchCollectionWithProductsResult = {
+export type GetCollectionWithProductsResult = {
   collection: Collection;
   products: Product[];
   cursor: string;
@@ -40,12 +40,30 @@ export type fetchCollectionWithProductsResult = {
  * Fetch collection info with products info for collection page
  * @param handle collection handle
  */
-export const fetchCollectionWithProducts = async (
+export const getCollectionWithProducts = async (
   handle: string,
   numOfDisplays: number,
   sortBy: SortBy,
   cursor: string | null
-): Promise<fetchCollectionWithProductsResult> => {
+): Promise<GetCollectionWithProductsResult> => {
+  const res = await fetchCollection(handle, numOfDisplays, sortBy, cursor);
+  return adjustIntoResult(res);
+};
+
+/**
+ * fetch collection info with products from shopify store front api
+ * @param handle collection handle
+ * @param numOfDisplays num of collection products to retrieve at once
+ * @param sortBy selected sort-by value
+ * @param cursor product cursor at store front api
+ * @returns
+ */
+const fetchCollection = async (
+  handle: string,
+  numOfDisplays: number,
+  sortBy: SortBy,
+  cursor: string | null
+): Promise<any> => {
   const query = gql`
     query getCollectionByHandle(
       $handle: String!
@@ -55,7 +73,12 @@ export const fetchCollectionWithProducts = async (
       $cursor: String
     ) {
       collectionByHandle(handle: $handle) {
-        products(first: $numOfDisplays, sortKey: $sortKey, reverse: $reverse, after: $cursor) {
+        products(
+          first: $numOfDisplays
+          sortKey: $sortKey
+          reverse: $reverse
+          after: $cursor
+        ) {
           edges {
             cursor
             node {
@@ -88,6 +111,34 @@ export const fetchCollectionWithProducts = async (
     }
   `;
 
+  const { sortKey, reverse } = generateSortParams(sortBy);
+
+  const variables = {
+    handle,
+    numOfDisplays,
+    sortKey,
+    reverse,
+    cursor,
+  };
+
+  const res = await customClient.request(query, variables).catch((err) => {
+    throw new Error(err);
+  });
+
+  return res;
+};
+
+/**
+ * generate sort params for query from selected sort-by value
+ * @param sortBy
+ * @returns
+ */
+const generateSortParams = (
+  sortBy: SortBy
+): {
+  sortKey: string;
+  reverse: boolean;
+} => {
   let sortKey: string;
   let reverse: boolean;
 
@@ -126,19 +177,18 @@ export const fetchCollectionWithProducts = async (
       break;
   }
 
-  const variables = {
-    handle,
-    numOfDisplays,
+  return {
     sortKey,
     reverse,
-    cursor,
   };
+};
 
-  const res = await customClient.request(query, variables).catch((err) => {
-    throw new Error(err);
-  });
-
-  // Arrange as collection object like Liquid collection object
+/**
+ * Arrange as collection and product object like Liquid object
+ * @param res
+ * @returns
+ */
+const adjustIntoResult = (res: any): GetCollectionWithProductsResult => {
   const collection: Collection = {} as Collection;
   collection.title = res.collectionByHandle.title;
 

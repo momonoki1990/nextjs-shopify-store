@@ -1,8 +1,5 @@
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
-import {
-  SortBy,
-} from "lib/graphql/collection";
-
+import { SortBy } from "lib/graphql/collection";
 
 type Props = {
   sortBy: SortBy;
@@ -28,7 +25,7 @@ const FilterToolbar: React.FC<Props> = ({ sortBy }) => {
             並び替え
           </label>
           <select
-            className="cursor-pointer pr-4 py-2 text-lg text-gray-800"
+            className="cursor-pointer pr-4 py-2 text-base text-gray-700"
             id="sort-by"
             value={sortBy}
             onChange={handleChange}
