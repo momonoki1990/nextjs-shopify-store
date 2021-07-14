@@ -25,7 +25,7 @@ const FilterToolbar: React.FC<Props> = ({ sortBy }) => {
             並び替え
           </label>
           <select
-            className="cursor-pointer pr-4 py-2 text-base text-gray-700"
+            className="bg-transparent cursor-pointer pr-4 py-2 text-base text-gray-700"
             id="sort-by"
             value={sortBy}
             onChange={handleChange}

@@ -73,7 +73,8 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
                 dataLength={products.length}
                 next={() => fetchMoreData(cursor)}
                 hasMore={hasNextPage}
-                loader={<Loader numOfDisplays={numOfDisplays} />}
+                // loader={<Loader numOfDisplays={numOfDisplays} />}
+                loader={<h4>Loading...</h4>}
               >
                 <ProductList products={products} />
               </InfiniteScroll>

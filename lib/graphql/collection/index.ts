@@ -46,7 +46,15 @@ export const getCollectionWithProducts = async (
   sortBy: SortBy,
   cursor: string | null
 ): Promise<GetCollectionWithProductsResult> => {
-  const res = await fetchCollection(handle, numOfDisplays, sortBy, cursor);
+  console.log("getCollectionWithProducts");
+  const { sortKey, reverse } = generateSortParams(sortBy);
+  const res = await fetchCollection(
+    handle,
+    numOfDisplays,
+    sortKey,
+    reverse,
+    cursor
+  );
   return adjustIntoResult(res);
 };
 
@@ -54,16 +62,19 @@ export const getCollectionWithProducts = async (
  * fetch collection info with products from shopify store front api
  * @param handle collection handle
  * @param numOfDisplays num of collection products to retrieve at once
- * @param sortBy selected sort-by value
+ * @param sortKey sortKey defined at ProductCollectionSortKeys(https://shopify.dev/api/storefront/reference/products/productcollectionsortkeys)
+ * @param reverse sort reverse
  * @param cursor product cursor at store front api
  * @returns
  */
 const fetchCollection = async (
   handle: string,
   numOfDisplays: number,
-  sortBy: SortBy,
+  sortKey: string,
+  reverse: boolean,
   cursor: string | null
 ): Promise<any> => {
+  console.log("fetchCollection");
   const query = gql`
     query getCollectionByHandle(
       $handle: String!
@@ -110,8 +121,6 @@ const fetchCollection = async (
       }
     }
   `;
-
-  const { sortKey, reverse } = generateSortParams(sortBy);
 
   const variables = {
     handle,
