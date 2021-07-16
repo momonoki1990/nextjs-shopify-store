@@ -91,8 +91,8 @@ const ProductPage: React.FC<Props> = ({ handle, variantId }) => {
               {product ? (
                 <ProductDetail />
               ) : (
-                Array.from(new Array(10)).map((_) => (
-                  <Skeleton variant="text" />
+                Array.from(new Array(10)).map((_, idx) => (
+                  <Skeleton variant="text" key={idx} />
                 ))
               )}
             </div>

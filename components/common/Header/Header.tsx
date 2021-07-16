@@ -16,10 +16,11 @@ const Header: React.FC = () => {
     <header className="header border-b border-gray-200">
       <div className="header__inner container items-center flex justify-between md:grid md:grid-cols-3 xl:max-w-none xl:px-14">
         <div className="header__logo text-left mt-3 md:mt-6 mb-3 md:mb-6 ">
-          <a href="/">
-            <a className="font-semibold leading-none text-lg md:text-xl text-gray-800 hover:text-opacity-70 tracking-widest">
-              SAMPLE-KUMA-STORE1
-            </a>
+          <a
+            href="/"
+            className="font-semibold leading-none text-lg md:text-xl text-gray-800 hover:text-opacity-70 tracking-widest"
+          >
+            SAMPLE-KUMA-STORE1
           </a>
         </div>
 
@@ -28,8 +29,8 @@ const Header: React.FC = () => {
         <div className="header__icons flex items-center justify-end">
           <SearchDrawer />
 
-          <a href="/cart">
-            <a className="bag inline-block p-2 text-gray-700">{bagIcon}</a>
+          <a href="/cart" className="bag inline-block p-2 text-gray-700">
+            {bagIcon}
           </a>
           <MenuButton opened={opened} toggleAccordion={toggleAccordion} />
         </div>

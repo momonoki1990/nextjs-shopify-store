@@ -7,8 +7,6 @@ type Props = {
 };
 
 const CartItemRow: React.FC<Props> = ({ item }) => {
-  console.log("CartItemRow rendered");
-  console.log(JSON.stringify(item));
   const { handle, quantity, title } = item;
   const price = Number(item.variant.price);
   const subtotal = price * quantity;

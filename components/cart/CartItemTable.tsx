@@ -3,10 +3,7 @@ import { CheckoutContext } from "pages/cart";
 import CartItemRow from "components/cart/CartItemRow";
 
 const CartItemTable = () => {
-  console.log("CartItemTable rendered");
-
   const checkout = useContext(CheckoutContext);
-  console.log(checkout?.lineItems?.length);
 
   return (
     <table>

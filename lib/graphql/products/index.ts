@@ -88,7 +88,6 @@ const fetchProduct = async (handle: string) => {
 };
 
 const adjustIntoResult = (res: any): getProductResult => {
-  console.log(res);
   const { descriptionHtml, title, options } = res.productByHandle;
 
   const images = res.productByHandle.images.edges.map((edge) => {
@@ -109,6 +108,5 @@ const adjustIntoResult = (res: any): getProductResult => {
   const result = {
     product,
   };
-  console.log(result);
   return result;
 };

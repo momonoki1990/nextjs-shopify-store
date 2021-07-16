@@ -9,24 +9,25 @@ const MenuList: React.FC<Props> = ({ visibility }) => {
     <nav className={`md:text-center ${visibility}`}>
       <ul>
         <li className="border-t md:border-t-0 border-gray-200 md:inline-block">
-          <a href="/">
+          <a
+            href="/"
+            className="block mx-auto px-8 md:px-4 py-4 text-gray-700 hover:text-opacity-70 hover:underline"
+            style={{ maxWidth: "640px" }}
+          >
+            Home
+          </a>
+        </li>
+        {["all", "apple", "watch"].map((title, idx) => (
+          <li
+            className="border-t md:border-t-0 border-gray-20 md:inline-block"
+            key={idx}
+          >
             <a
+              href={`/collections/${title}`}
               className="block mx-auto px-8 md:px-4 py-4 text-gray-700 hover:text-opacity-70 hover:underline"
               style={{ maxWidth: "640px" }}
             >
-              Home
-            </a>
-          </a>
-        </li>
-        {["all", "apple", "watch"].map((title) => (
-          <li className="border-t md:border-t-0 border-gray-20 md:inline-block">
-            <a href={`/collections/${title}`}>
-              <a
-                className="block mx-auto px-8 md:px-4 py-4 text-gray-700 hover:text-opacity-70 hover:underline"
-                style={{ maxWidth: "640px" }}
-              >
-                {title[0].toUpperCase() + title.slice(1)}
-              </a>
+              {title[0].toUpperCase() + title.slice(1)}
             </a>
           </li>
         ))}

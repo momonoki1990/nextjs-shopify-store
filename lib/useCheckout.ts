@@ -10,11 +10,9 @@ import client from "lib/client";
 // };
 
 const useCheckout = () => {
-  console.log('useCheckout')
   const [loading, setLoading] = useState<boolean>(false);
   const [checkout, setCheckout] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
-
 
   const initializeCart = () => {
     const id: string | null = localStorage.getItem("checkoutId") || null;
@@ -34,7 +32,6 @@ const useCheckout = () => {
   };
 
   useEffect(() => {
-    console.log('useCheckout内のuseEffect')
     initializeCart();
   }, []);
 
@@ -46,15 +43,15 @@ const useCheckout = () => {
       lineItemsToAdd
     );
     setCheckout(checkout);
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const buyNow = async (variantId: string, quantity: number) => {
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
-    const checkout= await client.checkout.addLineItems(
+    const checkout = (await client.checkout.addLineItems(
       checkoutId,
       lineItemsToAdd
-    ) as any;
+    )) as any;
     location.href = checkout.webUrl;
   };
 

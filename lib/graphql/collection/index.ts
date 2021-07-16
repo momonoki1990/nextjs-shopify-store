@@ -46,7 +46,6 @@ export const getCollectionWithProducts = async (
   sortBy: SortBy,
   cursor: string | null
 ): Promise<GetCollectionWithProductsResult> => {
-  console.log("getCollectionWithProducts");
   const { sortKey, reverse } = generateSortParams(sortBy);
   const res = await fetchCollection(
     handle,
