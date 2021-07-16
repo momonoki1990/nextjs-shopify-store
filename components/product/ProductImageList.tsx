@@ -2,28 +2,29 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper/core";
+import { Skeleton } from "@material-ui/lab";
 import { ProductContext } from "pages/products/[handle]";
-
-
 
 SwiperCore.use([Navigation]);
 
-
-
 const ProductImageList: React.FC = () => {
-
   const { product, imageId, setImageId } = useContext(ProductContext);
 
-  const initialImageIdx: number = product.images.findIndex(
+  const initialImageIdx: number = product?.images.findIndex(
     (prd) => prd.id === imageId
   );
 
-  const changeImage =(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    const id: string = e.currentTarget.getAttribute('data-id');
-    setImageId(id)
-  }
+  const changeImage = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const id: string = e.currentTarget.getAttribute("data-id");
+    setImageId(id);
+  };
 
-  const generateImageChild = (id: string, src: string, isCurrentImage: boolean, borderClass: string): JSX.Element => {
+  const generateImageChild = (
+    id: string,
+    src: string,
+    isCurrentImage: boolean,
+    borderClass: string
+  ): JSX.Element => {
     return (
       <figure
         className={"cursor-pointer m-0" + (isCurrentImage ? borderClass : "")}
@@ -33,10 +34,14 @@ const ProductImageList: React.FC = () => {
           <Image priority src={src} height={400} width={400} />
         </a>
       </figure>
-    )
-  }
+    );
+  };
 
-  const generateImageList = (product, imageId, useSwiper: boolean): JSX.Element[] => {
+  const generateImageList = (
+    product,
+    imageId,
+    useSwiper: boolean
+  ): JSX.Element[] => {
     const imageList = product.images.map((image) => {
       const { id, src } = image;
       const isCurrentImage = id === imageId;
@@ -45,28 +50,47 @@ const ProductImageList: React.FC = () => {
         <SwiperSlide key={id}>
           {generateImageChild(id, src, isCurrentImage, borderClass)}
         </SwiperSlide>
-      ) : generateImageChild(id, src, isCurrentImage, borderClass)
-    })
+      ) : (
+        generateImageChild(id, src, isCurrentImage, borderClass)
+      );
+    });
     return imageList;
-  }
-
+  };
 
   return (
     <>
-      <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4">
-        {generateImageList(product, imageId, false)}
-      </div>
+      {product ? (
+        <>
+          <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4">
+            {generateImageList(product, imageId, false)}
+          </div>
 
-      <div className="md:hidden">
-        <Swiper
-          spaceBetween={50}
-          slidesPerView={3}
-          navigation={true}
-          initialSlide={initialImageIdx}
-        >
-          {generateImageList(product, imageId, true)}
-        </Swiper>
-      </div>
+          <div className="md:hidden">
+            <Swiper
+              spaceBetween={50}
+              slidesPerView={3}
+              navigation={true}
+              initialSlide={initialImageIdx}
+            >
+              {generateImageList(product, imageId, true)}
+            </Swiper>
+          </div>
+        </>
+      ) : (
+        <div className="grid grid-cols-4 gap-1 mt-1">
+          {Array.from(new Array(4)).map((_) => (
+            <div
+              className="skelton-container h-0 overflow-hidden relative"
+              style={{ paddingTop: "100%" }}
+            >
+              <Skeleton
+                variant="rect"
+                className="absolute h-full left-0 top-0 w-full"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 };

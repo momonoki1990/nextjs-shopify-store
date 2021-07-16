@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from "react";
 import { GetServerSideProps } from "next";
+import { Skeleton } from "@material-ui/lab";
 import {
   getProduct,
   getProductResult,
@@ -68,14 +69,32 @@ const ProductPage: React.FC<Props> = ({ handle, variantId }) => {
           <section className="container md:grid md:grid-cols-2 md:gap-x-8">
             <div className="product__image mb-12 md:mb-0">
               <div className="main-image">
-                {product ? <ProductMainImage /> : <div>hahaha</div>}
+                {product ? (
+                  <ProductMainImage />
+                ) : (
+                  <div
+                    className="skelton-container h-0 overflow-hidden relative"
+                    style={{ paddingTop: "100%" }}
+                  >
+                    <Skeleton
+                      variant="rect"
+                      className="absolute h-full left-0 top-0 w-full"
+                    />
+                  </div>
+                )}
               </div>
               <div className="image-list">
-                {product ? <ProductImageList /> : <div>hahaha</div>}
+                <ProductImageList />
               </div>
             </div>
             <div className="product__detail">
-              {product ? <ProductDetail /> : <div>hahaha</div>}
+              {product ? (
+                <ProductDetail />
+              ) : (
+                Array.from(new Array(10)).map((_) => (
+                  <Skeleton variant="text" />
+                ))
+              )}
             </div>
           </section>
         </article>
