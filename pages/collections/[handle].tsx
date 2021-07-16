@@ -24,7 +24,7 @@ type Props = {
 const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
   const [collection, setCollection] = useState<Collection | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
-  const [cursor, setCursor] = useState<string>("");
+  const [cursor, setCursor] = useState<string | null>(null);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
   const numOfDisplays: number = 16;
@@ -39,7 +39,6 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
         cursor
       );
     } catch (err) {
-      console.error(err);
       alert("商品情報の取得に失敗しました。");
       return;
     }
@@ -73,8 +72,8 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
                 dataLength={products.length}
                 next={() => fetchMoreData(cursor)}
                 hasMore={hasNextPage}
-                // loader={<Loader numOfDisplays={numOfDisplays} />}
-                loader={<h4>Loading...</h4>}
+                loader={<Loader numOfDisplays={2} />}
+                // loader={<h4>Loading...</h4>}
               >
                 <ProductList products={products} />
               </InfiniteScroll>
