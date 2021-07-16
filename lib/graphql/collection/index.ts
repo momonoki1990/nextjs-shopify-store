@@ -74,7 +74,6 @@ const fetchCollection = async (
   reverse: boolean,
   cursor: string | null
 ): Promise<any> => {
-  console.log("fetchCollection");
   const query = gql`
     query getCollectionByHandle(
       $handle: String!

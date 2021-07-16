@@ -1,36 +1,35 @@
-import React, { useState, createContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { GetServerSideProps } from "next";
-import { Product, ProductVariant } from "shopify-buy";
-import client from "lib/client";
+import {
+  getProduct,
+  getProductResult,
+  Product,
+  Variant,
+} from "lib/graphql/products";
 import Layout from "components/common/Layout";
-import ProductImage from "components/product/ProductImage";
+import ProductMainImage from "components/product/ProductMainImage";
+import ProductImageList from "components/product/ProductImageList";
 import ProductDetail from "components/product/ProductDetail";
 
-
-
 type Props = {
-  product: any;
+  handle: string;
   variantId: string | null;
 };
 
 type ProductContext = {
   product: any;
   variant: any | null;
-  setVariant: (variant: ProductVariant) => void;
+  setVariant: (variant: Variant) => void;
   imageId: string;
   setImageId: (imageId: string) => void;
 };
 
 export const ProductContext = createContext({} as ProductContext);
 
-
-
-const ProductPage: React.FC<Props> = ({ product, variantId }) => {
-
-  const [variant, setVariant] = useState<ProductVariant | null>(variantId ? product.variants.find((v) => v.id === variantId) : null)
-  const [imageId, setImageId] = useState<string>(
-    (variant?.image?.id || product.images[0].id) as string
-  );
+const ProductPage: React.FC<Props> = ({ handle, variantId }) => {
+  const [product, setProduct] = useState<Product | null>(null);
+  const [variant, setVariant] = useState<Variant | null>(null);
+  const [imageId, setImageId] = useState<string>(null);
 
   const ProductContextValue: ProductContext = {
     product,
@@ -40,16 +39,43 @@ const ProductPage: React.FC<Props> = ({ product, variantId }) => {
     setImageId,
   };
 
+  const fetchData = async () => {
+    const result: getProductResult = await getProduct(handle);
+    const prd = result.product;
+
+    let initialVariant: Variant;
+    if (variantId) {
+      initialVariant = prd.variants.find((v) => v.id === variantId);
+      setVariant(initialVariant);
+    }
+
+    const initialImageId: string = (initialVariant?.image?.id ||
+      prd.images[0].id) as string;
+
+    setImageId(initialImageId);
+
+    setProduct(prd);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <ProductContext.Provider value={ProductContextValue}>
       <Layout>
         <article className="product">
           <section className="container md:grid md:grid-cols-2 md:gap-x-8">
             <div className="product__image mb-12 md:mb-0">
-              <ProductImage />
+              <div className="main-image">
+                {product ? <ProductMainImage /> : <div>hahaha</div>}
+              </div>
+              <div className="image-list">
+                {product ? <ProductImageList /> : <div>hahaha</div>}
+              </div>
             </div>
             <div className="product__detail">
-              <ProductDetail />
+              {product ? <ProductDetail /> : <div>hahaha</div>}
             </div>
           </section>
         </article>
@@ -58,17 +84,14 @@ const ProductPage: React.FC<Props> = ({ product, variantId }) => {
   );
 };
 
-
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const handle = context.params.handle as string;
-  const product: Product = await client.product.fetchByHandle(handle);
-  const variantId: string | null = context.query.variant as string || null;
+  const variantId: string | null = (context.query.variant as string) || null;
 
   return {
     props: {
-      product: JSON.parse(JSON.stringify(product)),
-      variantId
+      handle,
+      variantId,
     },
   };
 };
