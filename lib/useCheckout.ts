@@ -55,11 +55,25 @@ const useCheckout = () => {
     location.href = checkout.webUrl;
   };
 
+  const removeItem = async (lineItemId: string) => {
+    setLoading(true);
+    const lineItemIdsToRemove = [lineItemId];
+
+    const newCheckout = await client.checkout.removeLineItems(
+      checkoutId,
+      lineItemIdsToRemove
+    );
+
+    setCheckout(newCheckout);
+    setLoading(false);
+  };
+
   return {
-    checkout: checkout,
-    loading: loading,
-    addVariant: addVariant,
-    buyNow: buyNow,
+    checkout,
+    loading,
+    addVariant,
+    buyNow,
+    removeItem,
   };
 };
 
