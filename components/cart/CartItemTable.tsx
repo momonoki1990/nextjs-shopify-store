@@ -3,7 +3,7 @@ import { CheckoutContext } from "pages/cart";
 import CartItemRow from "components/cart/CartItemRow";
 
 const CartItemTable = () => {
-  const checkout = useContext(CheckoutContext);
+  const cart = useContext(CheckoutContext);
 
   return (
     <table>
@@ -20,7 +20,7 @@ const CartItemTable = () => {
         </tr>
       </thead>
       <tbody>
-        {checkout?.lineItems?.map((item, idx) => (
+        {cart?.lineItems?.map((item, idx) => (
           <CartItemRow item={item} key={idx} />
         ))}
       </tbody>

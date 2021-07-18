@@ -2,47 +2,74 @@ import React, { useState, useEffect } from "react";
 import { Cart } from "shopify-buy";
 import client from "lib/client";
 
-// type SetCart = {
-//   initializeCart;
-//   addVariant;
-//   changeQuantity;
-//   deleteVariant;
-// };
+type Checkout = {
+  addItem: (variantId: string, quantity: number) => Promise<void>;
+  removeItem: (lineItemId: string) => Promise<void>;
+  buyNow: (variantId: string, quantity: number) => Promise<void>;
+};
 
-const useCheckout = () => {
-  const [checkout, setCheckout] = useState<Cart | null>(null);
+const useCart = (): [Cart, Checkout] => {
+  const [cart, setCart] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
 
-  const initializeCart = () => {
-    const id: string | null = localStorage.getItem("checkoutId") || null;
+  /**
+   * get checkout id and initialize cart object
+   */
+  const initializeCart = async () => {
+    const id: string = localStorage.getItem("checkoutId");
 
+    let newCart: Cart;
+    let newCheckoutId: string;
     if (id) {
-      client.checkout.fetch(id).then((checkout) => {
-        setCheckoutId(checkout.id as string);
-        setCheckout(checkout);
-      });
+      newCart = await client.checkout.fetch(id);
+      newCheckoutId = newCart.id as string;
     } else {
-      client.checkout.create().then((checkout) => {
-        localStorage.setItem("checkoutId", checkout.id as string);
-        setCheckoutId(checkout.id as string);
-        setCheckout(checkout);
-      });
+      newCart = await client.checkout.create();
+      newCheckoutId = newCart.id as string;
+      localStorage.setItem("checkoutId", newCheckoutId);
     }
+
+    setCheckoutId(newCheckoutId);
+    setCart(newCart);
   };
 
   useEffect(() => {
     initializeCart();
   }, []);
 
-  const addVariant = async (variantId: string, quantity: number) => {
+  /**
+   * add item to cart
+   * @param variantId
+   * @param quantity
+   */
+  const addItem = async (variantId: string, quantity: number) => {
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
     const checkout = await client.checkout.addLineItems(
       checkoutId,
       lineItemsToAdd
     );
-    setCheckout(checkout);
+    setCart(checkout);
   };
 
+  /**
+   * remove item from cart
+   * @param lineItemId
+   */
+  const removeItem = async (lineItemId: string) => {
+    const lineItemIdsToRemove = [lineItemId];
+    const newCheckout = await client.checkout.removeLineItems(
+      checkoutId,
+      lineItemIdsToRemove
+    );
+
+    setCart(newCheckout);
+  };
+
+  /**
+   * redirect to checkout page with selected variant
+   * @param variantId
+   * @param quantity
+   */
   const buyNow = async (variantId: string, quantity: number) => {
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
     const checkout = (await client.checkout.addLineItems(
@@ -52,23 +79,13 @@ const useCheckout = () => {
     location.href = checkout.webUrl;
   };
 
-  const removeItem = async (lineItemId: string) => {
-    const lineItemIdsToRemove = [lineItemId];
-
-    const newCheckout = await client.checkout.removeLineItems(
-      checkoutId,
-      lineItemIdsToRemove
-    );
-
-    setCheckout(newCheckout);
-  };
-
-  return {
-    checkout,
-    addVariant,
-    buyNow,
+  const checkout = {
+    addItem,
     removeItem,
+    buyNow,
   };
+
+  return [cart, checkout];
 };
 
-export default useCheckout;
+export default useCart;

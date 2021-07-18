@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ProductContext } from "pages/products/[handle]";
 import AddToCartButton from "components/product/AddToCartButton";
-import CheckoutButton from "components/product/CheckoutButton";
+import BuyNowButton from "components/product/BuyNowButton";
 
 const PaymentButton: React.FC = () => {
   const { product, variant } = useContext(ProductContext);
@@ -19,7 +19,7 @@ const PaymentButton: React.FC = () => {
           </div>
 
           <div className="buynow-btn">
-            <CheckoutButton />
+            <BuyNowButton />
           </div>
         </>
       ) : (

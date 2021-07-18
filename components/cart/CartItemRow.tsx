@@ -24,7 +24,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:768px)");
 
-  const { removeItem } = useCart();
+  const [_cart, checkout] = useCart();
 
   const { handle, quantity, title, variant } = item;
   const price = Number(item.variant.price);
@@ -32,7 +32,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
   const imgSrc = variant.image.src;
 
   const onClickHandler = async (variantId: string) => {
-    await removeItem(variantId).catch((err) => {
+    await checkout.removeItem(variantId).catch((err) => {
       console.error(err);
       alert("削除に失敗しました");
     });

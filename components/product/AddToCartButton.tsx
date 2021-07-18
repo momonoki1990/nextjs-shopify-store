@@ -9,13 +9,16 @@ import CartDrawer from "components/product/CartDrawer";
 const AddToCartButton: React.FC = () => {
   const { product, variant } = useContext(ProductContext);
   const [loading, setLoading] = useState<boolean>(false);
-  const { checkout, addVariant } = useCart();
+  const [cart, checkout] = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
   const onClickHandler = async () => {
     setLoading(true);
     const quantity = 1;
-    await addVariant((variant ? variant : product.variants[0]).id, quantity);
+    await checkout.addItem(
+      (variant ? variant : product.variants[0]).id,
+      quantity
+    );
     setLoading(false);
     setIsOpen(true);
   };
@@ -41,7 +44,7 @@ const AddToCartButton: React.FC = () => {
           カートに追加する
         </button>
       )}
-      <CartDrawer isOpen={isOpen} setIsOpen={setIsOpen} checkout={checkout} />
+      <CartDrawer isOpen={isOpen} setIsOpen={setIsOpen} cart={cart} />
     </>
   );
 };

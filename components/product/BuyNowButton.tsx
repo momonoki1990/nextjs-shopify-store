@@ -3,12 +3,15 @@ import { ProductContext } from "pages/products/[handle]";
 import useCart from "lib/useCart";
 
 const CheckoutButton = () => {
-  const { buyNow } = useCart();
+  const [_cart, checkout] = useCart();
   const { product, variant } = useContext(ProductContext);
 
   const onClickHandler = async () => {
     const quantity = 1;
-    await buyNow((variant ? variant : product.variants[0]).id, quantity);
+    await checkout.buyNow(
+      (variant ? variant : product.variants[0]).id,
+      quantity
+    );
   };
 
   return (

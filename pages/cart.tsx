@@ -11,10 +11,10 @@ import useCart from "lib/useCart";
 export const CheckoutContext = createContext<Cart | null>(null);
 
 const CartPage: React.FC = () => {
-  const { checkout } = useCart();
+  const [cart, _checkout] = useCart();
 
   return (
-    <CheckoutContext.Provider value={checkout}>
+    <CheckoutContext.Provider value={cart}>
       <Layout>
         <article className="collections-all">
           <header className="mb-9 md:mb-14 text-center">
@@ -32,8 +32,8 @@ const CartPage: React.FC = () => {
           </header>
           <section>
             <div className="container">
-              {checkout ? (
-                checkout.lineItems.length > 0 ? (
+              {cart ? (
+                cart.lineItems.length > 0 ? (
                   <>
                     <CartItemTable />
                     <CartFooter />

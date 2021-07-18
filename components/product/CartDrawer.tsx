@@ -7,10 +7,10 @@ import { closeIcon } from "components/utils/Icon";
 type Props = {
   isOpen: boolean;
   setIsOpen: any;
-  checkout: any;
+  cart: any;
 };
 
-const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, checkout }) => {
+const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cart }) => {
   const closeDrawer = () => {
     setIsOpen(false);
   };
@@ -22,7 +22,7 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, checkout }) => {
     accumulator += currentValue.quantity;
     return accumulator;
   };
-  const totalQuqntity = checkout?.lineItems?.reduce(reducer, 0);
+  const totalQuqntity = cart?.lineItems?.reduce(reducer, 0);
 
   return (
     <Drawer
