@@ -6,12 +6,12 @@ import Layout from "components/common/Layout";
 import CartItemTable from "components/cart/CartItemTable";
 import CartFooter from "components/cart/CartFooter";
 
-import useCheckout from "lib/useCheckout";
+import useCart from "lib/useCart";
 
 export const CheckoutContext = createContext<Cart | null>(null);
 
 const CartPage: React.FC = () => {
-  const { checkout } = useCheckout();
+  const { checkout } = useCart();
 
   return (
     <CheckoutContext.Provider value={checkout}>

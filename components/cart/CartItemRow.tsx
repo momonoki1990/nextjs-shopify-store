@@ -3,7 +3,7 @@ import Image from "next/image";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { LineItem } from "shopify-buy";
-import useCheckout from "lib/useCheckout";
+import useCart from "lib/useCart";
 
 const useStyles = makeStyles({
   myFlex: {
@@ -24,7 +24,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:768px)");
 
-  const { removeItem } = useCheckout();
+  const { removeItem } = useCart();
 
   const { handle, quantity, title, variant } = item;
   const price = Number(item.variant.price);
