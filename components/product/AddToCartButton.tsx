@@ -8,12 +8,15 @@ import CartDrawer from "components/product/CartDrawer";
 
 const AddToCartButton: React.FC = () => {
   const { product, variant } = useContext(ProductContext);
-  const { loading, checkout, addVariant } = useCart();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { checkout, addVariant } = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
   const onClickHandler = async () => {
+    setLoading(true);
     const quantity = 1;
     await addVariant((variant ? variant : product.variants[0]).id, quantity);
+    setLoading(false);
     setIsOpen(true);
   };
 

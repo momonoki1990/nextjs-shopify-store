@@ -10,7 +10,6 @@ import client from "lib/client";
 // };
 
 const useCheckout = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [checkout, setCheckout] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
 
@@ -36,14 +35,12 @@ const useCheckout = () => {
   }, []);
 
   const addVariant = async (variantId: string, quantity: number) => {
-    setLoading(true);
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
     const checkout = await client.checkout.addLineItems(
       checkoutId,
       lineItemsToAdd
     );
     setCheckout(checkout);
-    setLoading(false);
   };
 
   const buyNow = async (variantId: string, quantity: number) => {
@@ -56,7 +53,6 @@ const useCheckout = () => {
   };
 
   const removeItem = async (lineItemId: string) => {
-    setLoading(true);
     const lineItemIdsToRemove = [lineItemId];
 
     const newCheckout = await client.checkout.removeLineItems(
@@ -65,12 +61,10 @@ const useCheckout = () => {
     );
 
     setCheckout(newCheckout);
-    setLoading(false);
   };
 
   return {
     checkout,
-    loading,
     addVariant,
     buyNow,
     removeItem,
