@@ -3,11 +3,12 @@ import Image from "next/image";
 import { Drawer } from "@material-ui/core";
 import { ProductContext } from "pages/products/[handle]";
 import { closeIcon } from "components/utils/Icon";
+import { Cart } from "shopify-buy";
 
 type Props = {
   isOpen: boolean;
-  setIsOpen: any;
-  cart: any;
+  setIsOpen: (isOpen: boolean) => void;
+  cart: Cart;
 };
 
 const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cart }) => {

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-  item: any;
+  item: LineItem;
 };
 
 const CartItemRow: React.FC<Props> = ({ item }) => {
@@ -67,7 +67,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
             </div>
             <div className="mt-3">
               <button
-                onClick={() => onClickHandler(item.id)}
+                onClick={() => onClickHandler(item.id as string)}
                 className="border-b border-gray-600 text-gray-600 text-sm"
               >
                 削除

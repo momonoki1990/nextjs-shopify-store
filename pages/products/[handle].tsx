@@ -11,6 +11,7 @@ import Layout from "components/common/Layout";
 import ProductMainImage from "components/product/ProductMainImage";
 import ProductImageList from "components/product/ProductImageList";
 import ProductDetail from "components/product/ProductDetail";
+import { ProductVariant } from "shopify-buy";
 
 type Props = {
   handle: string;
@@ -18,8 +19,8 @@ type Props = {
 };
 
 type ProductContext = {
-  product: any;
-  variant: any | null;
+  product: Product;
+  variant: Variant | null;
   setVariant: (variant: Variant) => void;
   imageId: string;
   setImageId: (imageId: string) => void;

@@ -6,9 +6,14 @@ export type Image = {
   src: string;
 };
 
-export type Option = {
+export type ProductOption = {
   name: string;
   values: string[];
+};
+
+export type SelectedOption = {
+  name: string;
+  value: string;
 };
 
 export type Variant = {
@@ -16,13 +21,14 @@ export type Variant = {
   id: string;
   image: Image;
   title: string;
+  selectedOptions: SelectedOption[];
 };
 
 export type Product = {
   descriptionHtml: string;
   title: string;
   images: Image[];
-  options: Option[];
+  options: ProductOption[];
   variants: Variant[];
 };
 
@@ -97,7 +103,9 @@ const adjustIntoResult = (res: any): getProductResult => {
       src: image.originalSrc,
     };
   });
-  const variants = res.productByHandle.variants.edges.map((edge) => edge.node);
+  const variants: Variant[] = res.productByHandle.variants.edges.map(
+    (edge) => edge.node
+  );
   const product: Product = {
     descriptionHtml,
     title,

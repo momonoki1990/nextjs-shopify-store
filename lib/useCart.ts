@@ -57,12 +57,12 @@ const useCart = (): [Cart, Checkout] => {
    */
   const removeItem = async (lineItemId: string) => {
     const lineItemIdsToRemove = [lineItemId];
-    const newCheckout = await client.checkout.removeLineItems(
+    const newCart: Cart = await client.checkout.removeLineItems(
       checkoutId,
       lineItemIdsToRemove
     );
 
-    setCart(newCheckout);
+    setCart(newCart);
   };
 
   /**
@@ -72,11 +72,11 @@ const useCart = (): [Cart, Checkout] => {
    */
   const buyNow = async (variantId: string, quantity: number) => {
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
-    const checkout = (await client.checkout.addLineItems(
+    const newCart: Cart = await client.checkout.addLineItems(
       checkoutId,
       lineItemsToAdd
-    )) as any;
-    location.href = checkout.webUrl;
+    );
+    location.href = newCart.webUrl;
   };
 
   const checkout = {
