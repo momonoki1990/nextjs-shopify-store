@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Cart } from "shopify-buy";
 import client from "lib/client";
 
@@ -48,46 +48,55 @@ const useCart = (): [CartState, Checkout] => {
    * @param variantId
    * @param quantity
    */
-  const addItem = async (variantId: string, quantity: number) => {
-    setLoading(true);
-    const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
-    const newCart = await client.checkout.addLineItems(
-      checkoutId,
-      lineItemsToAdd
-    );
-    setCart(newCart);
-    setLoading(false);
-  };
+  const addItem = useCallback(
+    async (variantId: string, quantity: number) => {
+      setLoading(true);
+      const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
+      const newCart = await client.checkout.addLineItems(
+        checkoutId,
+        lineItemsToAdd
+      );
+      setCart(newCart);
+      setLoading(false);
+    },
+    [checkoutId]
+  );
 
   /**
    * remove item from cart
    * @param lineItemId
    */
-  const removeItem = async (lineItemId: string) => {
-    setLoading(true);
-    const lineItemIdsToRemove = [lineItemId];
-    const newCart: Cart = await client.checkout.removeLineItems(
-      checkoutId,
-      lineItemIdsToRemove
-    );
+  const removeItem = useCallback(
+    async (lineItemId: string) => {
+      setLoading(true);
+      const lineItemIdsToRemove = [lineItemId];
+      const newCart: Cart = await client.checkout.removeLineItems(
+        checkoutId,
+        lineItemIdsToRemove
+      );
 
-    setCart(newCart);
-    setLoading(false);
-  };
+      setCart(newCart);
+      setLoading(false);
+    },
+    [checkoutId]
+  );
 
   /**
    * redirect to checkout page with selected variant
    * @param variantId
    * @param quantity
    */
-  const buyNow = async (variantId: string, quantity: number) => {
-    const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
-    const newCart: Cart = await client.checkout.addLineItems(
-      checkoutId,
-      lineItemsToAdd
-    );
-    location.href = newCart.webUrl;
-  };
+  const buyNow = useCallback(
+    async (variantId: string, quantity: number) => {
+      const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
+      const newCart: Cart = await client.checkout.addLineItems(
+        checkoutId,
+        lineItemsToAdd
+      );
+      location.href = newCart.webUrl;
+    },
+    [checkoutId]
+  );
 
   const cartState = {
     value: cart,
