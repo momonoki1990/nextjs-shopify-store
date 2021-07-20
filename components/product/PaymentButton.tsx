@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
+import useCart from "lib/useCart";
 import { ProductContext } from "pages/products/[handle]";
 import AddToCartButton from "components/product/AddToCartButton";
 import BuyNowButton from "components/product/BuyNowButton";
 
 const PaymentButton: React.FC = () => {
   const { product, variant } = useContext(ProductContext);
+  const [cartState, checkout] = useCart();
 
   const isAvailable = variant
     ? variant.availableForSale
@@ -15,11 +17,11 @@ const PaymentButton: React.FC = () => {
       {isAvailable ? (
         <>
           <div className="add-btn mb-2">
-            <AddToCartButton />
+            <AddToCartButton cartState={cartState} checkout={checkout} />
           </div>
 
           <div className="buynow-btn">
-            <BuyNowButton />
+            <BuyNowButton checkout={checkout} />
           </div>
         </>
       ) : (

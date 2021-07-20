@@ -14,12 +14,9 @@ export type Checkout = {
 };
 
 const useCart = (): [CartState, Checkout] => {
-  console.log("useCart called");
   const [cart, setCart] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  console.log("cart.lineItems.length", cart?.lineItems.length);
-  console.log("loading", loading);
 
   /**
    * get checkout id and initialize cart object
@@ -37,13 +34,9 @@ const useCart = (): [CartState, Checkout] => {
       newCheckoutId = newCart.id as string;
       localStorage.setItem("checkoutId", newCheckoutId);
     }
-    console.log("setCheckoutId will be called");
     setCheckoutId(newCheckoutId);
-    console.log("setCheckoutId called");
     setCart(newCart);
-    console.log("setCart called");
     setLoading(false);
-    console.log("setLoading called");
   };
 
   useEffect(() => {
@@ -107,8 +100,6 @@ const useCart = (): [CartState, Checkout] => {
     buyNow,
   };
 
-  console.log("return in useCart");
-  console.log(cartState);
   return [cartState, checkout];
 };
 

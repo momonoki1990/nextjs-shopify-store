@@ -1,15 +1,17 @@
 import React, { useState, useContext } from "react";
-import { Product, ProductVariant } from "shopify-buy";
 import { CircularProgress } from "@material-ui/core";
-import useCart from "lib/useCart";
-import client from "lib/client";
+import { CartState, Checkout } from "lib/useCart";
 import { ProductContext } from "pages/products/[handle]";
 import CartDrawer from "components/product/CartDrawer";
 
-const AddToCartButton: React.FC = () => {
+type Props = {
+  cartState: CartState;
+  checkout: Checkout;
+};
+
+const AddToCartButton: React.FC<Props> = ({ cartState, checkout }) => {
   const { product, variant } = useContext(ProductContext);
   const [loading, setLoading] = useState<boolean>(false);
-  const [cartState, checkout] = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
   const onClickHandler = async () => {

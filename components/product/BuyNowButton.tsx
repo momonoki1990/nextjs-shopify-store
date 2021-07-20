@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
+import { Checkout } from "lib/useCart";
 import { ProductContext } from "pages/products/[handle]";
-import useCart from "lib/useCart";
 
-const CheckoutButton = () => {
-  const [_cart, checkout] = useCart();
+type Props = {
+  checkout: Checkout;
+};
+
+const CheckoutButton: React.FC<Props> = ({ checkout }) => {
   const { product, variant } = useContext(ProductContext);
 
   const onClickHandler = async () => {
