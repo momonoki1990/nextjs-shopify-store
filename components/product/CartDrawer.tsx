@@ -3,15 +3,15 @@ import Image from "next/image";
 import { Drawer } from "@material-ui/core";
 import { ProductContext } from "pages/products/[handle]";
 import { closeIcon } from "components/utils/Icon";
-import { Cart } from "shopify-buy";
+import { CartState } from "lib/useCart";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  cart: Cart;
+  cartState: CartState;
 };
 
-const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cart }) => {
+const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cartState }) => {
   const closeDrawer = () => {
     setIsOpen(false);
   };
@@ -23,7 +23,7 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cart }) => {
     accumulator += currentValue.quantity;
     return accumulator;
   };
-  const totalQuqntity = cart?.lineItems?.reduce(reducer, 0);
+  const totalQuqntity = cartState.value?.lineItems.reduce(reducer, 0);
 
   return (
     <Drawer

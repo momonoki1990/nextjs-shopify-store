@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 
 const CartFooter: React.FC = () => {
   return (

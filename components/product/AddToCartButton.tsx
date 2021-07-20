@@ -9,7 +9,7 @@ import CartDrawer from "components/product/CartDrawer";
 const AddToCartButton: React.FC = () => {
   const { product, variant } = useContext(ProductContext);
   const [loading, setLoading] = useState<boolean>(false);
-  const [cart, checkout] = useCart();
+  const [cartState, checkout] = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
   const onClickHandler = async () => {
@@ -44,7 +44,7 @@ const AddToCartButton: React.FC = () => {
           カートに追加する
         </button>
       )}
-      <CartDrawer isOpen={isOpen} setIsOpen={setIsOpen} cart={cart} />
+      <CartDrawer isOpen={isOpen} setIsOpen={setIsOpen} cartState={cartState} />
     </>
   );
 };

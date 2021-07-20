@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { LineItem } from "shopify-buy";
-import useCart from "lib/useCart";
+import { CartContext } from "pages/cart";
 
 const useStyles = makeStyles({
   myFlex: {
@@ -24,7 +24,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
   const classes = useStyles();
   const matches = useMediaQuery("(min-width:768px)");
 
-  const [_cart, checkout] = useCart();
+  const { checkout } = useContext(CartContext);
 
   const { handle, quantity, title, variant } = item;
   const price = Number(item.variant.price);

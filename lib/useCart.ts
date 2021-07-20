@@ -2,15 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Cart } from "shopify-buy";
 import client from "lib/client";
 
-type Checkout = {
+export type CartState = {
+  value: Cart;
+  loading: boolean;
+};
+
+export type Checkout = {
   addItem: (variantId: string, quantity: number) => Promise<void>;
   removeItem: (lineItemId: string) => Promise<void>;
   buyNow: (variantId: string, quantity: number) => Promise<void>;
 };
 
-const useCart = (): [Cart, Checkout] => {
+const useCart = (): [CartState, Checkout] => {
+  console.log("useCart called");
   const [cart, setCart] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  console.log("cart.lineItems.length", cart?.lineItems.length);
+  console.log("loading", loading);
 
   /**
    * get checkout id and initialize cart object
@@ -28,9 +37,13 @@ const useCart = (): [Cart, Checkout] => {
       newCheckoutId = newCart.id as string;
       localStorage.setItem("checkoutId", newCheckoutId);
     }
-
+    console.log("setCheckoutId will be called");
     setCheckoutId(newCheckoutId);
+    console.log("setCheckoutId called");
     setCart(newCart);
+    console.log("setCart called");
+    setLoading(false);
+    console.log("setLoading called");
   };
 
   useEffect(() => {
@@ -43,12 +56,14 @@ const useCart = (): [Cart, Checkout] => {
    * @param quantity
    */
   const addItem = async (variantId: string, quantity: number) => {
+    setLoading(true);
     const lineItemsToAdd = [{ variantId: variantId, quantity: quantity }];
-    const checkout = await client.checkout.addLineItems(
+    const newCart = await client.checkout.addLineItems(
       checkoutId,
       lineItemsToAdd
     );
-    setCart(checkout);
+    setCart(newCart);
+    setLoading(false);
   };
 
   /**
@@ -56,6 +71,7 @@ const useCart = (): [Cart, Checkout] => {
    * @param lineItemId
    */
   const removeItem = async (lineItemId: string) => {
+    setLoading(true);
     const lineItemIdsToRemove = [lineItemId];
     const newCart: Cart = await client.checkout.removeLineItems(
       checkoutId,
@@ -63,6 +79,7 @@ const useCart = (): [Cart, Checkout] => {
     );
 
     setCart(newCart);
+    setLoading(false);
   };
 
   /**
@@ -79,13 +96,20 @@ const useCart = (): [Cart, Checkout] => {
     location.href = newCart.webUrl;
   };
 
+  const cartState = {
+    value: cart,
+    loading,
+  };
+
   const checkout = {
     addItem,
     removeItem,
     buyNow,
   };
 
-  return [cart, checkout];
+  console.log("return in useCart");
+  console.log(cartState);
+  return [cartState, checkout];
 };
 
 export default useCart;

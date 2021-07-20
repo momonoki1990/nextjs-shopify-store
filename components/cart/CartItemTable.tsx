@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { CheckoutContext } from "pages/cart";
+import { CartContext } from "pages/cart";
 import CartItemRow from "components/cart/CartItemRow";
 
 const CartItemTable = () => {
-  const cart = useContext(CheckoutContext);
+  const { cartState } = useContext(CartContext);
 
   return (
     <table>
@@ -20,7 +20,7 @@ const CartItemTable = () => {
         </tr>
       </thead>
       <tbody>
-        {cart?.lineItems?.map((item, idx) => (
+        {cartState.value.lineItems.map((item, idx) => (
           <CartItemRow item={item} key={idx} />
         ))}
       </tbody>

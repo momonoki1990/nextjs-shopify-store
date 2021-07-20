@@ -1,47 +1,63 @@
 import React, { createContext } from "react";
-import { GetServerSideProps } from "next";
-import { Cart } from "shopify-buy";
 import { CircularProgress } from "@material-ui/core";
+import useCart, { CartState, Checkout } from "lib/useCart";
 import Layout from "components/common/Layout";
 import CartItemTable from "components/cart/CartItemTable";
 import CartFooter from "components/cart/CartFooter";
 
-import useCart from "lib/useCart";
+type CartContext = {
+  cartState: CartState;
+  checkout: Checkout;
+};
 
-export const CheckoutContext = createContext<Cart | null>(null);
+export const CartContext = createContext<CartContext>({} as CartContext);
 
 const CartPage: React.FC = () => {
-  const [cart, _checkout] = useCart();
+  console.log("render CartPage");
+  const [cartState, checkout] = useCart();
+  console.log("cartState in CartPage component");
+  const CartContextValue: CartContext = {
+    cartState,
+    checkout,
+  };
 
   return (
-    <CheckoutContext.Provider value={cart}>
+    <CartContext.Provider value={CartContextValue}>
       <Layout>
         <article className="collections-all">
           <header className="mb-9 md:mb-14 text-center">
             <h1 className="font-semibold mb-2 text-gray-700 text-4xl">
               ショッピングカート
             </h1>
-            <div className="text-center">
-              <a
-                href="/collections/all"
-                className="border-b border-gray-600 text-gray-600"
-              >
-                買い物を続ける
-              </a>{" "}
-            </div>
           </header>
-          <section>
-            <div className="container">
-              {cart ? (
-                cart.lineItems.length > 0 ? (
+          <section className="container">
+            {cartState.loading ? (
+              <div className="loading-icon flex items-center justify-center">
+                <CircularProgress
+                  classes={{ svg: "font-bold text-gray-400" }}
+                  size="1.25rem"
+                  thickness={6}
+                />
+              </div>
+            ) : (
+              <div className="text-center">
+                {cartState.value.lineItems.length > 0 ? (
                   <>
+                    <div className="continue-link">
+                      <a
+                        href="/collections/all"
+                        className="border-b border-gray-600 text-gray-600"
+                      >
+                        買い物を続ける
+                      </a>
+                    </div>
                     <CartItemTable />
                     <CartFooter />
                   </>
                 ) : (
                   <>
-                    <div>カート内に商品がありません</div>
-                    <div>
+                    <div className="mb-4">カート内に商品がありません</div>
+                    <div className="continue-btn">
                       <a
                         className="bg-gray-700 flex-grow inline-block px-4 py-3 text-sm text-white"
                         href="/collections/all"
@@ -50,21 +66,13 @@ const CartPage: React.FC = () => {
                       </a>
                     </div>
                   </>
-                )
-              ) : (
-                <div className="flex items-center justify-center">
-                  <CircularProgress
-                    classes={{ svg: "font-bold text-gray-400" }}
-                    size="1.25rem"
-                    thickness={6}
-                  />
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </section>
         </article>
       </Layout>
-    </CheckoutContext.Provider>
+    </CartContext.Provider>
   );
 };
 
