@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "pages/cart";
 
 const CartFooter: React.FC = () => {
+  const { cartState } = useContext(CartContext);
   return (
     <div className="mt-12 text-center md:text-right">
       <div>
         <span>小計</span>
-        <span className="ml-2">~~~~JPY</span>
+        <span className="ml-2">
+          ¥{Number(cartState.value.subtotalPrice).toLocaleString("ja-JP")} JPY
+        </span>
       </div>
       <div className="mt-3">税と配送料は購入手続き時に計算されます</div>
       <div className="max-w-xs mx-auto md:mr-0">

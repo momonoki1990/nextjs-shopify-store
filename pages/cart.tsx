@@ -13,9 +13,7 @@ type CartContext = {
 export const CartContext = createContext<CartContext>({} as CartContext);
 
 const CartPage: React.FC = () => {
-  console.log("render CartPage");
   const [cartState, checkout] = useCart();
-  console.log("cartState in CartPage component");
   const CartContextValue: CartContext = {
     cartState,
     checkout,

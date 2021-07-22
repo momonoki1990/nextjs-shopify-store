@@ -9,6 +9,7 @@ export type CartState = {
 
 export type Checkout = {
   addItem: (variantId: string, quantity: number) => Promise<void>;
+  updateQuantity: (lineItemId: string, quantity: number) => Promise<void>;
   removeItem: (lineItemId: string) => Promise<void>;
   buyNow: (variantId: string, quantity: number) => Promise<void>;
 };
@@ -17,6 +18,7 @@ const useCart = (): [CartState, Checkout] => {
   const [cart, setCart] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  console.log(cart);
 
   /**
    * get checkout id and initialize cart object
@@ -63,20 +65,35 @@ const useCart = (): [CartState, Checkout] => {
   );
 
   /**
+   * update item quantity
+   */
+  const updateQuantity = useCallback(
+    async (lineItemId: string, quantity: number) => {
+      const lineItemsToUpdate = [{ id: lineItemId, quantity }];
+      const newCart = await client.checkout.updateLineItems(
+        checkoutId,
+        lineItemsToUpdate
+      );
+      setCart(newCart);
+    },
+    [checkoutId]
+  );
+
+  /**
    * remove item from cart
    * @param lineItemId
    */
   const removeItem = useCallback(
     async (lineItemId: string) => {
-      setLoading(true);
       const lineItemIdsToRemove = [lineItemId];
       const newCart: Cart = await client.checkout.removeLineItems(
         checkoutId,
         lineItemIdsToRemove
       );
 
+      console.log(newCart);
+
       setCart(newCart);
-      setLoading(false);
     },
     [checkoutId]
   );
@@ -105,6 +122,7 @@ const useCart = (): [CartState, Checkout] => {
 
   const checkout = {
     addItem,
+    updateQuantity,
     removeItem,
     buyNow,
   };
