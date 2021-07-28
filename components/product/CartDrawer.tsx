@@ -29,6 +29,7 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cartState }) => {
     <Drawer
       classes={{ paper: "border border-gray-400 left-auto w-full md:w-96" }}
       anchor="top"
+      BackdropProps={{ invisible: true }}
       open={isOpen}
       onClose={closeDrawer}
     >

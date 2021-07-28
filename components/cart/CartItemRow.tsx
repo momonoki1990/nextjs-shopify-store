@@ -8,11 +8,11 @@ import { QuantityInput } from "components/cart/QuantityInput";
 
 const useStyles = makeStyles({
   myFlex: {
-    flex: "5rem 0 0",
+    flex: "0 0 5rem ",
     paddingRight: "1.5rem",
   },
   myFlex2: {
-    flex: "9rem 0 0",
+    flex: "0 0 9rem",
     paddingRight: "3rem",
   },
 });
@@ -41,7 +41,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
 
   return (
     <tr className="border-gray-200 border-b">
-      <td className="py-5 text-left w-3/6">
+      <td className="py-5 text-left w-4/6">
         <div className="flex">
           <figure className={matches ? classes.myFlex2 : classes.myFlex}>
             <a
@@ -77,10 +77,12 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
           </div>
         </div>
       </td>
-      <td className="align-top md:align-middle p-5 text-right text-gray-700 md:w-1/6 w-3/6">
+      <td className="align-top md:align-middle p-5 text-right text-gray-700 md:w-1/6 w-2/6">
         <div className="text-sm">¥{price.toLocaleString("ja-JP")}</div>
-        <div className="md:hidden flex justify-end justify-items-center mt-3">
-          <label className="inline-block mr-2 my-auto text-xs">数量</label>
+        <div className="md:hidden mt-3">
+          <label className="inline-block mt-auto mb-auto mr-2 my-auto text-xs">
+            数量
+          </label>
           <QuantityInput id={item.id as string} quantity={quantity} />
         </div>
       </td>

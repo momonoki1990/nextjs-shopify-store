@@ -28,6 +28,7 @@ export const QuantityInput: React.FC<Props> = ({ id, quantity }) => {
   return (
     <TextField
       type="number"
+      className="align-middle"
       defaultValue={quantity}
       inputProps={{
         step: 1,
