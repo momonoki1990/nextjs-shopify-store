@@ -17,7 +17,7 @@ const MenuList: React.FC<Props> = ({ visibility }) => {
             Home
           </a>
         </li>
-        {["all", "apple", "watch"].map((title, idx) => (
+        {["apple", "watch"].map((title, idx) => (
           <li
             className="border-t md:border-t-0 border-gray-20 md:inline-block"
             key={idx}

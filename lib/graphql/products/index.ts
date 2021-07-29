@@ -48,7 +48,7 @@ const fetchProduct = async (handle: string) => {
       productByHandle(handle: $handle) {
         descriptionHtml
         title
-        images(first: 20) {
+        images(first: 250) {
           edges {
             node {
               id
@@ -60,7 +60,7 @@ const fetchProduct = async (handle: string) => {
           name
           values
         }
-        variants(first: 30) {
+        variants(first: 250) {
           edges {
             node {
               availableForSale

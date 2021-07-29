@@ -18,7 +18,6 @@ const useCart = (): [CartState, Checkout] => {
   const [cart, setCart] = useState<Cart | null>(null);
   const [checkoutId, setCheckoutId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  console.log(cart);
 
   /**
    * get checkout id and initialize cart object
@@ -90,8 +89,6 @@ const useCart = (): [CartState, Checkout] => {
         checkoutId,
         lineItemIdsToRemove
       );
-
-      console.log(newCart);
 
       setCart(newCart);
     },
