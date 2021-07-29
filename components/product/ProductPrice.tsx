@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
 import { ProductContext } from "pages/products/[handle]";
 
 const ProductPrice: React.FC = () => {
@@ -7,7 +6,7 @@ const ProductPrice: React.FC = () => {
 
   const price = variant
     ? variant.price
-    : getPriceInfoFromProduct(product).price.toLocaleString("ja-JP");
+    : product.variants[0].price.toLocaleString("ja-JP");
   const isAvailable = variant
     ? variant.availableForSale
     : product.variants[0].availableForSale;

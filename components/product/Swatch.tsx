@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { Option } from "lib/graphql/products";
+import { ProductOption } from "lib/graphql/products";
 import { ProductContext } from "pages/products/[handle]";
 
 type Props = {
-  productOption: Option;
+  productOption: ProductOption;
 };
 
 const Swatch: React.FC<Props> = ({ productOption }) => {

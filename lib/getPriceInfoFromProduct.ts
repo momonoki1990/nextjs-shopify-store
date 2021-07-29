@@ -1,10 +1,9 @@
-import { Product } from "shopify-buy";
-
-type ProductInfo = { price: number; priceVaries: boolean };
-type Func = (product: Product) => ProductInfo;
+import { Product } from "lib/graphql/products";
 
 // variantsから価格に関する情報を取得する
-const getPriceInfoFromProduct = (product: Product) => {
+const getPriceInfoFromProduct = (
+  product: Product
+): { price: number; priceVaries: boolean } => {
   const { variants } = product;
 
   // variantsを昇順で並び替え
@@ -12,7 +11,7 @@ const getPriceInfoFromProduct = (product: Product) => {
     const [priceA, priceB]: number[] = [a.price, b.price].map((str) =>
       Number(str)
     );
-    return priceA - priceB
+    return priceA - priceB;
   });
 
   // 一番低い価格・価格に差異があるかを取得

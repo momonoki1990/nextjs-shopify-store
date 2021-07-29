@@ -1,18 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { Product } from "lib/graphql/collection";
-// import { Product } from "shopify-buy";
-import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct"
 
 type Props = {
   product: Product;
 };
 
 const ProductCard: React.FC<Props> = ({ product }) => {
-  // const { price, priceVaries } = getPriceInfoFromProduct(product);
   const price = product.priceMin;
   const priceVaries = !(product.priceMax === product.priceMin);
-
 
   return (
     <div className="product-card">

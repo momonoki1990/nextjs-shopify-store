@@ -20,6 +20,7 @@ export type Variant = {
   availableForSale: boolean;
   id: string;
   image: Image;
+  price: number;
   title: string;
   selectedOptions: SelectedOption[];
 };
