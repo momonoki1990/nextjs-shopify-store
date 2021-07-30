@@ -211,8 +211,8 @@ const adjustIntoResult = (res: any): GetCollectionWithProductsResult => {
           originalSrc,
         };
       });
-      product.priceMax = node.priceRange.maxVariantPrice.amount;
-      product.priceMin = node.priceRange.minVariantPrice.amount;
+      product.priceMax = Math.floor(node.priceRange.maxVariantPrice.amount);
+      product.priceMin = Math.floor(node.priceRange.minVariantPrice.amount);
       product.title = node.title;
 
       return product;

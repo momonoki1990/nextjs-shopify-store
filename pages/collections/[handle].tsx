@@ -13,8 +13,6 @@ import {
 import Layout from "components/common/Layout";
 import FilterToolbar from "components/collections/FilterToolbar";
 import ProductList from "components/collections/ProductList";
-import Pagination from "components/utils/Pagination";
-import paginate from "lib/paginate";
 
 type Props = {
   handle: string;
