@@ -1,23 +1,30 @@
 import React from "react";
 import { Drawer } from "@material-ui/core";
-import { searchIcon, closeIcon } from "components/utils/Icon"
-
+import { searchIcon, closeIcon } from "components/utils/Icon";
 
 const SearchDrawer = () => {
   const [isOpened, setIsOpened] = React.useState(false);
 
-  const toggleDrawer = (isOpened: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
+  const toggleDrawer =
+    (isOpened: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
 
-    setIsOpened(isOpened);
+      setIsOpened(isOpened);
+    };
+
+  const onClickHandler = (event) => {
+    event.preventDefault();
+    const form = document.getElementById("search-form") as HTMLFormElement;
+    const formData = new FormData(form);
+    const text = formData.get("q");
+    form.action = `/search?${text}`;
+    form.submit();
   };
 
   return (
@@ -36,15 +43,21 @@ const SearchDrawer = () => {
       >
         <div className="search__container container flex justify-center items-center py-4 text-center">
           <div className="search__wrapper flex-grow max-w-screen-md relative">
-            <input
-              className="inline-block border border-gray-300 pl-4 pr-18 py-2 rounded-sm w-full"
-              type="text"
-              placeholder="検索する"
-              autoFocus
-            />
-            <button className="inline-block absolute p-2 top-1/2 right-0 transform -translate-y-1/2">
-              {searchIcon}
-            </button>
+            <form action="/search" method="get" id="search-form">
+              <input
+                className="inline-block border border-gray-300 pl-4 pr-18 py-2 rounded-sm w-full"
+                type="text"
+                placeholder="検索する"
+                autoFocus
+                name="q"
+              />
+              <button
+                className="inline-block absolute p-2 top-1/2 right-0 transform -translate-y-1/2"
+                onClick={onClickHandler}
+              >
+                {searchIcon}
+              </button>
+            </form>
           </div>
           <button
             className="drawer__close inline-block p-2"
