@@ -7,10 +7,11 @@ const Footer: React.FC = () => (
         <div className="font-semibold">クイックリンク</div>
         <ul>
           <li className="py-4">
-            <a href="/search">
-              <a className="hover:text-opacity-70 text-gray-800 hover:underline">
-                検索
-              </a>
+            <a
+              href="/search"
+              className="hover:text-opacity-70 text-gray-800 hover:underline"
+            >
+              検索
             </a>
           </li>
         </ul>
@@ -24,9 +25,7 @@ const Footer: React.FC = () => (
             placeholder="メールアドレス"
             style={{ flex: "9999 0 15rem" }}
           />
-          <button
-            className="bg-gray-700 flex-grow inline-block px-4 py-3 text-sm text-white"
-          >
+          <button className="bg-gray-700 flex-grow inline-block px-4 py-3 text-sm text-white">
             登録する
           </button>
         </div>

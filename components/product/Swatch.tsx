@@ -1,17 +1,15 @@
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { Option } from "shopify-buy";
+import { ProductOption } from "lib/graphql/products";
 import { ProductContext } from "pages/products/[handle]";
 
 type Props = {
-  productOption: Option;
+  productOption: ProductOption;
 };
 
 const Swatch: React.FC<Props> = ({ productOption }) => {
-
-  const { product, variant, setVariant, setImageId } = useContext(
-    ProductContext
-  );
+  const { product, variant, setVariant, setImageId } =
+    useContext(ProductContext);
 
   const { name: optionName } = productOption;
 
@@ -19,8 +17,9 @@ const Swatch: React.FC<Props> = ({ productOption }) => {
     ? variant.selectedOptions
     : product.variants[0].selectedOptions;
 
-  const currentValue = selectedOptions.find((opt) => opt.name === optionName)
-    .value;
+  const currentValue = selectedOptions.find(
+    (opt) => opt.name === optionName
+  ).value;
 
   const router = useRouter();
 
@@ -41,7 +40,7 @@ const Swatch: React.FC<Props> = ({ productOption }) => {
     setVariant(newVariant);
 
     // imageIdを更新
-    newVariant?.image?.id && setImageId(newVariant?.image?.id as string);
+    newVariant?.image?.id && setImageId(newVariant.image.id as string);
 
     // query paramを更新
     router.replace(
@@ -61,8 +60,8 @@ const Swatch: React.FC<Props> = ({ productOption }) => {
         onChange={changeVariant}
         value={currentValue}
       >
-        {productOption.values.map(({ value }) => (
-          <option value={value} key={value}>
+        {productOption.values.map((value, idx) => (
+          <option value={value} key={idx}>
             {value}
           </option>
         ))}

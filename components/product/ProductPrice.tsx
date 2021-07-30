@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
-import getPriceInfoFromProduct from "lib/getPriceInfoFromProduct";
 import { ProductContext } from "pages/products/[handle]";
 
 const ProductPrice: React.FC = () => {
-  const { product, variant } = useContext(ProductContext)
+  const { product, variant } = useContext(ProductContext);
 
-  const price = variant ? variant.price : getPriceInfoFromProduct(product).price.toLocaleString("ja-JP");
+  const price = variant
+    ? variant.price
+    : product.variants[0].price.toLocaleString("ja-JP");
   const isAvailable = variant
-    ? variant.available
-    : product.variants[0].available;
+    ? variant.availableForSale
+    : product.variants[0].availableForSale;
 
   return (
     <div className="flex items-center">
