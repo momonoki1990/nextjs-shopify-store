@@ -9,7 +9,7 @@ import {
   GetCollectionWithProductsResult,
   Product,
   SortBy,
-} from "lib/graphql/collection";
+} from "lib/graphql/collection/getCollectionWithProducts";
 import Layout from "components/common/Layout";
 import FilterToolbar from "components/collections/FilterToolbar";
 import ProductList from "components/collections/ProductList";

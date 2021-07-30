@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { ProductOption } from "lib/graphql/products";
+import { ProductOption } from "lib/graphql/product/getProduct";
 import { ProductContext } from "pages/products/[handle]";
 
 type Props = {

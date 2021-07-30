@@ -6,7 +6,7 @@ import {
   getProductResult,
   Product,
   Variant,
-} from "lib/graphql/products";
+} from "lib/graphql/product/getProduct";
 import Layout from "components/common/Layout";
 import ProductMainImage from "components/product/ProductMainImage";
 import ProductImageList from "components/product/ProductImageList";

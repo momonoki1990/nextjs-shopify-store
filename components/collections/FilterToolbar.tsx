@@ -1,5 +1,5 @@
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
-import { SortBy } from "lib/graphql/collection";
+import { SortBy } from "lib/graphql/collection/getCollectionWithProducts";
 
 type Props = {
   sortBy: SortBy;
