@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Drawer } from "@material-ui/core";
 import { searchIcon, closeIcon } from "components/utils/Icon";
 
 const SearchDrawer = () => {
   const [isOpened, setIsOpened] = React.useState(false);
+  const formEl = useRef<HTMLFormElement | null>(null);
 
   const toggleDrawer =
     (isOpened: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -20,7 +21,7 @@ const SearchDrawer = () => {
 
   const onClickHandler = (event) => {
     event.preventDefault();
-    const form = document.getElementById("search-form") as HTMLFormElement;
+    const form = formEl.current;
     const formData = new FormData(form);
     const text = formData.get("q");
     form.action = `/search?${text}`;
@@ -43,7 +44,7 @@ const SearchDrawer = () => {
       >
         <div className="search__container container flex justify-center items-center py-4 text-center">
           <div className="search__wrapper flex-grow max-w-screen-md relative">
-            <form action="/search" method="get" id="search-form">
+            <form action="/search" method="get" ref={formEl}>
               <input
                 className="inline-block border border-gray-300 pl-4 pr-18 py-2 rounded-sm w-full"
                 type="text"
