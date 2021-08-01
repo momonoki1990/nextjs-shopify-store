@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
 import { CircularProgress } from "@material-ui/core";
 import {
   Product,
@@ -9,11 +10,15 @@ import Layout from "components/common/Layout";
 import { SearchBox } from "components/common/SeachBox";
 import { SearchItemRow } from "components/search/SearchItemRow";
 
-const SearchPage: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [products, setProducts] = useState<Product[] | null>(null);
+type Props = {
+  q: string | null;
+};
 
+const SearchPage: React.FC<Props> = ({ q }) => {
+  const [loading, setLoading] = useState<boolean>(q ? true : false);
+  const [products, setProducts] = useState<Product[] | null>(null);
   const numOfDisplays: number = 16;
+  console.log(products);
 
   const fetchData = async (queryWord: string) => {
     const result: GetProductsByTitleResult = await getProductsByTitle(
@@ -25,7 +30,9 @@ const SearchPage: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData("360");
+    if (q) {
+      fetchData(q);
+    }
   }, []);
 
   return (
@@ -62,3 +69,13 @@ const SearchPage: React.FC = () => {
 };
 
 export default SearchPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const q = (context.query?.q as string) || null;
+
+  return {
+    props: {
+      q,
+    },
+  };
+};
