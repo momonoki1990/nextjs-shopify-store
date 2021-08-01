@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { Skeleton } from "@material-ui/lab";
 import InfiniteScroll from "react-infinite-scroll-component";
-import client from "lib/client";
 import {
   Collection,
   getCollectionWithProducts,
@@ -56,7 +55,7 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
 
   return (
     <Layout>
-      <article className="collections-all">
+      <article className="collection">
         <header>
           <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-4xl">
             {collection && collection.title}

@@ -37,7 +37,7 @@ export type getProductResult = {
   product: Product;
 };
 
-export const getProduct = async (handle: string) => {
+export const getProductByHandle = async (handle: string) => {
   const res = await fetchProduct(handle);
   const result: getProductResult = adjustIntoResult(res);
   return result;

@@ -14,12 +14,12 @@ export type SortBy =
   | "created-descending";
 
 type Image = {
-  src: string;
+  originalSrc: string;
 };
 
 export type Product = {
   handle: string;
-  images: Image;
+  images: Image[];
   priceMin: number;
   priceMax: number;
   title: string;
@@ -205,8 +205,8 @@ const adjustIntoResult = (res: any): GetCollectionWithProductsResult => {
       const product = {} as Product;
 
       product.handle = node.handle;
-      product.images = node.images.edges.map((node) => {
-        const originalSrc = node.node.originalSrc;
+      product.images = node.images.edges.map((edge) => {
+        const originalSrc = edge.node.originalSrc;
         return {
           originalSrc,
         };

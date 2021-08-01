@@ -1,12 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { CircularProgress } from "@material-ui/core";
+import {
+  Product,
+  getProductsByTitle,
+  GetProductsByTitleResult,
+} from "lib/graphql/product/getProductsByTitle";
 import Layout from "components/common/Layout";
+import { SearchBox } from "components/common/SeachBox";
+import { SearchItemRow } from "components/search/SearchItemRow";
 
-const Search: React.FC = () => (
-  <Layout>
-    <div className="text-center">
-      This is search result page and not implemented.
-    </div>
-  </Layout>
-);
+const SearchPage: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[] | null>(null);
 
-export default Search;
+  const numOfDisplays: number = 16;
+
+  const fetchData = async (queryWord: string) => {
+    const result: GetProductsByTitleResult = await getProductsByTitle(
+      queryWord,
+      numOfDisplays
+    );
+    setProducts(result.products);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData("360");
+  }, []);
+
+  return (
+    <Layout>
+      <article>
+        <header className="border-b md:pb-14 pb-8">
+          <div className="container">
+            <h2 className="font-semibold mb-4 text-center text-gray-700 text-xl">
+              〜件 - 結果 "〜〜〜"
+            </h2>
+            <div className="max-w-screen-sm relative mx-auto my-0 md:w-7/12 w-full">
+              <SearchBox />
+            </div>
+          </div>
+        </header>
+        <section className="container">
+          {loading ? (
+            <div className="loading-icon flex items-center justify-center">
+              <CircularProgress
+                classes={{ svg: "font-bold text-gray-400" }}
+                size="1.25rem"
+                thickness={6}
+              />
+            </div>
+          ) : (
+            products?.map((product: Product) => (
+              <SearchItemRow product={product} key={product.id} />
+            ))
+          )}
+        </section>
+      </article>
+    </Layout>
+  );
+};
+
+export default SearchPage;
