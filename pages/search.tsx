@@ -41,7 +41,7 @@ const SearchPage: React.FC<Props> = ({ q }) => {
         <header className="border-b pb-8 md:pb-14">
           <div className="container">
             <h2 className="font-semibold mb-4 text-center text-gray-700 text-xl">
-              〜件 - 結果 "〜〜〜"
+              {products ? `${products.length}件 - 結果 "${q}"` : `"${q}"を検索`}
             </h2>
             <div className="max-w-screen-sm relative mx-auto my-0 md:w-7/12 w-full">
               <SearchBox />
