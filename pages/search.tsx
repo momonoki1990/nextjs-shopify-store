@@ -38,7 +38,7 @@ const SearchPage: React.FC<Props> = ({ q }) => {
   return (
     <Layout>
       <article>
-        <header className="border-b md:pb-14 pb-8">
+        <header className="border-b pb-8 md:pb-14">
           <div className="container">
             <h2 className="font-semibold mb-4 text-center text-gray-700 text-xl">
               〜件 - 結果 "〜〜〜"
@@ -48,7 +48,7 @@ const SearchPage: React.FC<Props> = ({ q }) => {
             </div>
           </div>
         </header>
-        <section className="container">
+        <section className="container pt-8 md:pt-14">
           {loading ? (
             <div className="loading-icon flex items-center justify-center">
               <CircularProgress
