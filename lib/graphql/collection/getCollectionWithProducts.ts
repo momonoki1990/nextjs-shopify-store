@@ -37,7 +37,7 @@ export type GetCollectionWithProductsResult = {
 };
 
 /**
- * Fetch collection info with products info for collection page
+ * Fetch collection info with products info as a format like liquid object for collection page
  * @param handle collection handle
  */
 export const getCollectionWithProducts = async (
@@ -136,7 +136,7 @@ const fetchCollection = async (
 };
 
 /**
- * generate sort params for query from selected sort-by value
+ * Generate sort params for query from selected sort-by value
  * @param sortBy
  * @returns
  */
