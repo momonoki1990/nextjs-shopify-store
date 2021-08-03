@@ -58,7 +58,7 @@ export const getCollectionWithProducts = async (
 };
 
 /**
- * fetch collection info with products from shopify store front api
+ * Fetch collection info with products from shopify store front api
  * @param handle collection handle
  * @param numOfDisplays num of collection products to retrieve at once
  * @param sortKey sortKey defined at ProductCollectionSortKeys(https://shopify.dev/api/storefront/reference/products/productcollectionsortkeys)

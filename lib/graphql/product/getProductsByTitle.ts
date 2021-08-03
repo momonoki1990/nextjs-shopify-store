@@ -16,26 +16,44 @@ export type Product = {
 
 export type GetProductsByTitleResult = {
   products: Product[];
-  // cursor: string;
-  // hasNextPage: boolean;
+  cursor: string;
+  hasNextPage: boolean;
 };
 
+/**
+ * Fetch products info with query word as a format like product liquid object for search result page
+ * @param queryWord
+ * @param numOfDisplays
+ * @param cursor
+ * @returns
+ */
 export const getProductsByTitle = async (
   queryWord: string,
-  numOfDisplays: number
+  numOfDisplays: number,
+  cursor: string
 ): Promise<GetProductsByTitleResult> => {
-  console.log("getProductsByTitle called");
-  console.log(queryWord);
-  const res = await fetchProducts(queryWord, numOfDisplays);
+  const res = await fetchProducts(queryWord, numOfDisplays, cursor);
   const result = adjustIntoResult(res);
   return result;
 };
 
-const fetchProducts = async (queryWord: string, numOfDisplays: number) => {
+/**
+ * Fetch products info with query word from shopify store front api
+ * @param queryWord
+ * @param numOfDisplays
+ * @param cursor
+ * @returns
+ */
+const fetchProducts = async (
+  queryWord: string,
+  numOfDisplays: number,
+  cursor: string
+) => {
   const query = gql`
-    query products($query: String!, $numOfDisplays: Int!) {
-      products(first: $numOfDisplays, query: $query) {
+    query products($numOfDisplays: Int!, $query: String!, $cursor: String) {
+      products(first: $numOfDisplays, query: $query, after: $cursor) {
         edges {
+          cursor
           node {
             handle
             id
@@ -57,13 +75,18 @@ const fetchProducts = async (queryWord: string, numOfDisplays: number) => {
             title
           }
         }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+        }
       }
     }
   `;
 
   const variables = {
-    query: `title:*${queryWord}*`,
     numOfDisplays,
+    query: `title:*${queryWord}*`,
+    cursor,
   };
 
   const res = await customClient.request(query, variables).catch((err) => {
@@ -98,11 +121,8 @@ const adjustIntoResult = (res: any): GetProductsByTitleResult => {
     return product;
   });
 
-  return { products };
+  const hasNextPage: boolean = res.products.pageInfo.hasNextPage;
+  const lastCursor = res.products.edges.slice(-1)[0].cursor;
 
-  // const hasNextPage: boolean =
-  //   res.collectionByHandle.products.pageInfo.hasNextPage;
-  // const lastCursor = res.collectionByHandle.products.edges.slice(-1)[0].cursor;
-
-  // return { collection, products, hasNextPage, cursor: lastCursor };
+  return { products, hasNextPage, cursor: lastCursor };
 };

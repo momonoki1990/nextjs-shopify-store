@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { CircularProgress } from "@material-ui/core";
 import {
   Product,
@@ -11,27 +12,37 @@ import { SearchBox } from "components/common/SeachBox";
 import { SearchItemRow } from "components/search/SearchItemRow";
 
 type Props = {
-  q: string | null;
+  queryWord: string | null;
 };
 
-const SearchPage: React.FC<Props> = ({ q }) => {
-  const [loading, setLoading] = useState<boolean>(q ? true : false);
+const SearchPage: React.FC<Props> = ({ queryWord }) => {
   const [products, setProducts] = useState<Product[] | null>(null);
-  const numOfDisplays: number = 16;
-  console.log(products);
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
-  const fetchData = async (queryWord: string) => {
-    const result: GetProductsByTitleResult = await getProductsByTitle(
-      queryWord,
-      numOfDisplays
-    );
-    setProducts(result.products);
-    setLoading(false);
+  const fetchData = async (queryWord: string, cursor: string) => {
+    const numOfDisplays: number = 16;
+    let result: GetProductsByTitleResult;
+    try {
+      result = await getProductsByTitle(queryWord, numOfDisplays, cursor);
+    } catch {
+      alert("商品情報の取得に失敗しました。");
+      return;
+    }
+
+    if (products) {
+      setProducts([...products, ...result.products]);
+    } else {
+      setProducts([...result.products]);
+    }
+
+    setCursor(result.cursor);
+    setHasNextPage(result.hasNextPage);
   };
 
   useEffect(() => {
-    if (q) {
-      fetchData(q);
+    if (queryWord) {
+      fetchData(queryWord, cursor);
     }
   }, []);
 
@@ -41,7 +52,7 @@ const SearchPage: React.FC<Props> = ({ q }) => {
         <header className="border-b pb-8 md:pb-14">
           <div className="container">
             <h2 className="font-semibold mb-4 text-center text-gray-700 text-xl">
-              {products ? `${products.length}件 - 結果 "${q}"` : `"${q}"を検索`}
+              "{queryWord}"の検索結果
             </h2>
             <div className="max-w-screen-sm relative mx-auto my-0 md:w-7/12 w-full">
               <SearchBox />
@@ -49,18 +60,19 @@ const SearchPage: React.FC<Props> = ({ q }) => {
           </div>
         </header>
         <section className="container pt-8 md:pt-14">
-          {loading ? (
-            <div className="loading-icon flex items-center justify-center">
-              <CircularProgress
-                classes={{ svg: "font-bold text-gray-400" }}
-                size="1.25rem"
-                thickness={6}
-              />
-            </div>
+          {products ? (
+            <InfiniteScroll
+              dataLength={products.length}
+              next={() => fetchData(queryWord, cursor)}
+              hasMore={hasNextPage}
+              loader={<Loader />}
+            >
+              {products.map((product: Product) => (
+                <SearchItemRow product={product} key={product.id} />
+              ))}
+            </InfiniteScroll>
           ) : (
-            products?.map((product: Product) => (
-              <SearchItemRow product={product} key={product.id} />
-            ))
+            <Loader />
           )}
         </section>
       </article>
@@ -70,12 +82,22 @@ const SearchPage: React.FC<Props> = ({ q }) => {
 
 export default SearchPage;
 
+const Loader = () => (
+  <div className="text-center">
+    <CircularProgress
+      classes={{ svg: "font-bold text-gray-400" }}
+      size="1.25rem"
+      thickness={6}
+    />
+  </div>
+);
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const q = (context.query?.q as string) || null;
+  const queryWord = (context.query?.q as string) || null;
 
   return {
     props: {
-      q,
+      queryWord,
     },
   };
 };

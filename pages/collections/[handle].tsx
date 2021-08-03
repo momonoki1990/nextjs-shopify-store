@@ -20,7 +20,7 @@ type Props = {
 
 const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
   const [collection, setCollection] = useState<Collection | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[] | null>(null);
   const [cursor, setCursor] = useState<string | null>(null);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
@@ -44,7 +44,12 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
       setCollection(result.collection);
     }
 
-    setProducts([...products, ...result.products]);
+    if (products) {
+      setProducts([...products, ...result.products]);
+    } else {
+      setProducts([...result.products]);
+    }
+
     setCursor(result.cursor);
     setHasNextPage(result.hasNextPage);
   };
