@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CircularProgress } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 import {
   Product,
   getProductsByTitle,
@@ -9,7 +10,7 @@ import {
 } from "lib/graphql/product/getProductsByTitle";
 import Layout from "components/common/Layout";
 import { SearchBox } from "components/common/SeachBox";
-import { SearchItemRow } from "components/search/SearchItemRow";
+import { SearchItemRow, useStyles } from "components/search/SearchItemRow";
 
 type Props = {
   queryWord: string | null;
@@ -77,7 +78,9 @@ const SearchPage: React.FC<Props> = ({ queryWord }) => {
                 <div className="text-center">商品が見つかりませんでした。</div>
               )
             ) : (
-              <Loader />
+              Array.from(new Array(6)).map((_, idx) => (
+                <SkeltonLoader key={idx} />
+              ))
             )}
           </section>
         )}
@@ -87,6 +90,34 @@ const SearchPage: React.FC<Props> = ({ queryWord }) => {
 };
 
 export default SearchPage;
+
+const SkeltonLoader = () => {
+  return (
+    <div className="flex items-center justify-center mb-5">
+      <div className="flex items-center justify-center w-full">
+        <div className="flex-grow-0 flex-shrink-0 mr-4 md:mr-6 w-16 md:w-24">
+          <div
+            className="h-0 overflow-hidden relative"
+            style={{ paddingTop: "100%" }}
+          >
+            <Skeleton
+              variant="rect"
+              className="absolute h-full left-0 top-0 w-full"
+            />
+          </div>
+        </div>
+        <div className="flex-grow-1 w-full">
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+        </div>
+      </div>
+      <div className="ml-4 md:ml-6 w-1/5">
+        <Skeleton variant="text" />
+      </div>
+    </div>
+  );
+};
 
 const Loader = () => (
   <div className="text-center">

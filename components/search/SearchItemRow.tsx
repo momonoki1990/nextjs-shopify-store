@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Product } from "lib/graphql/product/getProductsByTitle";
 
-const useStyles = makeStyles({
+export const useStyles = makeStyles({
   flexSm: {
     flex: "0 0 4rem",
     marginRight: "1rem",
