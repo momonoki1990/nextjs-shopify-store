@@ -49,36 +49,38 @@ const SearchPage: React.FC<Props> = ({ queryWord }) => {
   return (
     <Layout>
       <article>
-        <header className="border-b pb-8 md:pb-14">
+        <header className="pb-8 md:pb-14">
           <div className="container">
             <h2 className="font-semibold mb-4 text-center text-gray-700 text-xl">
-              "{queryWord}"の検索結果
+              {queryWord ? `"${queryWord}"の検索結果` : "商品を検索する"}
             </h2>
             <div className="max-w-screen-sm relative mx-auto my-0 md:w-7/12 w-full">
               <SearchBox />
             </div>
           </div>
         </header>
-        <section className="container pt-8 md:pt-14">
-          {products ? (
-            products.length > 0 ? (
-              <InfiniteScroll
-                dataLength={products.length}
-                next={() => fetchData(queryWord, cursor)}
-                hasMore={hasNextPage}
-                loader={<Loader />}
-              >
-                {products.map((product: Product) => (
-                  <SearchItemRow product={product} key={product.id} />
-                ))}
-              </InfiniteScroll>
+        {queryWord && (
+          <section className="container border-t pt-8 md:pt-14">
+            {products ? (
+              products.length > 0 ? (
+                <InfiniteScroll
+                  dataLength={products.length}
+                  next={() => fetchData(queryWord, cursor)}
+                  hasMore={hasNextPage}
+                  loader={<Loader />}
+                >
+                  {products.map((product: Product) => (
+                    <SearchItemRow product={product} key={product.id} />
+                  ))}
+                </InfiniteScroll>
+              ) : (
+                <div className="text-center">商品が見つかりませんでした。</div>
+              )
             ) : (
-              <div className="text-center">商品が見つかりませんでした。</div>
-            )
-          ) : (
-            <Loader />
-          )}
-        </section>
+              <Loader />
+            )}
+          </section>
+        )}
       </article>
     </Layout>
   );
