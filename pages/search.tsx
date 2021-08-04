@@ -61,16 +61,20 @@ const SearchPage: React.FC<Props> = ({ queryWord }) => {
         </header>
         <section className="container pt-8 md:pt-14">
           {products ? (
-            <InfiniteScroll
-              dataLength={products.length}
-              next={() => fetchData(queryWord, cursor)}
-              hasMore={hasNextPage}
-              loader={<Loader />}
-            >
-              {products.map((product: Product) => (
-                <SearchItemRow product={product} key={product.id} />
-              ))}
-            </InfiniteScroll>
+            products.length > 0 ? (
+              <InfiniteScroll
+                dataLength={products.length}
+                next={() => fetchData(queryWord, cursor)}
+                hasMore={hasNextPage}
+                loader={<Loader />}
+              >
+                {products.map((product: Product) => (
+                  <SearchItemRow product={product} key={product.id} />
+                ))}
+              </InfiniteScroll>
+            ) : (
+              <div className="text-center">商品が見つかりませんでした。</div>
+            )
           ) : (
             <Loader />
           )}

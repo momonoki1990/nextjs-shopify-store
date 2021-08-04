@@ -122,7 +122,7 @@ const adjustIntoResult = (res: any): GetProductsByTitleResult => {
   });
 
   const hasNextPage: boolean = res.products.pageInfo.hasNextPage;
-  const lastCursor = res.products.edges.slice(-1)[0].cursor;
+  const lastCursor = res.products.edges.slice(-1)[0]?.cursor;
 
   return { products, hasNextPage, cursor: lastCursor };
 };
