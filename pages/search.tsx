@@ -10,7 +10,7 @@ import {
 } from "lib/graphql/product/getProductsByTitle";
 import Layout from "components/common/Layout";
 import { SearchBox } from "components/common/SeachBox";
-import { SearchItemRow, useStyles } from "components/search/SearchItemRow";
+import { SearchItemRow } from "components/search/SearchItemRow";
 
 type Props = {
   queryWord: string | null;
