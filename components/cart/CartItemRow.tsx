@@ -1,30 +1,14 @@
 import React, { useContext } from "react";
 import Image from "next/image";
-import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { LineItem } from "shopify-buy";
 import { CartContext } from "pages/cart";
 import { QuantityInput } from "components/cart/QuantityInput";
-
-const useStyles = makeStyles({
-  myFlex: {
-    flex: "0 0 5rem ",
-    paddingRight: "1.5rem",
-  },
-  myFlex2: {
-    flex: "0 0 9rem",
-    paddingRight: "3rem",
-  },
-});
 
 type Props = {
   item: LineItem;
 };
 
 const CartItemRow: React.FC<Props> = ({ item }) => {
-  const classes = useStyles();
-  const matches = useMediaQuery("(min-width:768px)");
-
   const { cartState, checkout } = useContext(CartContext);
 
   const { handle, quantity, title, variant } = item;
@@ -43,7 +27,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
     <tr className="border-gray-200 border-b">
       <td className="py-5 text-left w-4/6">
         <div className="flex">
-          <figure className={matches ? classes.myFlex2 : classes.myFlex}>
+          <figure className="flex-grow-0 flex-shrink-0 pr-6 md:pr-12 w-20 md:w-36">
             <a
               href={`/products/${variant.product.handle}?variant=${variant.id}`}
             >
