@@ -14,12 +14,12 @@ export type SortBy =
   | "created-descending";
 
 type Image = {
-  src: string;
+  originalSrc: string;
 };
 
 export type Product = {
   handle: string;
-  images: Image;
+  images: Image[];
   priceMin: number;
   priceMax: number;
   title: string;
@@ -37,7 +37,7 @@ export type GetCollectionWithProductsResult = {
 };
 
 /**
- * Fetch collection info with products info for collection page
+ * Fetch collection info with products info as a format like liquid object for collection page
  * @param handle collection handle
  */
 export const getCollectionWithProducts = async (
@@ -58,7 +58,7 @@ export const getCollectionWithProducts = async (
 };
 
 /**
- * fetch collection info with products from shopify store front api
+ * Fetch collection info with products from shopify store front api
  * @param handle collection handle
  * @param numOfDisplays num of collection products to retrieve at once
  * @param sortKey sortKey defined at ProductCollectionSortKeys(https://shopify.dev/api/storefront/reference/products/productcollectionsortkeys)
@@ -136,7 +136,7 @@ const fetchCollection = async (
 };
 
 /**
- * generate sort params for query from selected sort-by value
+ * Generate sort params for query from selected sort-by value
  * @param sortBy
  * @returns
  */
@@ -205,8 +205,8 @@ const adjustIntoResult = (res: any): GetCollectionWithProductsResult => {
       const product = {} as Product;
 
       product.handle = node.handle;
-      product.images = node.images.edges.map((node) => {
-        const originalSrc = node.node.originalSrc;
+      product.images = node.images.edges.map((edge) => {
+        const originalSrc = edge.node.originalSrc;
         return {
           originalSrc,
         };

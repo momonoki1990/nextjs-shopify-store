@@ -1,9 +1,13 @@
-body {
-  font-family: Helvetica,
-  'Helvetica Neue',
-  Arial,
-  'Lucida Grande',
-  sans-serif;
-  ;
+body > div#__next {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
+body {
+  font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+}
+
+main {
+  flex: 1;
+}

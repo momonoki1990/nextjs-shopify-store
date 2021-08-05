@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Product } from "lib/graphql/collection";
+import { Product } from "lib/graphql/collection/getCollectionWithProducts";
 
 type Props = {
   product: Product;

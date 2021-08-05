@@ -2,11 +2,11 @@ import React, { useEffect, useState, createContext } from "react";
 import { GetServerSideProps } from "next";
 import { Skeleton } from "@material-ui/lab";
 import {
-  getProduct,
+  getProductByHandle,
   getProductResult,
   Product,
   Variant,
-} from "lib/graphql/products";
+} from "lib/graphql/product/getProductByHandle";
 import Layout from "components/common/Layout";
 import ProductMainImage from "components/product/ProductMainImage";
 import ProductImageList from "components/product/ProductImageList";
@@ -42,7 +42,7 @@ const ProductPage: React.FC<Props> = ({ handle, variantId }) => {
   };
 
   const fetchData = async () => {
-    const result: getProductResult = await getProduct(handle);
+    const result: getProductResult = await getProductByHandle(handle);
     const prd = result.product;
 
     let initialVariant: Variant;

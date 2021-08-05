@@ -14,7 +14,7 @@ const MenuList: React.FC<Props> = ({ visibility }) => {
             className="block mx-auto px-8 md:px-4 py-4 text-gray-700 hover:text-opacity-70 hover:underline"
             style={{ maxWidth: "640px" }}
           >
-            Home
+            All
           </a>
         </li>
         {["apple", "watch"].map((title, idx) => (
