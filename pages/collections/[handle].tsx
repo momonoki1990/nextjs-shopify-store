@@ -63,7 +63,7 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
     <Layout>
       <article className="collection">
         <header>
-          <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-4xl">
+          <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-3xl md:text-4xl">
             {collection && collection.title}
           </h1>
           <FilterToolbar sortBy={sortBy} />

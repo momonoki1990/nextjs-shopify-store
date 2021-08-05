@@ -24,7 +24,7 @@ const CartPage: React.FC = () => {
       <Layout>
         <article className="collections-all">
           <header className="mb-9 md:mb-14 text-center">
-            <h1 className="font-semibold mb-2 text-gray-700 text-4xl">
+            <h1 className="font-semibold mb-2 text-gray-700 text-3xl md:text-4xl">
               ショッピングカート
             </h1>
           </header>
