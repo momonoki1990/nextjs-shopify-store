@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { CircularProgress } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 import useCart, { CartState, Checkout } from "lib/useCart";
 import Layout from "components/common/Layout";
 import CartItemTable from "components/cart/CartItemTable";
@@ -30,13 +30,9 @@ const CartPage: React.FC = () => {
           </header>
           <section className="container">
             {cartState.loading ? (
-              <div className="loading-icon flex items-center justify-center">
-                <CircularProgress
-                  classes={{ svg: "font-bold text-gray-400" }}
-                  size="1.25rem"
-                  thickness={6}
-                />
-              </div>
+              Array.from(new Array(3)).map((_, idx) => (
+                <SleltonLoader key={idx} />
+              ))
             ) : (
               <div className="text-center">
                 {cartState.value.lineItems.length > 0 ? (
@@ -75,3 +71,36 @@ const CartPage: React.FC = () => {
 };
 
 export default CartPage;
+
+const SleltonLoader = () => (
+  <div className="flex justify-center mb-5">
+    <div className="flex justify-center w-full items-start">
+      <div className="flex-grow-0 flex-shrink-0 mr-4 md:mr-6 w-16 md:w-24">
+        <div
+          className="h-0 overflow-hidden relative"
+          style={{ paddingTop: "100%" }}
+        >
+          <Skeleton
+            variant="rect"
+            className="absolute h-full left-0 top-0 w-full"
+          />
+        </div>
+      </div>
+      <div className="flex-grow-1 w-full">
+        <Skeleton variant="text" />
+        <Skeleton variant="text" />
+        <Skeleton variant="text" />
+      </div>
+    </div>
+    <div className="px-2 md:w-1/6 w-2/6">
+      <Skeleton variant="text" />
+      <Skeleton variant="text" className="md:hidden" />
+    </div>
+    <div className="hidden px-2 md:block w-1/6">
+      <Skeleton variant="text" />
+    </div>
+    <div className="hidden px-2 md:block w-1/6">
+      <Skeleton variant="text" />
+    </div>
+  </div>
+);
