@@ -1,5 +1,5 @@
 module.exports = {
-  purge: [],
+  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -12,10 +12,10 @@ module.exports = {
       addComponents({
         ".container": {
           width: "100%",
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: '1.25rem',
-          paddingRight: '1.25rem',
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingLeft: "1.25rem",
+          paddingRight: "1.25rem",
           "@screen sm": {
             maxWidth: "640px",
           },
@@ -32,5 +32,5 @@ module.exports = {
       });
     },
   ],
-  important: true
+  important: true,
 };
