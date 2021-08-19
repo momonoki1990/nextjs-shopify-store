@@ -63,7 +63,7 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
     <Layout>
       <article className="collection">
         <header>
-          <h1 className="font-semibold mb-9 md:mb-14 text-center text-gray-700 text-3xl md:text-4xl">
+          <h1 className="font-semibold text-center mb-9 text-gray-700 text-3xl md:mb-14 md:text-4xl">
             {collection && collection.title}
           </h1>
           <FilterToolbar sortBy={sortBy} />
@@ -92,16 +92,16 @@ const CollectionPage: React.FC<Props> = ({ handle, sortBy }) => {
 const SkeltonLoader: React.FC<{ numOfDisplays: number }> = ({
   numOfDisplays,
 }) => (
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-9 py-9 md:py-14 md:py-12">
+  <div className="grid py-9 gap-x-6 gap-y-9 grid-cols-2 md:py-14 md:grid-cols-4">
     {Array.from(new Array(numOfDisplays)).map((_, idx) => (
       <div className="skelton" key={idx}>
         <div
-          className="skelton__image-container h-0 overflow-hidden relative"
+          className="h-0 skelton__image-container overflow-hidden relative"
           style={{ paddingTop: "100%" }}
         >
           <Skeleton
             variant="rect"
-            className="absolute h-full left-0 top-0 w-full"
+            className="h-full w-full top-0 left-0 absolute"
           />
         </div>
         <Skeleton variant="text" />

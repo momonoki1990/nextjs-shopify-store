@@ -3,6 +3,7 @@ import Image from "next/image";
 import { LineItem } from "shopify-buy";
 import { CartContext } from "pages/cart";
 import { QuantityInput } from "components/cart/QuantityInput";
+import Link from "next/link";
 
 type Props = {
   item: LineItem;
@@ -24,27 +25,37 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
   };
 
   return (
-    <tr className="border-gray-200 border-b">
-      <td className="py-5 text-left w-4/6">
+    <tr className="border-b border-gray-200">
+      <td className="text-left py-5 w-4/6">
         <div className="flex">
-          <figure className="flex-grow-0 flex-shrink-0 pr-6 md:pr-12 w-20 md:w-36">
-            <a
+          <figure className="flex-grow-0 flex-shrink-0 pr-6 w-20 md:pr-12 md:w-36">
+            <Link
               href={`/products/${variant.product.handle}?variant=${variant.id}`}
+              passHref
             >
-              <Image priority src={imgSrc} height={150} width={150} />
-            </a>
+              <a>
+                <Image
+                  priority
+                  src={imgSrc}
+                  height={150}
+                  width={150}
+                  alt={title}
+                />
+              </a>
+            </Link>
           </figure>
           <div>
-            <div className="font-semibold text-gray-700 text-sm hover:underline">
-              <a
+            <div className="font-semibold text-sm text-gray-700 hover:underline">
+              <Link
                 href={`/products/${variant.product.handle}?variant=${variant.id}`}
+                passHref
               >
-                {title}
-              </a>
+                <a>{title}</a>
+              </Link>
             </div>
             <div className="mt-3">
               {item.variant.selectedOptions.map((opt, idx) => (
-                <div className="text-gray-700 text-sm" key={idx}>
+                <div className="text-sm text-gray-700" key={idx}>
                   <span>{opt.name}:</span>
                   <span>{opt.value}</span>
                 </div>
@@ -53,7 +64,7 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
             <div className="mt-3">
               <button
                 onClick={() => onClickHandler(item.id as string)}
-                className="border-b border-gray-600 text-gray-700 text-sm"
+                className="border-b border-gray-600 text-sm text-gray-700"
               >
                 削除
               </button>
@@ -61,19 +72,19 @@ const CartItemRow: React.FC<Props> = ({ item }) => {
           </div>
         </div>
       </td>
-      <td className="align-top md:align-middle p-5 text-right text-gray-700 md:w-1/6 w-2/6">
+      <td className="text-right p-5 text-gray-700 w-2/6 align-top md:w-1/6 md:align-middle">
         <div className="text-sm">¥{price.toLocaleString("ja-JP")}</div>
-        <div className="md:hidden mt-3">
-          <label className="inline-block mt-auto mb-auto mr-2 my-auto text-xs">
+        <div className="mt-3 md:hidden">
+          <label className="my-auto mt-auto mb-auto mr-2 text-xs inline-block">
             数量
           </label>
           <QuantityInput id={item.id as string} quantity={quantity} />
         </div>
       </td>
-      <td className="md:table-cell hidden p-5 text-gray-700 text-right w-1/6">
+      <td className="text-right p-5 text-gray-700 w-1/6 hidden md:table-cell">
         <QuantityInput id={item.id as string} quantity={quantity} />
       </td>
-      <td className="md:table-cell hidden p-5 pr-0 text-gray-700 text-right w-1/6">
+      <td className="text-right p-5 pr-0 text-gray-700 w-1/6 hidden md:table-cell">
         ¥{subtotal.toLocaleString("ja-JP")}
       </td>
     </tr>

@@ -4,6 +4,7 @@ import { Drawer } from "@material-ui/core";
 import { ProductContext } from "pages/products/[handle]";
 import { closeIcon } from "components/utils/Icon";
 import { CartState } from "lib/useCart";
+import Link from "next/link";
 
 type Props = {
   isOpen: boolean;
@@ -33,8 +34,8 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cartState }) => {
       open={isOpen}
       onClose={closeDrawer}
     >
-      <div className="cart-drawer__container px-6 pb-6">
-        <div className="cart-drawer__header border-b border-gray-200 flex justify-between py-2">
+      <div className="px-6 pb-6 cart-drawer__container">
+        <div className="border-b flex border-gray-200 py-2 cart-drawer__header justify-between">
           <div className="text-sm text-gray-700">カートに追加済み</div>
           <div className="text-gray-700">
             <a className="cursor-pointer" onClick={closeDrawer}>
@@ -42,18 +43,23 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cartState }) => {
             </a>
           </div>
         </div>
-        <div className="cart-drawer__content flex mt-4">
+        <div className="flex mt-4 cart-drawer__content">
           <figure
-            className="cart-drawer__image mr-4"
+            className="mr-4 cart-drawer__image"
             style={{ flexBasis: "15%" }}
           >
-            <Image src={selectedImage.src} height={200} width={200}></Image>
+            <Image
+              src={selectedImage.src}
+              height={200}
+              width={200}
+              alt={"image-" + selectedImage.id.toString()}
+            ></Image>
           </figure>
-          <div className="cart-drawer__info flex-1">
-            <div className="cart-drawer__product-title font-bold">
+          <div className="flex-1 cart-drawer__info">
+            <div className="font-bold cart-drawer__product-title">
               {product.title}
             </div>
-            <div className="cart-drawer__option mt-2">
+            <div className="mt-2 cart-drawer__option">
               {(variant ? variant : product.variants[0]).selectedOptions.map(
                 (opt, idx) => (
                   <div className="text-sm" key={idx}>
@@ -65,23 +71,22 @@ const CartDrawer: React.FC<Props> = ({ isOpen, setIsOpen, cartState }) => {
             </div>
           </div>
           <div
-            className="cart-drawer__quantity ml-4 text-gray-600 text-right text-sm"
+            className="text-right text-sm ml-4 text-gray-600 cart-drawer__quantity"
             style={{ flexBasis: "20%" }}
           >
             数量: 1
           </div>
         </div>
-        <div className="cart-drawer__cart-link mt-4">
-          <a
-            className="border border-gray-900 font-semibold inline-block text-gray-700 rounded-sm px-4 py-3 text-center text-sm w-full"
-            href="/cart"
-          >
-            カートを見る（{String(totalQuqntity)}）
-          </a>
+        <div className="mt-4 cart-drawer__cart-link">
+          <Link href="/cart">
+            <a className="border rounded-sm font-semibold border-gray-900 text-center text-sm w-full py-3 px-4 text-gray-700 inline-block">
+              カートを見る（{String(totalQuqntity)}）
+            </a>
+          </Link>
         </div>
-        <div className="cart-drawer__continue mt-4 text-center">
+        <div className="mt-4 text-center cart-drawer__continue">
           <a
-            className="border-b border-gray-400 cursor-pointer text-gray-600 text-sm"
+            className="border-b cursor-pointer border-gray-400 text-sm text-gray-600"
             onClick={closeDrawer}
           >
             買い物を続ける
