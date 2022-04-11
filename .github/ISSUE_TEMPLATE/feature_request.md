@@ -1,10 +1,8 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: 機能追加や変更・修正など
 title: ''
 labels: ''
-assignees: ''
-
 ---
 
 **Is your feature request related to a problem? Please describe.**
