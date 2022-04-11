@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: 不具合・バグ
+about: 不具合・バグの報告
 title: ''
 labels: 'bug'
 ---
