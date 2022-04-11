@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: 機能追加や変更・修正など
+about: 機能追加や変更・修正の要望
 title: ''
 labels: ''
 ---
