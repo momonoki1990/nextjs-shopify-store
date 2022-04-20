@@ -77,16 +77,16 @@ const ProductImageList: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="grid grid-cols-4 gap-1 mt-1">
+        <div className="mt-1 grid gap-1 grid-cols-4">
           {Array.from(new Array(4)).map((_, idx) => (
             <div
-              className="skelton-container h-0 overflow-hidden relative"
+              className="h-0 skelton-container overflow-hidden relative"
               style={{ paddingTop: "100%" }}
               key={idx}
             >
               <Skeleton
                 variant="rect"
-                className="absolute h-full left-0 top-0 w-full"
+                className="h-full w-full top-0 left-0 absolute"
               />
             </div>
           ))}
